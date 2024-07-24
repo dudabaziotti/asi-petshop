@@ -5,7 +5,13 @@
 .body{
     justify-content: space-between;
     display: grid;
+    margin-left: 100px;;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+
+    img {
+        width: 85%;
+        height: 100%;
+    }
     
 }
