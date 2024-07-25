@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
-enum tipoUsuario {
+export enum tipoUsuario {
   leitor = 'Leitor',
   estoquista = 'Estoquista'
 }
@@ -79,13 +79,15 @@ export class AuthService {
     }
 
     cadastroEstoquista (email: string, password: string) {
-      this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
+       return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
         const user = userCredential.user;
         if (user) {
           const identificacao = 'identificacao_estoquista'; 
           const cpf = 'cpf_estoquista'; 
           const foto = new File([""], "foto.png");
-          this.salvarDadosEstoquista(user.uid, identificacao, cpf, foto);
+          return this.salvarDadosEstoquista(user.uid, cpf, identificacao, foto).then(() => user.uid);
+      } else {
+        throw new Error('Não foi possível obter o UID do usuário.')
         }
       })
       .catch(error => {
@@ -98,8 +100,13 @@ export class AuthService {
       
     }
   
-    salvarDadosEstoquista(uid: string, identificacao: string, cpf: string, foto: File) {
-      // Implemente a lógica para salvar as informações do estoquista no banco de dados
-      
+    salvarDadosEstoquista(uid: string, cpf: string, identificacao: string, foto: File | null): Promise<void> {
+      return new Promise<void>((resolve, reject) => {
+        if (!foto) {
+          reject(new Error('Foto não fornecida.'));
+          return;
+        }
+      });
     }
-}
+  }
+
