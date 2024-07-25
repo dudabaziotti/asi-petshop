@@ -11,11 +11,14 @@ export class LoginComponent implements OnInit{
 
   email : string = '';
   password : string = '';
+  rememberMe: boolean = false;
 
   constructor (private router: Router, private auth : AuthService){ }
 
   ngOnInit(): void {
-    
+    if (localStorage.getItem('token')) {
+      this.router.navigate(['/dashboard']);
+    }
   }
   
   login() {
@@ -30,7 +33,7 @@ export class LoginComponent implements OnInit{
       return;
     }
 
-    this.auth.login(this.email,this.password);
+    this.auth.login(this.email,this.password, this.rememberMe);
     
     this.email = '';
     this.password = '';

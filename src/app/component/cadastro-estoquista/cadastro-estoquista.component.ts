@@ -5,10 +5,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-cadastro-estoquista',
   templateUrl: './cadastro-estoquista.component.html',
-  styleUrl: './cadastro-estoquista.component.scss'
+  styleUrls: ['./cadastro-estoquista.component.scss']
 })
-export class CadastroEstoquistaComponent implements OnInit{
-
+export class CadastroEstoquistaComponent implements OnInit {
   email: string = '';
   password: string = '';
   cpf: string = '';
@@ -17,10 +16,9 @@ export class CadastroEstoquistaComponent implements OnInit{
   uid: string = '';
   photoUrl: string | ArrayBuffer | null = '';
 
-  constructor (private auth: AuthService, private router: Router) {}
-  ngOnInit(): void {
-    
-  }
+  constructor(private auth: AuthService, private router: Router) {}
+
+  ngOnInit(): void {}
 
   onFileChange(event: any) {
     const file = event.target.files[0];
@@ -36,7 +34,16 @@ export class CadastroEstoquistaComponent implements OnInit{
     }
   }
 
-  cadastroEstoquista () {
+  convertFileToBase64(file: File): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  cadastroEstoquista() {
     if (this.cpf === '') {
       alert('Por favor digite o CPF');
       this.router.navigate(['/cadastro-estoquista']);
@@ -55,21 +62,22 @@ export class CadastroEstoquistaComponent implements OnInit{
       return;
     }
 
-    this.auth.cadastroEstoquista(this.email, this.password).then(uid => {
-      if (uid) {
-        this.auth.salvarDadosEstoquista(uid, this.cpf, this.identificacao, this.foto);
+    this.convertFileToBase64(this.foto).then(base64Foto => {
+      this.auth.cadastroEstoquista(this.email, this.password, this.cpf, this.identificacao, base64Foto).then(uid => {
         alert('Cadastro de estoquista realizado com sucesso! Faça seu login.');
         this.router.navigate(['/login']);
-      }
-    }).catch(error => {
-      console.error('Erro ao criar usuário:', error);
-    });
+      }).catch(error => {
+        alert('Erro ao realizar cadastro: ' + error.message);
+      });
 
-    this.email = '';
-    this.password = '';
-    this.cpf = '';
-    this.identificacao = '';
-    this.foto = null;
-    this.photoUrl = '';
+      this.email = '';
+      this.password = '';
+      this.cpf = '';
+      this.identificacao = '';
+      this.foto = null;
+      this.photoUrl = '';
+    }).catch(error => {
+      alert('Erro ao converter a foto: ' + error.message);
+    });
   }
 }

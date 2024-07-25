@@ -48,13 +48,21 @@ export class CadastroLeitorComponent implements OnInit{
       return;
     }
 
-    this.auth.cadastroLeitor(this.email, this.password);
-    this.auth.salvarDadosLeitor(this.uid, this.cpf, this.especie, this.raca, this.sexo);
-    alert('Cadastro de leitor realizado com sucesso! Faça seu login.')
-    this.router.navigate(['/login']);
+    this.auth.cadastroLeitor(this.email, this.password, this.cpf, this.especie, this.raca, this.sexo).then(() => {
+      alert('Cadastro de leitor realizado com sucesso!');
+      this.router.navigate(['/login']);
+    }).catch(error => {
+      alert('Erro ao realizar cadastro: ' + error.message);
+    });
 
     this.email = '';
     this.password = '';
+    this.cpf = '';
+    this.especie = '';
+    this.raca = '';
+    this.sexo = '';
 
+    this.auth.salvarDadosLeitor(this.uid, this.cpf, this.especie, this.raca, this.sexo);
+    
   }
 }
