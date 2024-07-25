@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 export enum tipoUsuario {
   leitor = 'Leitor',
@@ -12,7 +13,7 @@ export enum tipoUsuario {
 })
 export class AuthService {
 
-  constructor(private fireauth: AngularFireAuth, private router: Router) {
+  constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) {
     this.checkAuth();
   }
 
@@ -27,7 +28,7 @@ export class AuthService {
     });
   }
 
-  // Login
+  // login
   login(email: string, password: string, rememberMe: boolean) {
     this.fireauth.signInWithEmailAndPassword(email, password)
       .then(res => {
@@ -109,20 +110,19 @@ export class AuthService {
   }
 
   salvarDadosLeitor(uid: string, cpf: string, especie: string, raca: string, sexo: string) {
-    // lógica para salvar as informações do leitor no banco de dados
+    return this.firestore.collection(`users/${uid}/data`).add({
+      cpf,
+      especie,
+      raca,
+      sexo
+    });
   }
 
-  salvarDadosEstoquista(uid: string, cpf: string, identificacao: string, fotoBase64: string): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      if (!fotoBase64) {
-        reject(new Error('Foto não fornecida.'));
-        return;
-      }
-
-      // lógica para salvar as informações do estoquista no banco de dados,
-      // incluir a string base64 da foto
-
-      resolve();
+  salvarDadosEstoquista(uid: string, cpf: string, identificacao: string, fotoBase64: string) {
+    return this.firestore.collection(`users/${uid}/data`).add({
+      cpf,
+      identificacao,
+      fotoBase64
     });
   }
 }
