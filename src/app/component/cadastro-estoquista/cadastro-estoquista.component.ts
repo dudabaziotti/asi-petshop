@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./cadastro-estoquista.component.scss']
 })
 export class CadastroEstoquistaComponent implements OnInit {
+  name: string ='';
+  telephone: string ='';
   email: string = '';
   password: string = '';
   cpf: string = '';
@@ -18,7 +20,12 @@ export class CadastroEstoquistaComponent implements OnInit {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.email = localStorage.getItem('email') || '';
+    this.password = localStorage.getItem('password') || '';
+    this.name = localStorage.getItem('name') || '';
+    this.telephone = localStorage.getItem('telephone') || '';
+  }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
@@ -89,5 +96,8 @@ export class CadastroEstoquistaComponent implements OnInit {
     }).catch(error => {
       alert('Erro ao converter a foto: ' + error.message);
     });
+  }
+  ngOnDestroy() {
+    localStorage.clear();
   }
 }

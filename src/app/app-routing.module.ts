@@ -6,6 +6,7 @@ import { CadastroComponent } from './component/cadastro/cadastro.component';
 import { CadastroLeitorComponent } from './component/cadastro-leitor/cadastro-leitor.component';
 import { CadastroEstoquistaComponent } from './component/cadastro-estoquista/cadastro-estoquista.component';
 import { RedefinirSenhaComponent } from './component/redefinir-senha/redefinir-senha.component';
+import { DashboardComponent } from './component/dashboard/dashboard.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'cadastro', component: CadastroComponent},
   {path: 'cadastro-leitor', component: CadastroLeitorComponent},
   {path: 'cadastro-estoquista', component: CadastroEstoquistaComponent},
-  {path: 'redefinir-senha', component: RedefinirSenhaComponent}
+  {path: 'redefinir-senha', component: RedefinirSenhaComponent},
+  {path: 'dashboard', component: DashboardComponent}
 ];
 
 @NgModule({

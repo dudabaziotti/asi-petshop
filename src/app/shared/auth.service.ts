@@ -13,20 +13,7 @@ export enum tipoUsuario {
 })
 export class AuthService {
 
-  constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) {
-    this.checkAuth();
-  }
-
-  // verifica usuário autenticado
-  checkAuth() {
-    this.fireauth.onAuthStateChanged(user => {
-      if (user) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+  constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) { }
 
   // login
   login(email: string, password: string, rememberMe: boolean) {
@@ -71,6 +58,7 @@ export class AuthService {
 
   // cadastro
   cadastro(name: string, email: string, password: string, telephone: string, type: tipoUsuario) {
+    console.log(email, password);
     if (type === tipoUsuario.leitor) {
       this.router.navigate(['/cadastro-leitor'], { state: { email, password } });
     }
@@ -80,6 +68,7 @@ export class AuthService {
   }
 
   cadastroLeitor(email: string, password: string, cpf: string, especie: string, raca: string, sexo: string) {
+    console.log(email);
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {

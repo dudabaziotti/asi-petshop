@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class CadastroLeitorComponent implements OnInit{
 
+  telephone: string = '';
+  name: string = '';
   email: string = '';
   password: string = '';
   cpf: string = '';
@@ -20,7 +22,11 @@ export class CadastroLeitorComponent implements OnInit{
   constructor (private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    
+    this.email = localStorage.getItem('email') || '';
+    this.password = localStorage.getItem('password') || '';
+    this.name = localStorage.getItem('name') || '';
+    this.telephone = localStorage.getItem('telephone') || '';
+    console.log (this.email, this.password);
   }
 
   cadastroLeitor () {
@@ -64,5 +70,8 @@ export class CadastroLeitorComponent implements OnInit{
 
     this.auth.salvarDadosLeitor(this.uid, this.cpf, this.especie, this.raca, this.sexo);
     
+  }
+  ngOnDestroy() {
+    localStorage.clear();
   }
 }

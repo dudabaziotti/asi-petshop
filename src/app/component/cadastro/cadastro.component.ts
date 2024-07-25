@@ -23,13 +23,18 @@ ngOnInit(): void {
 }
 
 avancar () {
+  console.log(this.name, this.email, this.password, this.telephone);
+  this.cadastro();
+  localStorage.setItem('name', `${this.name}`);
+  localStorage.setItem('email', `${this.email}`);
+  localStorage.setItem('password', `${this.password}`);
+  localStorage.setItem('telephone', `${this.telephone}`);
+
   if (this.type === tipoUsuario.estoquista) {
     this.router.navigate(['/cadastro-estoquista']);
-    this.cadastro();
   }
   else if (this.type === tipoUsuario.leitor) {
     this.router.navigate(['./cadastro-leitor']);
-    this.cadastro();
   }
 }
 
@@ -58,12 +63,8 @@ cadastro() {
     return;
   }
 
-  this.auth.cadastro(this.email, this.password, this.name, this.telephone, this.type);
+  this.auth.cadastro(this.name, this.email, this.password, this.telephone, this.type);
 
-  this.email = '';
-  this.password = '';
-  this.name = '';
-  this.telephone = '';
   this.type = tipoUsuario.leitor; 
 }
 }
