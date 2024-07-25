@@ -43,6 +43,11 @@ export class CadastroEstoquistaComponent implements OnInit {
     });
   }
 
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   cadastroEstoquista() {
     if (this.cpf === '') {
       alert('Por favor digite o CPF');
@@ -59,6 +64,11 @@ export class CadastroEstoquistaComponent implements OnInit {
     if (!this.foto) {
       alert('Por favor adicione uma foto');
       this.router.navigate(['/cadastro-estoquista']);
+      return;
+    }
+
+    if (!this.isValidEmail(this.email)) {
+      alert('Por favor, insira um endereço de e-mail válido');
       return;
     }
 
