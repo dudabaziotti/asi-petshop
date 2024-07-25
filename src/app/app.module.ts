@@ -10,6 +10,8 @@ import { CadastroLeitorComponent } from './component/cadastro-leitor/cadastro-le
 import { CadastroEstoquistaComponent } from './component/cadastro-estoquista/cadastro-estoquista.component';
 import { RedefinirSenhaComponent } from './component/redefinir-senha/redefinir-senha.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
