@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PaginaInicialComponent } from './component/pagina-inicial/pagina-inicial.component';
@@ -9,6 +9,7 @@ import { CadastroComponent } from './component/cadastro/cadastro.component';
 import { CadastroLeitorComponent } from './component/cadastro-leitor/cadastro-leitor.component';
 import { CadastroEstoquistaComponent } from './component/cadastro-estoquista/cadastro-estoquista.component';
 import { RedefinirSenhaComponent } from './component/redefinir-senha/redefinir-senha.component';
+import { DashboardComponent } from './component/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { RedefinirSenhaComponent } from './component/redefinir-senha/redefinir-s
     CadastroComponent,
     CadastroLeitorComponent,
     CadastroEstoquistaComponent,
-    RedefinirSenhaComponent
+    RedefinirSenhaComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
