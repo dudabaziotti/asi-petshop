@@ -4,8 +4,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 export enum tipoUsuario {
-  leitor = 'Leitor',
-  estoquista = 'Estoquista'
+  leitor = 'leitor',
+  estoquista = 'estoquista'
 }
 
 @Injectable({
@@ -56,6 +56,8 @@ export class AuthService {
     });
   }
 
+ 
+
   // cadastro
   cadastro(name: string, email: string, password: string, telephone: string, type: tipoUsuario) {
     console.log(email, password);
@@ -68,11 +70,15 @@ export class AuthService {
   }
 
   cadastroLeitor(email: string, password: string, cpf: string, especie: string, raca: string, sexo: string) {
-    console.log(email);
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {
-        return this.salvarDadosLeitor(user.uid, cpf, especie, raca, sexo);
+        user.sendEmailVerification().then(() => { }).catch(error => {
+          console.error('Erro ao enviar email de verificação:', error);
+        });
+        alert('Cadastro de leitor realizado com sucesso! Verifique seu email antes de fazer o login.');
+        this.router.navigate(['/login']);
+        return this.salvarDadosLeitor(user.uid, cpf, especie, raca, sexo).then(() => user.uid);
       } else {
         throw new Error('Não foi possível obter o UID do usuário.');
       }
@@ -82,12 +88,17 @@ export class AuthService {
       throw error;
     });
   }
-
-  cadastroEstoquista(email: string, password: string, cpf: string, identificacao: string, fotoBase64: string) {
+  
+  cadastroEstoquista(email: string, password: string, fotoBase64: string, identificacao: string, cpf: string) {
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {
-        return this.salvarDadosEstoquista(user.uid, cpf, identificacao, fotoBase64).then(() => user.uid);
+        user.sendEmailVerification().then(() => { }).catch(error => {
+          console.error('Erro ao enviar email de verificação:', error);
+        });
+        alert('Cadastro de estoquista realizado com sucesso! Verifique seu email antes de fazer o login.');
+        this.router.navigate(['/login']);
+        return this.salvarDadosEstoquista(user.uid, fotoBase64, identificacao, cpf).then(() => user.uid);
       } else {
         throw new Error('Não foi possível obter o UID do usuário.');
       }
@@ -109,9 +120,9 @@ export class AuthService {
 
   salvarDadosEstoquista(uid: string, cpf: string, identificacao: string, fotoBase64: string) {
     return this.firestore.collection(`users/${uid}/data`).add({
-      cpf,
+      fotoBase64,
       identificacao,
-      fotoBase64
+      cpf
     });
   }
 }

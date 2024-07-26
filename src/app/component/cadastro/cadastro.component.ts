@@ -13,7 +13,7 @@ email: string ='';
 password: string = '';
 name: string = '';
 telephone: string = '';
-type: tipoUsuario = tipoUsuario.leitor; 
+type: tipoUsuario = tipoUsuario.leitor;
 tipoUsuario = tipoUsuario;
 
 constructor (private auth: AuthService, private router: Router) {}
@@ -25,11 +25,11 @@ ngOnInit(): void {
 avancar () {
   console.log(this.name, this.email, this.password, this.telephone);
   this.cadastro();
-  localStorage.setItem('name', `${this.name}`);
-  localStorage.setItem('email', `${this.email}`);
-  localStorage.setItem('password', `${this.password}`);
-  localStorage.setItem('telephone', `${this.telephone}`);
-
+  localStorage.setItem('name', this.name);
+  localStorage.setItem('email', this.email);
+  localStorage.setItem('password', this.password);
+  localStorage.setItem('telephone', this.telephone);
+  
   if (this.type === tipoUsuario.estoquista) {
     this.router.navigate(['/cadastro-estoquista']);
   }
@@ -64,7 +64,6 @@ cadastro() {
   }
 
   this.auth.cadastro(this.name, this.email, this.password, this.telephone, this.type);
-
-  this.type = tipoUsuario.leitor; 
+ 
 }
 }

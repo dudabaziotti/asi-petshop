@@ -5,7 +5,7 @@
             <div class="msg text-center text-lg mb-4 text-extrabold">Problemas para fazer o login?</div>
             <div class="texto text-center text-gray-700 mb-4 text-xs">Entre com o seu e-mail e nós enviaremos um link para você voltar à sua conta.</div>
             <div class="mb-4 px-5">
-                <input type="email" class="form-control placeholder-gray-300 w-full p-2 border border-gray-300 rounded" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail">
+                <input type="email" class="form-control placeholder-gray-300" id="email" [(ngModel)]="email" name="email" placeholder="E-mail">
             </div>
             <div class="mb-4 px-5">
                 <button (click)="redefinirSenha()" class="w-full bg-back-blue text-white px-4 py-2 rounded hover:bg-blue-700">Enviar link</button>

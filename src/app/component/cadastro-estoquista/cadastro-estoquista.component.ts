@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../shared/auth.service';
+import { AuthService, tipoUsuario } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,9 +21,9 @@ export class CadastroEstoquistaComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    this.name = localStorage.getItem('name') || '';
     this.email = localStorage.getItem('email') || '';
     this.password = localStorage.getItem('password') || '';
-    this.name = localStorage.getItem('name') || '';
     this.telephone = localStorage.getItem('telephone') || '';
   }
 
@@ -50,11 +50,6 @@ export class CadastroEstoquistaComponent implements OnInit {
     });
   }
 
-  isValidEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
   cadastroEstoquista() {
     if (this.cpf === '') {
       alert('Por favor digite o CPF');
@@ -74,25 +69,12 @@ export class CadastroEstoquistaComponent implements OnInit {
       return;
     }
 
-    if (!this.isValidEmail(this.email)) {
-      alert('Por favor, insira um endereço de e-mail válido');
-      return;
-    }
 
     this.convertFileToBase64(this.foto).then(base64Foto => {
-      this.auth.cadastroEstoquista(this.email, this.password, this.cpf, this.identificacao, base64Foto).then(uid => {
-        alert('Cadastro de estoquista realizado com sucesso! Faça seu login.');
-        this.router.navigate(['/login']);
-      }).catch(error => {
+      this.auth.cadastroEstoquista(this.email, this.password, base64Foto, this.identificacao, this.cpf).then(() => { }).catch(error => {
         alert('Erro ao realizar cadastro: ' + error.message);
       });
 
-      this.email = '';
-      this.password = '';
-      this.cpf = '';
-      this.identificacao = '';
-      this.foto = null;
-      this.photoUrl = '';
     }).catch(error => {
       alert('Erro ao converter a foto: ' + error.message);
     });
