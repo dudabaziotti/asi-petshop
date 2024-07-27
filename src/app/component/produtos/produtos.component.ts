@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  selector: 'app-produtos',
+  templateUrl: './produtos.component.html',
+  styleUrl: './produtos.component.scss'
 })
-export class DashboardComponent implements OnInit{
+export class ProdutosComponent implements OnInit{
+
   constructor (private route: Router) {}
+
   ngOnInit(): void {
     
   }

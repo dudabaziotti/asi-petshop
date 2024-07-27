@@ -1,0 +1,37 @@
+<div class="page bg-back-blue">
+    <div class="header">
+        <div class="img">
+            <img src="../../../assets/Cabeçalho (19) 1.png">
+        </div>
+        <div class="vertical-line"></div>
+        <div class="pags text-white px-5 font-bold">
+            <a (click)="dirperfil()" class="barra px-5">Perfil</a>
+            <a (click)="dirusuarios()" class="barra px-5">Usuários</a>
+            <a (click)="dirprodutos()" class="barra px-5">Produtos</a>
+            <a (click)="direstoque()" class="barra px-5">Estoque</a>
+            <a (click)="dirregistro()" class="barra px-5">Registros</a>
+        </div>
+        <div class="linha">
+            <div class="horizontal-line"></div>
+        </div>
+    </div>
+    <div class="body">
+        <div class=" cards bg-white p-4 px-2 rounded-lg shadow-lg max-w-md">
+            <div class="barra">
+                <a class="font-bold">Filtros</a>
+                <div class="search-container">
+                    <form action="/search" method="GET">
+                        <input type="text" placeholder="Pesquisar Produtos " name="query" class="search-input">
+                        <button type="submit" class="search-button">🔍</button>
+                    </form>
+                </div>
+                <a>Ordenar por</a>
+            </div>
+            
+            <h1></h1>
+            <h1>texto</h1>
+            <h1>texto</h1>
+        </div>
+        
+    </div>
+</div>

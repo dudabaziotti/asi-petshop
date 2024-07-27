@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
+import { ProdutosComponent } from './component/produtos/produtos.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { environment } from '../environments/environment';
     CadastroLeitorComponent,
     CadastroEstoquistaComponent,
     RedefinirSenhaComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProdutosComponent
   ],
   imports: [
     BrowserModule,
