@@ -7,7 +7,7 @@
         <div class="pags text-white px-5 font-bold">
             <a (click)="dirperfil()" class="barra px-5">Perfil</a>
             <a (click)="dirusuarios()" class="barra px-5">Usuários</a>
-            <a (click)="dirprodutos()" class="barra px-5">Produtos</a>
+            <a (click)="dirprodutos()" class="barra-atual px-5">Produtos</a>
             <a (click)="direstoque()" class="barra px-5">Estoque</a>
             <a (click)="dirregistro()" class="barra px-5">Registros</a>
         </div>
@@ -15,23 +15,83 @@
             <div class="horizontal-line"></div>
         </div>
     </div>
-    <div class="body">
-        <div class=" cards bg-white p-4 px-2 rounded-lg shadow-lg max-w-md">
-            <div class="barra">
+    <div class="header-body">
+        <div class="cards bg-white p-4 px-2 rounded-xl shadow mt-3 ml-20 mr-20 mb-3">
+            <div class="barra px-4">
                 <a class="font-bold">Filtros</a>
-                <div class="search-container">
-                    <form action="/search" method="GET">
-                        <input type="text" placeholder="Pesquisar Produtos " name="query" class="search-input">
-                        <button type="submit" class="search-button">🔍</button>
-                    </form>
+                <div class="lado flex px-4">
+                    <div class="search-container">
+                        <form action="/search" method="GET">
+                            <input type="text" placeholder="Pesquisar Produtos " name="query" class="search-input">
+                            <button type="submit" class="search-button">🔍</button>
+                        </form>
+                    </div>
+                    <div class="sort-container">
+                        <select id="sort-by" class="sort-select" onchange="sortItems() ">
+                            <option  disabled selected>Ordenar por</option>
+                            <option value="recentes">Mais recentes</option>
+                            <option value="antigos">Mais antigos</option>
+                            <option value="alfabética">Ordem alfabética A-Z</option>
+                        </select>
+                    </div>
                 </div>
-                <a>Ordenar por</a>
             </div>
-            
-            <h1></h1>
-            <h1>texto</h1>
-            <h1>texto</h1>
+            <div class="body">
+                <div class="card-body bg-white px-2 rounded-xl ml-10 mr-5">
+                    <h1 class='px-2 font-semibold'>Data de Cadastro</h1>
+                    <input type="text" placeholder="dd/mm/aaaa " name="query" class="mt-3 mb-3 search-input">
+                    <h1 class='px-2 font-semibold'>Tipo</h1>
+                    <div class="mt-3 checks flex flex-col">
+                        <div class="check flex">
+                            <input type="checkbox" name="Alimentação" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Alimentação">Alimentação</label>
+                        </div>
+                        <div class="check flex">
+                            <input type="checkbox" name="Lazer" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Lazer">Lazer</label>
+                        </div>
+                        <div class="check flex">
+                            <input type="checkbox" name="Acessórios" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Acessórios">Acessórios</label>
+                        </div>
+                        <div class="check flex">
+                            <input type="checkbox" name="Higiene" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Higiene">Higiene e Limpeza</label>
+                        </div>
+                        <div class="check flex">
+                            <input type="checkbox" name="Medicina" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Medicina">Medicina e Saúde</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="listagem w-4/5">
+                    <div class="card-body bg-white px-2 rounded-xl mr-10 ">
+                        <div class="flex items-center">
+                            <a class="tool px-5 font-semibold">Item</a>
+                            <a class="tool px-5 font-semibold">Descrição</a>
+                            <a class="tool px-5 font-semibold">Tipo</a>
+                            <a class="tool px-5 font-semibold">Estoque</a>
+                            <a class="tool px-5 font-semibold">Data de Cadastro</a>
+                        </div>
+                        <div class="card-body-1 bg-white px-2 rounded-sm mr-10 mt-3">
+                            <div class="flex items-center">
+                                texto
+                            </div>
+                        </div>
+                        <div class="card-body-1 bg-white px-2 rounded-sm mr-10 mt-3">
+                            <div class="flex items-center">
+                                texto
+                            </div>
+                        </div>
+                        <div class="card-body-1 bg-white px-2 rounded-sm mr-10 mt-3">
+                            <div class="flex items-center">
+                                texto
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
     </div>
+    
 </div>
