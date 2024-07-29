@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page" *ngIf="tipoCadastro === 'inicial'">
     <div class="body">
         <img src="../../../assets/Cabeçalho (20) 1 (1).png">
         <div class="mt-5 container">
@@ -51,3 +51,13 @@
         </div>
     </div>
 </div>
+
+<app-cadastro-estoquista 
+[email]="email" [password]="password" [name]="name" [telephone]="telephone" [usuario]="usuario"
+*ngIf="tipoCadastro === 'estoquista'">
+</app-cadastro-estoquista>
+
+<app-cadastro-leitor
+[email]="email" [password]="password" [name]="name" [telephone]="telephone" [usuario]="usuario"
+*ngIf="tipoCadastro === 'leitor'">
+</app-cadastro-leitor>

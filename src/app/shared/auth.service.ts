@@ -8,6 +8,12 @@ export enum tipoUsuario {
   estoquista = 'estoquista'
 }
 
+export enum tipoCadastro {
+  inicial = 'inicial',
+  leitor = 'leitor',
+  estoquista = 'estoquista'
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -59,7 +65,7 @@ export class AuthService {
  
 
   // cadastro
-  cadastro(name: string, email: string, password: string, telephone: string, type: tipoUsuario) {
+  cadastro(name: string, email: string, password: string, telephone: string, type: tipoUsuario, usuario: string) {
     console.log(email, password);
     if (type === tipoUsuario.leitor) {
       this.router.navigate(['/cadastro-leitor'], { state: { email, password } });
@@ -69,7 +75,8 @@ export class AuthService {
     }
   }
 
-  cadastroLeitor(email: string, password: string, cpf: string, especie: string, raca: string, sexo: string) {
+  cadastroLeitor(name: string, email: string, password: string, telephone: string, usuario: string, cpf: string, especie: string, raca: string, sexo: string) {
+
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {
@@ -78,7 +85,7 @@ export class AuthService {
         });
         alert('Cadastro de leitor realizado com sucesso! Verifique seu email antes de fazer o login.');
         this.router.navigate(['/login']);
-        return this.salvarDadosLeitor(user.uid, cpf, especie, raca, sexo).then(() => user.uid);
+        return this.salvarDadosLeitor(user.uid, name, email, telephone, usuario, cpf, especie, raca, sexo).then(() => user.uid);
       } else {
         throw new Error('Não foi possível obter o UID do usuário.');
       }
@@ -89,7 +96,7 @@ export class AuthService {
     });
   }
   
-  cadastroEstoquista(email: string, password: string, fotoBase64: string, identificacao: string, cpf: string) {
+  cadastroEstoquista(name: string, email: string, password: string, telephone: string, usuario: string, fotoBase64: string, identificacao: string, cpf: string) {
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {
@@ -98,7 +105,7 @@ export class AuthService {
         });
         alert('Cadastro de estoquista realizado com sucesso! Verifique seu email antes de fazer o login.');
         this.router.navigate(['/login']);
-        return this.salvarDadosEstoquista(user.uid, fotoBase64, identificacao, cpf).then(() => user.uid);
+        return this.salvarDadosEstoquista(user.uid, name, email, telephone, usuario, fotoBase64, identificacao, cpf).then(() => user.uid);
       } else {
         throw new Error('Não foi possível obter o UID do usuário.');
       }
@@ -109,8 +116,12 @@ export class AuthService {
     });
   }
 
-  salvarDadosLeitor(uid: string, cpf: string, especie: string, raca: string, sexo: string) {
-    return this.firestore.collection(`users/${uid}/data`).add({
+  salvarDadosLeitor(uid: string, name: string, email: string, telephone: string, usuario: string, cpf: string, especie: string, raca: string, sexo: string) {
+    return this.firestore.collection(`users`).add({
+      name,
+      email,
+      telephone,
+      usuario,
       cpf,
       especie,
       raca,
@@ -118,8 +129,12 @@ export class AuthService {
     });
   }
 
-  salvarDadosEstoquista(uid: string, cpf: string, identificacao: string, fotoBase64: string) {
-    return this.firestore.collection(`users/${uid}/data`).add({
+  salvarDadosEstoquista(uid: string, name: string, email: string, telephone: string, usuario: string, fotoBase64: string, identificacao: string, cpf: string) {
+    return this.firestore.collection(`users`).add({
+      name,
+      email,
+      telephone,
+      usuario,
       fotoBase64,
       identificacao,
       cpf

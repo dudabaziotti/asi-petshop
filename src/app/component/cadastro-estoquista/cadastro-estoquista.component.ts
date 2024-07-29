@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService, tipoUsuario } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,23 +8,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./cadastro-estoquista.component.scss']
 })
 export class CadastroEstoquistaComponent implements OnInit {
-  name: string ='';
-  telephone: string ='';
-  email: string = '';
-  password: string = '';
+
+  @Input() name: string;
+  @Input() email: string;
+  @Input() password: string;
+  @Input() telephone: string;
+  @Input() usuario: string;
+
   cpf: string = '';
   identificacao: string = '';
   foto: File | null = null;
   uid: string = '';
   photoUrl: string | ArrayBuffer | null = '';
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) {
+    this.name = '';
+    this.email = '';
+    this.password = '';
+    this.telephone = '';
+    this.usuario = '';
+  }
 
   ngOnInit(): void {
-    this.name = localStorage.getItem('name') || '';
-    this.email = localStorage.getItem('email') || '';
-    this.password = localStorage.getItem('password') || '';
-    this.telephone = localStorage.getItem('telephone') || '';
+    console.log(this.name);
+    console.log(this.email);
+    console.log(this.password);
+    console.log(this.telephone);
+    console.log(this.usuario);
   }
 
   onFileChange(event: any) {
@@ -71,15 +81,12 @@ export class CadastroEstoquistaComponent implements OnInit {
 
 
     this.convertFileToBase64(this.foto).then(base64Foto => {
-      this.auth.cadastroEstoquista(this.email, this.password, base64Foto, this.identificacao, this.cpf).then(() => { }).catch(error => {
+      this.auth.cadastroEstoquista(this.name, this.email, this.password, this.telephone,  this.usuario, base64Foto, this.identificacao, this.cpf).then(() => { }).catch(error => {
         alert('Erro ao realizar cadastro: ' + error.message);
       });
 
     }).catch(error => {
       alert('Erro ao converter a foto: ' + error.message);
     });
-  }
-  ngOnDestroy() {
-    localStorage.clear();
   }
 }

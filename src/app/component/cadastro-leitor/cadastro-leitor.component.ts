@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService, tipoUsuario } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,23 +8,33 @@ import { Router } from '@angular/router';
   styleUrl: './cadastro-leitor.component.scss'
 })
 export class CadastroLeitorComponent implements OnInit{
-  telephone: string = '';
-  name: string = '';
-  email: string = '';
-  password: string = '';
+
+  @Input() name: string;
+  @Input() email: string;
+  @Input() password: string;
+  @Input() telephone: string;
+  @Input() usuario: string;
+
   cpf: string = '';
   especie: string = '';
   raca: string = '';
   sexo: string = '';
   uid: string = '';
 
-  constructor (private auth: AuthService, private router: Router) {}
+  constructor (private auth: AuthService, private router: Router) {
+    this.name = '';
+    this.email = '';
+    this.password = '';
+    this.telephone = '';
+    this.usuario = '';
+  }
 
   ngOnInit(): void {
-    this.email = localStorage.getItem('email') || '';
-    this.password = localStorage.getItem('password') || '';
-    this.name = localStorage.getItem('name') || '';
-    this.telephone = localStorage.getItem('telephone') || '';
+    console.log(this.name);
+    console.log(this.email);
+    console.log(this.password);
+    console.log(this.telephone);
+    console.log(this.usuario);
   }
 
   cadastroLeitor () {
@@ -52,12 +62,8 @@ export class CadastroLeitorComponent implements OnInit{
       return;
     }
 
-    this.auth.cadastroLeitor(this.email, this.password, this.cpf, this.especie, this.raca, this.sexo).then(() => { }).catch(error => {
+    this.auth.cadastroLeitor(this.name, this.email, this.password, this.telephone, this.usuario, this.cpf, this.especie, this.raca, this.sexo).then(() => { }).catch(error => {
       alert('Erro ao realizar cadastro: ' + error.message);
     });
-  }
-
-  ngOnDestroy() {
-    localStorage.clear();
   }
 }

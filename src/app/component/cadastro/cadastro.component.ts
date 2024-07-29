@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, tipoUsuario } from '../../shared/auth.service';
+import { AuthService, tipoUsuario, tipoCadastro } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,32 +9,30 @@ import { Router } from '@angular/router';
 })
 export class CadastroComponent implements OnInit{
 
+usuario: string = '';  
 email: string ='';
 password: string = '';
 name: string = '';
 telephone: string = '';
 type: tipoUsuario = tipoUsuario.leitor;
 tipoUsuario = tipoUsuario;
+tipoCadastro: tipoCadastro = tipoCadastro.inicial;
 
-constructor (private auth: AuthService, private router: Router) {}
+constructor (private auth: AuthService, private router: Router) {
+}
 
 ngOnInit(): void {
   
 }
 
 avancar () {
-  console.log(this.name, this.email, this.password, this.telephone);
-  this.cadastro();
-  localStorage.setItem('name', this.name);
-  localStorage.setItem('email', this.email);
-  localStorage.setItem('password', this.password);
-  localStorage.setItem('telephone', this.telephone);
-  
   if (this.type === tipoUsuario.estoquista) {
-    this.router.navigate(['/cadastro-estoquista']);
+    this.tipoCadastro = tipoCadastro.estoquista;
+    this.usuario = 'estoquista';
   }
   else if (this.type === tipoUsuario.leitor) {
-    this.router.navigate(['./cadastro-leitor']);
+    this.tipoCadastro = tipoCadastro.leitor;
+    this.usuario = 'leitor';
   }
 }
 
@@ -62,8 +60,8 @@ cadastro() {
     this.router.navigate(['/cadastro']);
     return;
   }
-
-  this.auth.cadastro(this.name, this.email, this.password, this.telephone, this.type);
+  
+  this.auth.cadastro(this.name, this.email, this.password, this.telephone, this.type, this.usuario);
  
 }
 }
