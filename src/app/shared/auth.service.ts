@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 export enum tipoUsuario {
   leitor = 'leitor',
@@ -19,7 +21,15 @@ export enum tipoCadastro {
 })
 export class AuthService {
 
-  constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) { }
+
+  constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) {}
+
+  //obter tipo de usuario
+  getUserType(uid: string): Observable<string | null> {
+    return this.firestore.collection('users').doc(uid).valueChanges().pipe(
+      map((user:any) => user ? user.usuario : null)
+    );
+  }
 
   // login
   login(email: string, password: string, rememberMe: boolean) {
@@ -46,6 +56,7 @@ export class AuthService {
   logout() {
     this.fireauth.signOut().then(() => {
       localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
       this.router.navigate(['/login']);
     }).catch(err => {
       alert(err.message);
@@ -61,8 +72,6 @@ export class AuthService {
       alert('Algo deu errado');
     });
   }
-
- 
 
   // cadastro
   cadastro(name: string, email: string, password: string, telephone: string, type: tipoUsuario, usuario: string) {
@@ -115,7 +124,7 @@ export class AuthService {
   }
 
   salvarDadosLeitor(uid: string, name: string, email: string, telephone: string, usuario: string, cpf: string, especie: string, raca: string, sexo: string) {
-    return this.firestore.collection(`users`).add({
+    return this.firestore.collection(`users`).doc(uid).set({
       name,
       email,
       telephone,
@@ -128,7 +137,7 @@ export class AuthService {
   }
 
   salvarDadosEstoquista(uid: string, name: string, email: string, telephone: string, usuario: string, fotoBase64: string, identificacao: string, cpf: string) {
-    return this.firestore.collection(`users`).add({
+    return this.firestore.collection(`users`).doc(uid).set({
       name,
       email,
       telephone,
