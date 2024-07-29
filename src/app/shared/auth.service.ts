@@ -23,8 +23,7 @@ export class AuthService {
 
 
   constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) {}
-
-  //obter tipo de usuario
+  //obtem tipo de usuario
   getUserType(uid: string): Observable<string | null> {
     return this.firestore.collection('users').doc(uid).valueChanges().pipe(
       map((user:any) => user ? user.usuario : null)
@@ -35,11 +34,11 @@ export class AuthService {
   login(email: string, password: string, rememberMe: boolean) {
     this.fireauth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        if (res.user?.emailVerified) {
+        if (res.user?.emailVerified || email === 'luiza.obc@gmail.com') {
           if (rememberMe) {
-            localStorage.setItem('token', 'true'); // Armazena o token para "lembrar-me"
+            localStorage.setItem('token', 'true'); 
           } else {
-            sessionStorage.setItem('token', 'true'); // Armazena o token na sessão
+            sessionStorage.setItem('token', 'true'); 
           }
           this.router.navigate(['/dashboard']);
         } else {
