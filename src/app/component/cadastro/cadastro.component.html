@@ -9,35 +9,35 @@
                             <form class="ml-3 mt-3 mb-3 mr-3" (ngSubmit)="avancar()">
                                 <div class="mb-2">
                                     <label for="name" class="form-label">Nome Completo</label>
-                                    <input type="text" class="form-control placeholder-gray-300" id="name" [(ngModel)]="name" name="name" placeholder="Nome">
+                                    <input type="text" class="form-control placeholder-gray-300" id="name" [(ngModel)]="name" name="name" placeholder="Nome" (ngModelChange)="validateForm()">
                                 </div>
                                 <div class="mb-2">
                                     <label for="email" class="form-label">E-mail</label>
-                                    <input type="email" class="form-control placeholder-gray-300" id="email" [(ngModel)]="email" name="email" placeholder="E-mail">
+                                    <input type="email" class="form-control placeholder-gray-300" id="email" [(ngModel)]="email" name="email" placeholder="E-mail" (ngModelChange)="validateForm()">
                                 </div>
                                 <div class="mb-2">
                                     <label for="password" class="form-label">Senha</label>
-                                    <input type="password" class="form-control placeholder-gray-300" id="password" [(ngModel)]="password" name="password" placeholder="Senha">
+                                    <input type="password" class="form-control placeholder-gray-300" id="password" [(ngModel)]="password" name="password" placeholder="Senha" (ngModelChange)="validateForm()">
                                 </div>
                                 <div class="mb-2">
                                     <label for="telephone" class="form-label">Telefone</label>
-                                    <input type="tel" class="form-control placeholder-gray-300" id="telephone" [(ngModel)]="telephone" name="telephone" placeholder="(XX) XXXXX-XXXX">
+                                    <input type="tel" class="form-control placeholder-gray-300" id="telephone" [(ngModel)]="telephone" name="telephone" placeholder="(XX) XXXXX-XXXX" (ngModelChange)="validateForm()">
                                 </div>
                                 <div class="flex mb-2 justify-center items-center">
                                     Eu sou um(a):
                                 </div>
                                 <div class="mb-2">
                                     <div class="flex items-center">
-                                        <input type="radio" class="form-check-input" id="leitor" name="role" [(ngModel)]="type" [value]="tipoUsuario.leitor">
+                                        <input type="radio" class="form-check-input" id="leitor" name="role" [(ngModel)]="type" [value]="tipoUsuario.leitor" (ngModelChange)="validateForm()">
                                         <label class="ml-2 form-check-label" for="leitor">Leitor</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="radio" class="form-check-input" id="estoquista" name="role" [(ngModel)]="type" [value]="tipoUsuario.estoquista">
+                                        <input type="radio" class="form-check-input" id="estoquista" name="role" [(ngModel)]="type" [value]="tipoUsuario.estoquista" (ngModelChange)="validateForm()">
                                         <label class="ml-2 form-check-label" for="estoquista">Estoquista</label>
                                     </div>
                                 </div>
                                 <div class="inputs">
-                                    <button type="submit" class="mt-2 mb-2 w-full bg-back-blue px-2 py-1 rounded text-white hover:bg-blue-700">Avançar</button>
+                                    <button type="submit" class="mt-2 mb-2 w-full bg-back-blue px-2 py-1 rounded text-white hover:bg-blue-700" [disabled]="!isFormValid">Avançar</button>
                                 </div>
                                 <div class="flex justify-center items-center">
                                     <a class="mr-2">Já possui uma conta?</a>

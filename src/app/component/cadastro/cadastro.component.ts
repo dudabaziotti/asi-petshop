@@ -17,13 +17,21 @@ telephone: string = '';
 type: tipoUsuario = tipoUsuario.leitor;
 tipoUsuario = tipoUsuario;
 tipoCadastro: tipoCadastro = tipoCadastro.inicial;
+isFormValid: boolean = false;
 
 constructor (private auth: AuthService, private router: Router) {
 }
 
-ngOnInit(): void {
-  
-}
+ngOnInit(): void { }
+
+validateForm() {
+  this.isFormValid = 
+    this.name !== '' &&
+    this.email!== '' &&
+    this.password!== '' &&
+    this.telephone!== '' &&
+    (this.type === tipoUsuario.estoquista || this.type === tipoUsuario.leitor);
+  }
 
 avancar () {
   if (this.type === tipoUsuario.estoquista) {
@@ -37,31 +45,6 @@ avancar () {
 }
 
 cadastro() {
-  if (this.email === '') {
-    alert('Por favor digite o seu email');
-    this.router.navigate(['/cadastro']);
-    return;
-  }
-
-  if (this.password === '') {
-    alert('Por favor digite uma senha');
-    this.router.navigate(['/cadastro']);
-    return;
-  }
-
-  if (this.name === '') {
-    alert('Por favor digite o seu nome');
-    this.router.navigate(['/cadastro']);
-    return;
-  }
-
-  if (this.telephone === '') {
-    alert('Por favor digite o seu telefone');
-    this.router.navigate(['/cadastro']);
-    return;
-  }
-  
   this.auth.cadastro(this.name, this.email, this.password, this.telephone, this.type, this.usuario);
- 
 }
 }

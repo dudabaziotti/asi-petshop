@@ -16,14 +16,14 @@
                                 </div>
                                 <div class="mb-2">
                                     <label for="identificacao" class="form-label">Número de Identificação</label>
-                                    <input type="text" class="form-control placeholder-gray-300" id="identificacao" [(ngModel)]="identificacao" name="identificacao" placeholder="XX.XXX.XXX/000X-XX" required>
+                                    <input type="text" class="form-control placeholder-gray-300" id="identificacao" [(ngModel)]="identificacao" name="identificacao" placeholder="XX.XXX.XXX/000X-XX" required (ngModelChange)="validateForm()">
                                 </div>
                                 <div class="mb-2">
                                     <label for="cpf" class="form-label">CPF</label>
-                                    <input type="text" class="form-control placeholder-gray-300" id="cpf" [(ngModel)]="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX" required>
+                                    <input type="text" class="form-control placeholder-gray-300" id="cpf" [(ngModel)]="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX" required (ngModelChange)="validateForm()">
                                 </div>
                                 <div class="inputs pt-5">
-                                    <button type="submit" class="mt-2 mb-2 w-full bg-back-blue px-2 py-1 rounded text-white hover:bg-blue-700">Concluir</button>
+                                    <button type="submit" class="mt-2 mb-2 w-full bg-back-blue px-2 py-1 rounded text-white hover:bg-blue-700" [disabled]="!isFormValid">Concluir</button>
                                 </div>
                                 <div class="flex justify-center items-center">
                                     <a class="mr-2">Já possui uma conta?</a>

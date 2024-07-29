@@ -66,7 +66,6 @@ export class AuthService {
 
   // cadastro
   cadastro(name: string, email: string, password: string, telephone: string, type: tipoUsuario, usuario: string) {
-    console.log(email, password);
     if (type === tipoUsuario.leitor) {
       this.router.navigate(['/cadastro-leitor'], { state: { email, password } });
     }
@@ -76,7 +75,6 @@ export class AuthService {
   }
 
   cadastroLeitor(name: string, email: string, password: string, telephone: string, usuario: string, cpf: string, especie: string, raca: string, sexo: string) {
-
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {

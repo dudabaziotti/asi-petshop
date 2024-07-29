@@ -20,6 +20,7 @@ export class CadastroLeitorComponent implements OnInit{
   raca: string = '';
   sexo: string = '';
   uid: string = '';
+  isFormValid: boolean = false;
 
   constructor (private auth: AuthService, private router: Router) {
     this.name = '';
@@ -37,31 +38,15 @@ export class CadastroLeitorComponent implements OnInit{
     console.log(this.usuario);
   }
 
+  validateForm() {
+    this.isFormValid = 
+      this.cpf!== '' &&
+      this.especie!== '' &&
+      this.raca!== '' &&
+      this.sexo!== '';
+  }
+
   cadastroLeitor () {
-    if (this.cpf === '') {
-      alert('Por favor digite o CPF');
-      this.router.navigate(['/cadastro-leitor']);
-      return;
-    }
-
-    if (this.especie === '') {
-      alert('Por favor digite a espécie');
-      this.router.navigate(['/cadastro-leitor']);
-      return;
-    }
-
-    if (this.raca === '') {
-      alert('Por favor digite a raça');
-      this.router.navigate(['/cadastro-leitor']);
-      return;
-    }
-
-    if (this.sexo === '') {
-      alert('Por favor digite o sexo');
-      this.router.navigate(['/cadastro-leitor']);
-      return;
-    }
-
     this.auth.cadastroLeitor(this.name, this.email, this.password, this.telephone, this.usuario, this.cpf, this.especie, this.raca, this.sexo).then(() => { }).catch(error => {
       alert('Erro ao realizar cadastro: ' + error.message);
     });
