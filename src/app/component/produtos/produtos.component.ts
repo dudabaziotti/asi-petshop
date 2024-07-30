@@ -46,8 +46,16 @@ export class ProdutosComponent implements OnInit{
     this.carregarProdutos();
   }
 
-  crudProdutos() {
-    this.route.navigate(['/crud-produtos']);
+  navegarParaEditar(produtoId: string): void {
+    this.route.navigate(['/editar-produtos', produtoId]);
+  }
+
+  addProdutos() {
+    this.route.navigate(['/add-produtos']);
+  }
+
+  trackProdutos(index: number, produto: any): any {
+    return produto ? produto.id : undefined;
   }
 
   carregarProdutos(): void {

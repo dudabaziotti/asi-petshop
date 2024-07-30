@@ -9,7 +9,8 @@ import { RedefinirSenhaComponent } from './component/redefinir-senha/redefinir-s
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ProdutosComponent } from './component/produtos/produtos.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
-import { CrudProdutosComponent } from './component/crud-produtos/crud-produtos.component';
+import { AddProdutosComponent } from './component/add-produtos/add-produtos.component';
+import { EditarProdutosComponent } from './component/editar-produtos/editar-produtos.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'redefinir-senha', component: RedefinirSenhaComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path:'produtos', component: ProdutosComponent},
-  {path:'crud-produtos', component: CrudProdutosComponent},
+  {path:'add-produtos', component: AddProdutosComponent},
+  {path:'editar-produtos/:id', component: EditarProdutosComponent},
   {path:'perfil', component: PerfilComponent}
 ];
 

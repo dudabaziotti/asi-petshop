@@ -1,0 +1,52 @@
+.title {
+    padding-top: 40px;
+    padding-left: 50px;
+    display: flex;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.form {
+    padding: 40px 30px 40px 30px;
+    .form-botao {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+    h3 {
+        color: white;
+        font-size: 18px;
+        text-shadow: 2px 2px 2px rgba(66, 62, 62, 0.5);
+        font-weight: 500;
+        padding-right: 20px;
+        text-align:right;
+        padding-top: 10px;
+    }
+
+    .item {
+        display: flex;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 80px;
+        padding-right: 520px;
+        justify-content: space-between;
+    }
+
+    .input {
+        width: 500px;
+        outline: none;
+    }
+
+    .botao {
+        font-size: 15px;
+        cursor: pointer;
+        width: 200px;
+        padding: 5px 5px 5px 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+
+    }
+}

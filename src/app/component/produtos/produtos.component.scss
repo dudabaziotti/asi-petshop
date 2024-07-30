@@ -152,9 +152,15 @@
 
                     .card-body-1 {
                         padding: 10px 10px 10px 10px;
-                        border: 1px solid #86adf7;
+                        
                         width: fit-content;
                     }
+                    .linha-azul {
+                        border: none;
+                        height: 1px;
+                        background-color: #0946c9;
+                        margin: 10px 0;
+        }
                 }
             }
         }
