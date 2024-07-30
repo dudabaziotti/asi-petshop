@@ -22,7 +22,18 @@ export class DashboardComponent implements OnInit{
       if (user) {
         this.userId = user.uid;
         console.log('Logged in user ID:', this.userId);
-        this.loadUserData();
+        if (this.userId) {
+          this.auth.getUserType(this.userId).subscribe(userType => {
+            console.log('User type from document:', userType); 
+            if (userType === 'estoquista') {
+              this.isEstoquista = true;
+            } else if (userType === 'leitor') {
+              this.isLeitor = true;
+            } else if (userType === 'administrador') {
+              this.isAdmin = true;
+            } 
+          });
+        }
       } else {
         console.log('No user is logged in');
         this.isLeitor = false;
@@ -30,21 +41,6 @@ export class DashboardComponent implements OnInit{
         this.isAdmin = false;
       }
     });
-  }
-
-  loadUserData(): void {
-    if (this.userId) {
-      this.auth.getUserType(this.userId).subscribe(userType => {
-        console.log('User type from document:', userType); 
-        if (userType === 'estoquista') {
-          this.isEstoquista = true;
-        } else if (userType === 'leitor') {
-          this.isLeitor = true;
-        } else if (userType === 'administrador') {
-          this.isAdmin = true;
-        } 
-      });
-    }
   }
   
   dirperfil(){

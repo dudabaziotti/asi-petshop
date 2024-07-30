@@ -17,6 +17,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
 import { ProdutosComponent } from './component/produtos/produtos.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
+import { CrudProdutosComponent } from './component/crud-produtos/crud-produtos.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PerfilComponent } from './component/perfil/perfil.component';
     RedefinirSenhaComponent,
     DashboardComponent,
     ProdutosComponent,
-    PerfilComponent
+    PerfilComponent,
+    CrudProdutosComponent
   ],
   imports: [
     BrowserModule,
