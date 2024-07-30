@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 export enum tipoUsuario {
   leitor = 'leitor',
@@ -22,7 +24,7 @@ export enum tipoCadastro {
 export class AuthService {
 
 
-  constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore) {}
+  constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore, private storage: AngularFireStorage) {}
   //obtem tipo de usuario
   getUserType(uid: string): Observable<string | null> {
     return this.firestore.collection('users').doc(uid).valueChanges().pipe(
@@ -34,7 +36,7 @@ export class AuthService {
   login(email: string, password: string, rememberMe: boolean) {
     this.fireauth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        if (res.user?.emailVerified || email === 'luiza.obc@gmail.com') {
+        if (res.user?.emailVerified) {
           if (rememberMe) {
             localStorage.setItem('token', 'true'); 
           } else {
@@ -102,21 +104,22 @@ export class AuthService {
     });
   }
   
-  cadastroEstoquista(name: string, email: string, password: string, telephone: string, usuario: string, fotoBase64: string, identificacao: string, cpf: string) {
+  cadastroEstoquista(name: string, email: string, password: string, telephone: string, usuario: string, identificacao: string, cpf: string, photoUrl: string) {
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {
-        user.sendEmailVerification().then(() => { }).catch(error => {
+        user.sendEmailVerification().then(() => {}).catch(error => {
           console.error('Erro ao enviar email de verificação:', error);
         });
-        alert('Cadastro de estoquista realizado com sucesso! Verifique seu email antes de fazer o login.');
-        this.router.navigate(['/login']);
-        return this.salvarDadosEstoquista(user.uid, name, email, telephone, usuario, fotoBase64, identificacao, cpf).then(() => user.uid);
+
+        return this.salvarDadosEstoquista(user.uid, name, email, telephone, usuario, photoUrl, identificacao, cpf).then(() => {
+          alert('Cadastro de estoquista realizado com sucesso! Verifique seu email antes de fazer o login.');
+          this.router.navigate(['/login']);
+        });
       } else {
         throw new Error('Não foi possível obter o UID do usuário.');
       }
-    })
-    .catch(error => {
+    }).catch(error => {
       console.error('Erro ao criar usuário:', error);
       throw error;
     });
@@ -135,13 +138,13 @@ export class AuthService {
     });
   }
 
-  salvarDadosEstoquista(uid: string, name: string, email: string, telephone: string, usuario: string, fotoBase64: string, identificacao: string, cpf: string) {
+  salvarDadosEstoquista(uid: string, name: string, email: string, telephone: string, usuario: string, photoUrl: string, identificacao: string, cpf: string) {
     return this.firestore.collection(`users`).doc(uid).set({
       name,
       email,
       telephone,
       usuario,
-      fotoBase64,
+      photoUrl,
       identificacao,
       cpf
     });

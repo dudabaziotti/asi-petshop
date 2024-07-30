@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService, tipoUsuario } from '../../shared/auth.service';
 import { Router } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cadastro-estoquista',
@@ -17,12 +20,12 @@ export class CadastroEstoquistaComponent implements OnInit {
 
   cpf: string = '';
   identificacao: string = '';
-  foto: File | null = null;
+  selectedFile: File | null = null;
+  photoUrl: string | null = null;
   uid: string = '';
-  photoUrl: string | ArrayBuffer | null = '';
   isFormValid: boolean = false;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private storage: AngularFireStorage, private firestore: AngularFirestore) {
     this.name = '';
     this.email = '';
     this.password = '';
@@ -39,47 +42,39 @@ export class CadastroEstoquistaComponent implements OnInit {
   }
   
   onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.foto = file;
-      // Criar URL para pré-visualização
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.photoUrl = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      reader.onload = e => this.photoUrl = reader.result as string;
+      reader.readAsDataURL(this.selectedFile);
     }
-  }
-
-  convertFileToBase64(file: File): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-    });
   }
 
   validateForm() {
     this.isFormValid = 
       this.identificacao!== '' &&
-      this.cpf!== '';
+      this.cpf!== '' &&
+      this.selectedFile !== null;
   }
 
-  cadastroEstoquista() {
-    if (!this.foto) {
-      alert('Por favor adicione uma foto');
-      this.router.navigate(['/cadastro-estoquista']);
-      return;
+  cadastroEstoquista(): void {
+    if (this.isFormValid && this.selectedFile) {
+      const filePath = `images/${this.selectedFile.name}`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, this.selectedFile);
+
+      task.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(url => {
+            this.auth.cadastroEstoquista(
+              this.name, this.email, this.password, this.telephone, 
+              this.usuario, this.identificacao, this.cpf, url
+            )
+          });
+        })
+      ).subscribe();
+    } else {
+      alert('Por favor, preencha todos os campos e selecione um arquivo.');
     }
-
-    this.convertFileToBase64(this.foto).then(base64Foto => {
-      this.auth.cadastroEstoquista(this.name, this.email, this.password, this.telephone,  this.usuario, base64Foto, this.identificacao, this.cpf).then(() => { }).catch(error => {
-        alert('Erro ao realizar cadastro: ' + error.message);
-      });
-
-    }).catch(error => {
-      alert('Erro ao converter a foto: ' + error.message);
-    });
   }
 }
