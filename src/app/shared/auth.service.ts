@@ -147,4 +147,17 @@ export class AuthService {
       cpf
     });
   }
+
+  salvarProdutos(uid: string, nome: string, preco: string, categoria: string, estoque: number, codigo: number, descricao: string, dataCadastro: string, fotoUrl: string) {
+    return this.firestore.collection(`produtos`).doc(uid).set({
+      nome,
+      preco,
+      categoria,
+      estoque,
+      codigo,
+      descricao,
+      dataCadastro,
+      fotoUrl
+    });
+  }
 }

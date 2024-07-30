@@ -1,0 +1,48 @@
+<div class="form-container bg-white">
+    <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-5 ml-5">
+        <div class="title text-white drop-shadow-md">Novo Produto</div>
+        <form [formGroup]="novoProdutoForm" (ngSubmit)="novoProduto()" class="form">
+                <div>
+                    <div class="item">
+                        <h3>Nome</h3>
+                        <input type="text" formControlName="nome" placeholder="Nome" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Preço</h3>
+                        <input type="text" formControlName="preco" placeholder="Preço" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Categoria</h3>
+                        <input type="text" formControlName="categoria" placeholder="Categoria" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                        
+                    <div class="item">
+                        <h3>Estoque</h3>
+                        <input type="text" formControlName="estoque" placeholder="Estoque" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Código</h3>
+                        <input type="text" formControlName="codigo" placeholder="Código" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Descrição</h3>
+                        <input type="text" formControlName="descricao" placeholder="Descrição" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+            
+                    <div class="item">
+                        <h3>Data de Cadastro</h3>
+                        <input type="text" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Foto do Produto</h3>
+                        <input type="text" formControlName="foto" placeholder="Foto do Produto" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                </div>
+                <div class="form-botao pt-3">
+                    <div class="botao bg-gray-100  text-gray-800 rounded-lg hover:bg-gray-200">
+                        <button class="botao" type="submit" [disabled]="!novoProdutoForm.valid">Adicionar Produto</button> 
+                    </div>
+                </div>
+        </form>
+    </div>
+  </div>

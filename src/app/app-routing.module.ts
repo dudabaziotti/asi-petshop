@@ -9,6 +9,7 @@ import { RedefinirSenhaComponent } from './component/redefinir-senha/redefinir-s
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ProdutosComponent } from './component/produtos/produtos.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
+import { CrudProdutosComponent } from './component/crud-produtos/crud-produtos.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -20,8 +21,8 @@ const routes: Routes = [
   {path: 'redefinir-senha', component: RedefinirSenhaComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path:'produtos', component: ProdutosComponent},
-  {path:'perfil', component: PerfilComponent} 
-
+  {path:'crud-produtos', component: CrudProdutosComponent},
+  {path:'perfil', component: PerfilComponent}
 ];
 
 @NgModule({
