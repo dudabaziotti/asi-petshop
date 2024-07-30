@@ -1,8 +1,8 @@
 <div class="page bg-back-blue">
     <div class="header">
         <div class="img">
-        <img src="../../../assets/Cabeçalho (19) 1.png" alt="Cabeçalho">
-    </div>
+            <img src="../../../assets/Cabeçalho (19) 1.png" alt="Cabeçalho">
+        </div>
         <div class="vertical-line"></div>
         <div class="pags text-white px-5 font-bold">
             <a (click)="dirperfil()" class="barra-atual px-5">Perfil</a>
@@ -18,66 +18,71 @@
     <div class="header-body">
         <div class="cards bg-white p-4 px-4 rounded-xl shadow mt-3 ml-20 mr-20 mb-3">
             <div class="foto">
-                <div class=""></div>
-                <a href="#" style="text-decoration: underline;">Editar foto</a>
-                <i class="fa-solid fa-camera ml-2"></i>
+                <img *ngIf="photoUrl" [src]="photoUrl" alt="Foto de Perfil" class="profile-photo">
+                <div class="edit-photo">
+                    <a href="#" (click)="openFileDialog($event)">Editar foto</a>
+                    <i class="fa-solid fa-camera ml-2"></i>
+                    <input type="file" #fileInput (change)="onFileChange($event)" style="display: none;">
+                </div>
             </div>
-        <div class="infos">
-            <form>
-                <div class="form-row">
-                    <div class="form-group w-2/5">
-                        <label for="name" class="form-label">Nome Completo<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="name" [(ngModel)]="name" name="name" placeholder="Nome">
+            <div class="infos mr-3">
+                <form [formGroup]="perfilForm" (ngSubmit)="onSave()">
+                    <div class="form-row">
+                        <div class="form-group w-2/5">
+                            <label for="name" class="form-label">Nome Completo<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="name" formControlName="name" placeholder="Nome">
+                        </div>
+                        <div class="form-group w-2/5">
+                            <label for="data" class="form-label">Data de Nascimento<span class="required">*</span></label>
+                            <input type="date" class="form-control p-2 placeholder-gray-300" id="data" formControlName="data" placeholder="dd/mm/aaaa">
+                        </div>
                     </div>
-                    <div class="form-group w-2/5">
-                        <label for="data" class="form-label">Data de Nascimento<span class="required">*</span></label>
-                        <input type="date" class="form-control p-2 placeholder-gray-300 text-gray-300" id="data" [(ngModel)]="data" name="data" placeholder="dd/mm/aaaa">
+                    <div class="form-row">
+                        <div class="form-group w-2/5">
+                            <label for="cpf" class="form-label">CPF<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="cpf" formControlName="cpf">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group w-2/5">
-                        <label for="cpf" class="form-label">CPF<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="cpf" [(ngModel)]="cpf" name="cpf">
+                    <div class="form-row" *ngIf="isEstoquista || isAdmin">
+                        <div class="form-group w-2/5">
+                            <label for="identificacao" class="form-label">Número de Registro<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="identificacao" formControlName="identificacao">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group w-2/5">
-                        <label for="identificacao" class="form-label">Número de Registro<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="identificacao" [(ngModel)]="identificacao" name="identificacao">
+                    <div class="form-row">
+                        <div class="form-group w-2/5">
+                            <label for="cep" class="form-label">CEP<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="cep" formControlName="cep" placeholder="xxxxx-xxx">
+                        </div>
+                        <div class="form-group w-2/5">
+                            <label for="endereco" class="form-label">Endereço<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="endereco" formControlName="endereco">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group w-2/5">
-                        <label for="cep" class="form-label">CEP<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="cep" [(ngModel)]="cep" name="cep" placeholder="xxxxx-xxx">
+                    <div class="form-row">
+                        <div class="form-group w-2/5">
+                            <label for="estado" class="form-label">Estado<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="estado" formControlName="estado">
+                        </div>
+                        <div class="form-group w-2/5">
+                            <label for="bairro" class="form-label">Bairro<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="bairro" formControlName="bairro">
+                        </div>
                     </div>
-                    <div class="form-group w-2/5">
-                        <label for="endereco" class="form-label">Endereço<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="endereco" [(ngModel)]="endereco" name="endereco" placeholder="Rua">
+                    <div class="form-row">
+                        <div class="form-group w-2/5">
+                            <label for="numero" class="form-label">Número<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="numero" formControlName="numero">
+                        </div>
+                        <div class="form-group w-2/5">
+                            <label for="complemento" class="form-label">Complemento<span class="required">*</span></label>
+                            <input type="text" class="form-control p-2 placeholder-gray-300" id="complemento" formControlName="complemento">
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group w-2/12">
-                        <label for="estado" class="form-label">Estado<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="estado" [(ngModel)]="estado" name="estado" placeholder="Estado">
+                    <div class="button-container">
+                        <button class="text-l px-12 py-1 rounded text-white shadow bg-back-blue hover:bg-blue-400">Salvar</button>
                     </div>
-                    <div class="form-group w-2/12">
-                        <label for="bairro" class="form-label">Bairro<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="bairro" [(ngModel)]="bairro" name="bairro" placeholder="Bairro">
-                    </div>
-                    <div class="form-group w-2/12">
-                        <label for="numero" class="form-label">Número<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="numero" [(ngModel)]="numero" name="numero" placeholder="Número">
-                    </div>
-                    <div class="form-group w-2/12">
-                        <label for="complemento" class="form-label">Complemento<span class="required">*</span></label>
-                        <input type="text" class="form-control p-2 placeholder-gray-300" id="complemento" [(ngModel)]="complemento" name="complemento" placeholder="Complemento">
-                    </div>
-                </div>
-            </form>
-        </div>
-            <div class="button-container">
-                <button class="text-l px-12 py-1 rounded text-white shadow bg-back-blue hover:bg-blue-400">Salvar</button>
+                </form>
             </div>
         </div>
     </div>
