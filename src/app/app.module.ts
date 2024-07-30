@@ -17,6 +17,7 @@ import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from '../environments/environment';
 import { ProdutosComponent } from './component/produtos/produtos.component';
+import { PerfilComponent } from './component/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProdutosComponent } from './component/produtos/produtos.component';
     CadastroEstoquistaComponent,
     RedefinirSenhaComponent,
     DashboardComponent,
-    ProdutosComponent
+    ProdutosComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

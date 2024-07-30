@@ -8,6 +8,7 @@ import { CadastroEstoquistaComponent } from './component/cadastro-estoquista/cad
 import { RedefinirSenhaComponent } from './component/redefinir-senha/redefinir-senha.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ProdutosComponent } from './component/produtos/produtos.component';
+import { PerfilComponent } from './component/perfil/perfil.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -18,7 +19,9 @@ const routes: Routes = [
   {path: 'cadastro-estoquista', component: CadastroEstoquistaComponent},
   {path: 'redefinir-senha', component: RedefinirSenhaComponent},
   {path: 'dashboard', component: DashboardComponent},
-  {path:'produtos', component: ProdutosComponent} 
+  {path:'produtos', component: ProdutosComponent},
+  {path:'perfil', component: PerfilComponent} 
+
 ];
 
 @NgModule({

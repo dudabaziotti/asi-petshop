@@ -15,7 +15,7 @@ export class ProdutosComponent implements OnInit{
   }
 
   dirperfil(){
-    this.route.navigate(['/pagina-inicial']);
+    this.route.navigate(['/perfil']);
   }
   dirprodutos(){
     this.route.navigate(['/produtos']);
