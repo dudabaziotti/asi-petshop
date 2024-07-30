@@ -1,22 +1,27 @@
 .page{
     display: flex;
     padding-top: 0;
-}
 
-.body{
-    justify-content: space-between;
-    display: grid;
-    margin-left: 40px;;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px;
-    
-
-    img {
-        padding-top: 50px;
-        width: 550px;
-        height: 550px;
-        padding-left: 50px;
-        
+    .container {
+    padding-top: 95px;
     }
 
+    .body{
+        justify-content: space-between;
+        display: grid;
+        margin-left: 40px;;
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
+        
+    
+        img {
+            padding-top: 50px;
+            width: 550px;
+            height: 550px;
+            padding-left: 50px;
+            
+        }
+    
+    }
 }
+
