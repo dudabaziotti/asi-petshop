@@ -84,7 +84,7 @@ export class AuthService {
     }
   }
 
-  cadastroLeitor(name: string, email: string, password: string, telephone: string, usuario: string, cpf: string, especie: string, raca: string, sexo: string) {
+  cadastroLeitor(name: string, email: string, password: string, telephone: string, usuario: string, photoUrl: string, cpf: string) {
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {
@@ -93,7 +93,7 @@ export class AuthService {
         });
         alert('Cadastro de leitor realizado com sucesso! Verifique seu email antes de fazer o login.');
         this.router.navigate(['/login']);
-        return this.salvarDadosLeitor(user.uid, name, email, telephone, usuario, cpf, especie, raca, sexo).then(() => user.uid);
+        return this.salvarDadosLeitor(user.uid, name, email, telephone, usuario, photoUrl, cpf).then(() => user.uid);
       } else {
         throw new Error('Não foi possível obter o UID do usuário.');
       }
@@ -104,7 +104,7 @@ export class AuthService {
     });
   }
   
-  cadastroEstoquista(name: string, email: string, password: string, telephone: string, usuario: string, identificacao: string, cpf: string, photoUrl: string) {
+  cadastroEstoquista(name: string, email: string, password: string, telephone: string, usuario: string, photoUrl: string, identificacao: string, cpf: string) {
     return this.fireauth.createUserWithEmailAndPassword(email, password).then(userCredential => {
       const user = userCredential.user;
       if (user) {
@@ -125,16 +125,14 @@ export class AuthService {
     });
   }
 
-  salvarDadosLeitor(uid: string, name: string, email: string, telephone: string, usuario: string, cpf: string, especie: string, raca: string, sexo: string) {
+  salvarDadosLeitor(uid: string, name: string, email: string, telephone: string, usuario: string, photoUrl: string, cpf: string) {
     return this.firestore.collection(`users`).doc(uid).set({
       name,
       email,
       telephone,
       usuario,
-      cpf,
-      especie,
-      raca,
-      sexo
+      photoUrl,
+      cpf
     });
   }
 

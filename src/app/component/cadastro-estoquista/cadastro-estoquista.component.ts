@@ -68,7 +68,7 @@ export class CadastroEstoquistaComponent implements OnInit {
           fileRef.getDownloadURL().subscribe(url => {
             this.auth.cadastroEstoquista(
               this.name, this.email, this.password, this.telephone, 
-              this.usuario, this.identificacao, this.cpf, url
+              this.usuario, url, this.identificacao, this.cpf
             )
           });
         })

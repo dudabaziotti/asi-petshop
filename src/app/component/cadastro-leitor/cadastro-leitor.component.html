@@ -8,20 +8,15 @@
                         <div class="card-body p-2 rounded-lg border-solid border-2 border-back-blue">
                             <form class="ml-3 mt-3 mb-3 mr-3" (ngSubmit)="cadastroLeitor()">
                                 <div class="mb-2">
+                                    <label for="foto" class="form-label">Foto de Perfil</label>
+                                    <div>
+                                        <img id="photoPreview" [src]="photoUrl" alt="Pré-visualização da Foto" class="hidden w-32 h-32 object-cover border-2 border-gray-300 rounded-lg">
+                                        <input type="file" id="foto" (change)="onFileChange($event)" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="mb-2">
                                     <label for="cpf" class="form-label">CPF</label>
                                     <input type="text" class="form-control placeholder-gray-300" id="cpf" [(ngModel)]="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX" required (ngModelChange)="validateForm()">
-                                </div>
-                                <div class="mb-2">
-                                    <label for="especie" class="form-label">Espécie do Animal</label>
-                                    <input type="text" class="form-control placeholder-gray-300" id="especie" [(ngModel)]="especie" name="especie" placeholder="Espécie" required (ngModelChange)="validateForm()">
-                                </div>
-                                <div class="mb-2">
-                                    <label for="raca" class="form-label">Raça do Animal</label>
-                                    <input type="text" class="form-control placeholder-gray-300" id="raca" [(ngModel)]="raca" name="raca" placeholder="Raça" required (ngModelChange)="validateForm()">
-                                </div>
-                                <div class="mb-2">
-                                    <label for="sexo" class="form-label">Sexo do Animal</label>
-                                    <input type="text" class="form-control placeholder-gray-300" id="sexo" [(ngModel)]="sexo" name="sexo" placeholder="Sexo" required (ngModelChange)="validateForm()"> 
                                 </div>
                                 <div class="inputs pt-5">
                                     <button type="submit" class="mt-2 mb-2 w-full bg-back-blue px-2 py-1 rounded text-white hover:bg-blue-700" [disabled]="!isFormValid">Concluir</button>
