@@ -92,15 +92,19 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
-        height: 470px; 
+        height: 490px; 
         overflow-y: auto;
+        margin-bottom: -13px;
 
         .user-header {
+            position: sticky;
+            top: 0;
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             padding: 10px;
             border-radius: 5px;
             font-weight: bold;
+            background-color: white;
 
         .header-item {
             text-align: center;
