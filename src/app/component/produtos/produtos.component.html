@@ -6,10 +6,10 @@
         <div class="vertical-line"></div>
         <div class="pags text-white px-5 font-bold">
             <a (click)="dirperfil()" class="barra px-5">Perfil</a>
-            <a (click)="dirusuarios()" class="barra px-5">Usuários</a>
+            <a (click)="dirusuarios()" class="barra px-5" *ngIf="isAdmin">Usuários</a>
             <a (click)="dirprodutos()" class="barra-atual px-5">Produtos</a>
-            <a (click)="direstoque()" class="barra px-5">Estoque</a>
-            <a (click)="dirregistro()" class="barra px-5">Registros</a>
+            <a (click)="direstoque()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Estoque</a>
+            <a (click)="dirregistro()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Registros</a>
         </div>
         <div class="linha">
             <div class="horizontal-line"></div>

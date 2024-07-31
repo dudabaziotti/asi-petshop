@@ -12,6 +12,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class UsuariosComponent {
 
   users: any[] = [];
+  filteredUsers: any[] = [];
+  searchQuery: string = '';
 
   constructor(
     private route: Router,
@@ -22,6 +24,7 @@ export class UsuariosComponent {
     this.authService.getUsers().subscribe({
       next: (data: any[]) => {
         this.users = data;
+        this.filteredUsers = data;
       },
       error: (error: any) => {
         console.error('Erro ao carregar usuários:', error);
@@ -30,6 +33,20 @@ export class UsuariosComponent {
         console.log('Carga de usuários completa');
       }
     });
+  }
+
+  filterUsers(): void {
+    const query = this.searchQuery.trim().toLowerCase();
+    const sanitizedQuery = query.replace(/[\.\-]/g, '');
+    if (sanitizedQuery === '') {
+      this.filteredUsers = this.users;
+    } else {
+      this.filteredUsers = this.users.filter(user => {
+        const sanitizedCPF = user.cpf.replace(/[\.\-]/g, '');
+        const sanitizedTelephone = user.telephone.replace(/[\-\(\)\s]/g, '');
+        return user.name.toLowerCase().includes(query) || user.type.includes(query) || sanitizedCPF.includes(sanitizedQuery) || sanitizedTelephone.includes(sanitizedQuery);
+      });
+    }
   }
 
   dirperfil() {
@@ -47,6 +64,5 @@ export class UsuariosComponent {
   dirusuarios() {
     this.route.navigate(['/usuarios']);
   }
-
 
 }

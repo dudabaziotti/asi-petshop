@@ -19,10 +19,10 @@
         <div class="cards bg-white p-4 px-4 rounded-xl shadow mt-3 ml-20 mr-20 mb-3">
             <div>
                 <div class="search">
-                    <form action="/search" method="GET">
-                        <input type="text" placeholder="Pesquisar Usuários" name="query" class="search-input">
-                        <button type="submit" class="search-button">🔍</button>
-                    </form>
+                    
+                    <input type="text" placeholder="Pesquisar Usuários" [(ngModel)]="searchQuery" (input)="filterUsers()" class="search-input">
+                    <button type="button" class="search-button" (click)="filterUsers()">🔍</button>
+                    
                 </div>
                 <div class="user-list">
                     <!-- Header -->
@@ -34,7 +34,7 @@
                         <div class="header-item">CPF</div>
                     </div>
                     <!-- User Infos -->
-                    <div class="user-item" *ngFor="let user of users">
+                    <div class="user-item" *ngFor="let user of filteredUsers">
                         <div class="user-info">
                             <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="Foto do Usuário" class="user-photo ml-12">
                             <img *ngIf="!user.photoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="user-photo">
