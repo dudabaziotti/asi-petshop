@@ -5,7 +5,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { finalize } from 'rxjs/operators';
 
 export enum tipoUsuario {
   leitor = 'leitor',
@@ -160,4 +159,19 @@ export class AuthService {
       fotoUrl
     });
   }
+  getUsers(): Observable<any[]> {
+    return this.firestore.collection('users').valueChanges().pipe(
+      map((users: any[]) => {
+        return users.map(user => ({
+          name: user.name,
+          type: user.usuario,
+          telephone: user.telephone,
+          cpf: user.cpf,
+          photoUrl: user.photoUrl
+        }));
+      })
+    );
+  }
+  
+
 }

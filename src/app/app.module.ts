@@ -18,6 +18,7 @@ import { environment } from '../environments/environment';
 import { ProdutosComponent } from './component/produtos/produtos.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
 import { CrudProdutosComponent } from './component/crud-produtos/crud-produtos.component';
+import { UsuariosComponent } from './component/usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CrudProdutosComponent } from './component/crud-produtos/crud-produtos.c
     DashboardComponent,
     ProdutosComponent,
     PerfilComponent,
-    CrudProdutosComponent
+    CrudProdutosComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

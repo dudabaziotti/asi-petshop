@@ -10,6 +10,7 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ProdutosComponent } from './component/produtos/produtos.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
 import { CrudProdutosComponent } from './component/crud-produtos/crud-produtos.component';
+import { UsuariosComponent } from './component/usuarios/usuarios.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path:'produtos', component: ProdutosComponent},
   {path:'crud-produtos', component: CrudProdutosComponent},
-  {path:'perfil', component: PerfilComponent}
+  {path:'perfil', component: PerfilComponent},
+  {path:'usuarios', component: UsuariosComponent}
 ];
 
 @NgModule({
