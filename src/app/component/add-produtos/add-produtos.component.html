@@ -1,7 +1,7 @@
 <div class="form-container bg-white">
     <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-5 ml-5">
         <div class="title text-white drop-shadow-md">Novo Produto</div>
-        <form [formGroup]="novoProdutoForm" (ngSubmit)="novoProduto()" class="form">
+        <form [formGroup]="novoProdutoForm" (ngSubmit)="adicionarProduto()" class="form">
                 <div>
                     <div class="item">
                         <h3>Nome</h3>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-botao pt-3">
                     <div class="botao bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300">
-                        <button class="botao" type="submit" [disabled]="!novoProdutoForm.valid || !selectedFile">Adicionar Produto</button> 
+                        <button class="botao" type="submit" [disabled]="!novoProdutoForm.valid">Adicionar Produto</button> 
                     </div>
                 </div>
         </form>

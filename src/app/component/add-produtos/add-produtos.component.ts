@@ -34,52 +34,43 @@ export class AddProdutosComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onFileChange(event: any): void {
-    if (event.target.files.length > 0) {
-      this.selectedFile = event.target.files[0];
-      console.log('Arquivo selecionado:', this.selectedFile); // Adicione isto para verificar
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      console.log('Arquivo selecionado:', this.selectedFile);
     }
   }
   
-  novoProduto(): void {
-    if (this.novoProdutoForm.valid && this.selectedFile) {
-      const produto = this.novoProdutoForm.value;
-      const filePath = `produto-fotos/${this.selectedFile.name}`;
+  adicionarProduto(): void {
+    console.log('cheguei aqui: ', this.selectedFile);
+    if (this.novoProdutoForm.invalid) {
+      return;
+    }
+    const produto = this.novoProdutoForm.value;
+
+    if (this.selectedFile) {
+      const filePath = `produtos/${Date.now()}_${this.selectedFile.name}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, this.selectedFile);
-  
-      console.log('Iniciando upload do arquivo:', filePath);
-  
-      // Observe as mudanças no upload
+
       task.snapshotChanges().pipe(
         finalize(() => {
-          console.log('Upload concluído, tentando obter URL...');
-          fileRef.getDownloadURL().subscribe(
-            (url) => {
-              console.log('URL da foto:', url);
-              produto.foto = url;
-  
-              // Agora adiciona o produto ao Firestore
-              this.fire.collection('produtos').add(produto).then(() => {
-                alert('Produto adicionado!');
-                this.novoProdutoForm.reset();
-                this.route.navigate(['/produtos']);
-              }).catch(error => {
-                console.error('Erro ao adicionar produto: ', error);
-              });
-            },
-            (error) => {
-              console.error('Erro ao obter URL da foto:', error);
-            }
-          );
+          fileRef.getDownloadURL().subscribe(url => {
+            produto.fotoUrl = url;
+            this.fire.collection('produtos').add(produto).then(() => {
+              console.log('Produto salvo com sucesso!');
+              this.novoProdutoForm.reset();
+              this.route.navigate(['/produtos']);
+            }).catch(error => {
+              console.error('Erro ao salvar o produto: ', error);
+            });
+          });
         })
-      ).subscribe(
-        () => console.log('Upload concluído com sucesso'),
-        (error) => console.error('Erro durante o upload:', error)
-      );
+      ).subscribe();
     } else {
-      alert('Preencha todos os campos e selecione uma foto.');
+      console.error('Nenhum arquivo foi selecionado');
     }
   }
-  
 }
+
