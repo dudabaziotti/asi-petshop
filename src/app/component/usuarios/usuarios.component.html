@@ -25,30 +25,28 @@
                     </form>
                 </div>
                 <div class="user-list">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="py-2 px-4">Foto</th>
-                                <th class="py-2 px-4">Nome</th>
-                                <th class="py-2 px-4">Tipo</th>
-                                <th class="py-2 px-4">Telefone</th>
-                                <th class="py-2 px-4">CPF</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let user of users">
-                                <td class="py-2 px-2">
-                                    <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="Foto do Usuário" class="user-photo">
-                                    <img *ngIf="!user.photoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="user-photo">
-                                </td>
-                                <td class="py-2 px-4">{{ user.name }}</td>
-                                <td class="py-2 px-4">{{ user.type }}</td>
-                                <td class="py-2 px-4">{{ user.telephone }}</td>
-                                <td class="py-2 px-4">{{ user.cpf }}</td>
-                                <td class="py-2 px-4"><button class="edit-button">Editar</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- Header -->
+                    <div class="user-header">
+                        <div class="header-item">Foto</div>
+                        <div class="header-item">Nome</div>
+                        <div class="header-item">Tipo</div>
+                        <div class="header-item">Telefone</div>
+                        <div class="header-item">CPF</div>
+                    </div>
+                    <!-- User Infos -->
+                    <div class="user-item" *ngFor="let user of users">
+                        <div class="user-info">
+                            <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="Foto do Usuário" class="user-photo">
+                            <img *ngIf="!user.photoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="user-photo">
+                        </div>
+                        <div class="user-info">{{ user.name }}</div>
+                        <div class="user-info">{{ user.type }}</div>
+                        <div class="user-info">{{ user.telephone }}</div>
+                        <div class="user-info">{{ user.cpf }}</div>
+                        <div class="user-actions">
+                            <button class="edit-button">Editar</button>
+                        </div>
+                    </div>
                     <div class="action-buttons">
                         <button class="remove-user-button text-l px-12 py-1 rounded text-white shadow bg-back-blue hover:bg-blue-400">Remover Usuário</button>
                         <button class="add-user-button text-l px-12 py-1 rounded text-white shadow bg-back-blue hover:bg-blue-400">Adicionar Usuário</button>
