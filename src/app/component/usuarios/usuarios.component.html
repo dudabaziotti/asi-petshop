@@ -39,7 +39,7 @@
                             <tr *ngFor="let user of users">
                                 <td class="py-2 px-2">
                                     <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="Foto do Usuário" class="user-photo">
-                                    <img *ngIf="!user.photoUrl" src="path/to/default-photo.jpg" alt="Foto Padrão" class="user-photo">
+                                    <img *ngIf="!user.photoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="user-photo">
                                 </td>
                                 <td class="py-2 px-4">{{ user.name }}</td>
                                 <td class="py-2 px-4">{{ user.type }}</td>
