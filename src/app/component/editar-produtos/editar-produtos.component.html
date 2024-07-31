@@ -14,12 +14,19 @@
                     </div>
                     <div class="item">
                         <h3>Categoria</h3>
-                        <input type="text" formControlName="categoria" placeholder="Categoria" class="input placeholder-gray-300 rounded-lg p-2">
+                        <select formControlName="categoria" class="input placeholder-gray-300 rounded-lg p-2">
+                            <option disabled selected>Selecione uma Categoria</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Acessórios">Acessórios</option>
+                            <option value="Higiene e Limpeza">Higiene e Limpeza</option>
+                            <option value="Medicina e Saúde">Medicina e Saúde</option>
+                        </select>
                     </div>
                         
                     <div class="item">
                         <h3>Estoque</h3>
-                        <input type="text" formControlName="estoque" placeholder="Estoque" class="input placeholder-gray-300 rounded-lg p-2">
+                        <input type="number" formControlName="estoque" placeholder="Estoque" class="input placeholder-gray-300 rounded-lg p-2">
                     </div>
                     <div class="item">
                         <h3>Código</h3>
@@ -32,7 +39,7 @@
             
                     <div class="item">
                         <h3>Data de Cadastro</h3>
-                        <input type="text" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input placeholder-gray-300 rounded-lg p-2">
+                        <input type="date" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input placeholder-gray-300 rounded-lg p-2">
                     </div>
                     
                 </div>

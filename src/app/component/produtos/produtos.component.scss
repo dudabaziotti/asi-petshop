@@ -132,6 +132,9 @@
             }
             .body {
 
+
+                
+
                 display: flex;
 
                 .search-input {
@@ -150,8 +153,30 @@
                     width: fit-content;
                     height: 403px;
 
+                    .itenzinho {
+                        width: 180px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .itenzinhos {
+                        padding-bottom: 10px;
+                        padding-left: 10px;
+                        padding-right: 5px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        width: 180px;
+                        display: flex;
+                        align-items: center;
+                        text-align: center;
+                        justify-content: center;
+                        white-space: nowrap;
+                    }
+                    
+
                     .card-body-1 {
-                        padding: 10px 10px 10px 10px;
+                        
                         
                         width: fit-content;
                     }
