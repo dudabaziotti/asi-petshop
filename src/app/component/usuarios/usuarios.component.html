@@ -36,7 +36,7 @@
                     <!-- User Infos -->
                     <div class="user-item" *ngFor="let user of users">
                         <div class="user-info">
-                            <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="Foto do Usuário" class="user-photo">
+                            <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="Foto do Usuário" class="user-photo ml-12">
                             <img *ngIf="!user.photoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="user-photo">
                         </div>
                         <div class="user-info">{{ user.name }}</div>
