@@ -65,7 +65,7 @@ export class AddProdutosComponent implements OnInit {
         fileRef.getDownloadURL().subscribe(url => {
           produto.fotoUrl = url;
           this.fire.collection('produtos').add(produto).then(() => {
-            console.log('Produto salvo com sucesso!');
+            alert('Produto adicionado!');
             this.novoProdutoForm.reset();
             this.route.navigate(['/produtos']);
           }).catch(error => {
