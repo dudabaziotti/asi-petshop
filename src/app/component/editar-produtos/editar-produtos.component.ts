@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { finalize } from 'rxjs/operators';
 
 interface Produto {
   nome: string;
@@ -12,22 +14,40 @@ interface Produto {
   estoque: string;
   codigo: string;
   descricao: string;
-  foto: string;
   dataCadastro: string;
+  fotoUrl?: string;
 }
+
+const extractFotoPath = (fotoUrl: string): string | null => {
+  const match = fotoUrl.match(/\/o\/(.+?)\?alt/);
+  return match ? match[1] : null;
+};
 
 @Component({
   selector: 'app-editar-produtos',
   templateUrl: './editar-produtos.component.html',
-  styleUrl: './editar-produtos.component.scss'
+  styleUrls: ['./editar-produtos.component.scss']
 })
-export class EditarProdutosComponent implements OnInit{
+export class EditarProdutosComponent implements OnInit {
   produtos: any[] = [];
   editarProdutoForm: FormGroup;
   edicaoProduto: any = null;
   produtoId: string | null = null;
+  selectedFile: File | null = null;
+  fotoUrl: string | null = null;
+  editandoFoto: boolean = false;
 
-  constructor(private route: Router, private auth: AuthService, private fire: AngularFirestore, private afauth:AngularFireAuth, private fb: FormBuilder, private activatedRoute: ActivatedRoute){
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  constructor(
+    private route: Router, 
+    private auth: AuthService, 
+    private fire: AngularFirestore, 
+    private storage: AngularFireStorage, 
+    private afauth: AngularFireAuth, 
+    private fb: FormBuilder, 
+    private activatedRoute: ActivatedRoute
+  ) {
     this.editarProdutoForm = this.fb.group({
       nome: ['', Validators.required],
       preco: ['', Validators.required],
@@ -35,7 +55,6 @@ export class EditarProdutosComponent implements OnInit{
       estoque: ['', Validators.required],
       codigo: ['', Validators.required],
       descricao: ['', Validators.required],
-      foto: ['', Validators.required],
       dataCadastro: ['', Validators.required]
     });
   }
@@ -49,11 +68,28 @@ export class EditarProdutosComponent implements OnInit{
     });
   }
 
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.fotoUrl = reader.result as string; 
+      };
+      reader.readAsDataURL(file);
+      this.editandoFoto = true;
+      console.log('Arquivo selecionado:', this.selectedFile);
+    } else {
+      this.selectedFile = null;
+    }
+  }
+
   buscarProduto(id: string): void {
     this.fire.collection('produtos').doc(id).get().subscribe(doc => {
       if (doc.exists) {
-        const produto = doc.data() as Produto; // Assegura que produto é do tipo Produto
+        const produto = doc.data() as Produto; 
         this.editarProdutoForm.patchValue(produto);
+        this.fotoUrl = produto.fotoUrl || null;
       } else {
         console.log('Produto não encontrado!');
       }
@@ -61,15 +97,52 @@ export class EditarProdutosComponent implements OnInit{
   }
 
   excluirProduto(): void {
-    if(this.produtoId) {
-      this.fire.collection('produtos').doc(this.produtoId).delete().then(() => {
-        alert('Produto excluído com sucesso!');
-        this.route.navigate(['/produtos']);
-      }).catch(error => {
-        console.error('Erro ao excluir produto: ', error);
+    if (this.produtoId) {
+      this.fire.collection('produtos').doc(this.produtoId).get().subscribe(doc => {
+        if (doc.exists) {
+          const produto = doc.data() as Produto;
+          if (produto.fotoUrl) {
+            const fotoPath = extractFotoPath(produto.fotoUrl);
+            if (fotoPath) {
+              const storageRef = this.storage.ref(fotoPath);
+              storageRef.delete().toPromise().then(() => {
+                console.log('Foto excluída com sucesso!');
+                this.fire.collection('produtos').doc(this.produtoId!).delete().then(() => {
+                  alert('Produto excluído com sucesso!');
+                  this.route.navigate(['/produtos']);
+                }).catch(error => {
+                  console.error('Erro ao excluir produto: ', error);
+                });
+              }).catch(error => {
+                console.error('Erro ao excluir a foto: ', error);
+                this.fire.collection('produtos').doc(this.produtoId!).delete().then(() => {
+                  alert('Produto excluído, mas a foto não pôde ser excluída.');
+                  this.route.navigate(['/produtos']);
+                }).catch(error => {
+                  console.error('Erro ao excluir produto: ', error);
+                });
+              });
+            } else {
+              this.fire.collection('produtos').doc(this.produtoId!).delete().then(() => {
+                alert('Produto excluído com sucesso!');
+                this.route.navigate(['/produtos']);
+              }).catch(error => {
+                console.error('Erro ao excluir produto: ', error);
+              });
+            }
+          } else {
+            this.fire.collection('produtos').doc(this.produtoId!).delete().then(() => {
+              alert('Produto excluído com sucesso!');
+              this.route.navigate(['/produtos']);
+            }).catch(error => {
+              console.error('Erro ao excluir produto: ', error);
+            });
+          }
+        } else {
+          console.log('Produto não encontrado!');
+        }
       });
     }
-    
   }
 
   editorProduto(id: string): void {
@@ -77,11 +150,11 @@ export class EditarProdutosComponent implements OnInit{
     this.fire.collection('produtos').doc(id).get().toPromise().then((doc) => {
       console.log('Documento recebido:', doc);
       if (doc && doc.exists) {
-        const data = doc.data();
+        const data = doc.data() as Produto;
         console.log('Dados do documento:', data);
         if (data) {
-          this.edicaoProduto = { id: doc.id, ...data };
-          this.editarProdutoForm.patchValue(this.edicaoProduto);
+          this.fotoUrl = data.fotoUrl || null;
+          this.editarProdutoForm.patchValue(data);
         }
       } else {
         console.log('Produto não encontrado!');
@@ -92,15 +165,56 @@ export class EditarProdutosComponent implements OnInit{
   }
 
   editarProduto(): void {
-    if(this.editarProdutoForm.valid && this.produtoId) {
+    if (this.editarProdutoForm.valid && this.produtoId) {
       const produtoEditado = this.editarProdutoForm.value;
-      this.fire.collection('produtos').doc(this.produtoId).update(produtoEditado).then (() => {
+  
+      if (this.selectedFile) {
+        const oldFotoUrl = this.fotoUrl;
+        const filePath = `produtos/${Date.now()}_${this.selectedFile.name}`;
+        const fileRef = this.storage.ref(filePath);
+        const task = this.storage.upload(filePath, this.selectedFile);
+  
+        task.snapshotChanges().pipe(
+          finalize(() => {
+            fileRef.getDownloadURL().subscribe(url => {
+              produtoEditado.fotoUrl = url;
+  
+              if (oldFotoUrl && oldFotoUrl.includes('/o/')) {
+                const oldFotoPath = extractFotoPath(oldFotoUrl);
+                if (oldFotoPath) {
+                  const oldFotoRef = this.storage.ref(oldFotoPath);
+                  oldFotoRef.delete().subscribe(() => {
+                    console.log('Foto antiga excluída com sucesso!');
+                    this.updateProduto(produtoEditado);
+                  }, error => {
+                    console.error('Erro ao excluir a foto antiga: ', error);
+                    this.updateProduto(produtoEditado); // Atualize o produto mesmo se a exclusão falhar
+                  });
+                } else {
+                  this.updateProduto(produtoEditado);
+                }
+              } else {
+                this.updateProduto(produtoEditado);
+              }
+            });
+          })
+        ).subscribe({
+          error: err => console.error('Erro ao fazer upload do arquivo: ', err)
+        });
+      } else {
+        this.updateProduto(produtoEditado);
+      }
+    }
+  }
+
+  updateProduto(produto: Produto): void {
+    if (this.produtoId) {
+      this.fire.collection('produtos').doc(this.produtoId).update(produto).then(() => {
         alert('Produto editado!');
         this.editarProdutoForm.reset();
-        this.edicaoProduto = null;
         this.route.navigate(['/produtos']);
       }).catch(error => {
-        console.error('Erro ao editar tarefa: ', error);
+        console.error('Erro ao editar produto: ', error);
       });
     }
   }

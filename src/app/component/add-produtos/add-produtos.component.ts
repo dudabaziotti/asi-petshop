@@ -13,6 +13,7 @@ import { finalize } from 'rxjs/operators';
 export class AddProdutosComponent implements OnInit {
   novoProdutoForm: FormGroup;
   selectedFile: File | null = null;
+  fileSelected: boolean = false;
 
   constructor(
     private route: Router,
@@ -37,6 +38,7 @@ export class AddProdutosComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
+      this.fileSelected = !!file;
       console.log('Arquivo selecionado:', this.selectedFile);
     } else {
       this.selectedFile = null;

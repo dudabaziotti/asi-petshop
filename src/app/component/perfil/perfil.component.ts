@@ -104,6 +104,7 @@ export class PerfilComponent implements OnInit {
     this.route.navigate(['/usuarios']);
   }
 
+
   loadUser(): void {
     this.afAuth.currentUser.then(user => {
       if (user) {

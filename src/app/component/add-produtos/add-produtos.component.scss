@@ -1,5 +1,5 @@
 .title {
-    padding-top: 40px;
+    padding-top: 50px;
     padding-left: 50px;
     display: flex;
     font-size: 30px;
@@ -7,7 +7,7 @@
 }
 
 .form {
-    padding: 40px 30px 40px 30px;
+    padding: 50px 30px 50px 0px;
     .form-botao {
         display: flex;
         justify-content: center;
@@ -24,18 +24,25 @@
         padding-top: 10px;
     }
 
+    .rev {
+        padding-right: 332px;
+    }
     .item {
         display: flex;
         padding-top: 10px;
         padding-bottom: 10px;
-        padding-left: 80px;
-        padding-right: 520px;
+        padding-left: 50px;
+        padding-right: 600px;
         justify-content: space-between;
     }
 
     .input {
         width: 500px;
         outline: none;
+    }
+
+    .input-foto {
+        width: 500px;
     }
 
     .botao {
