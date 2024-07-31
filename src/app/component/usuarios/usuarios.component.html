@@ -1,0 +1,60 @@
+<div class="page bg-back-blue">
+    <div class="header">
+        <div class="img">
+            <img src="../../../assets/Cabeçalho (19) 1.png" alt="Cabeçalho">
+        </div>
+        <div class="vertical-line"></div>
+        <div class="pags text-white px-5 font-bold">
+            <a (click)="dirperfil()" class="barra px-5">Perfil</a>
+            <a (click)="dirusuarios()" class="barra-atual px-5">Usuários</a>
+            <a (click)="dirprodutos()" class="barra px-5">Produtos</a>
+            <a (click)="direstoque()" class="barra px-5">Estoque</a>
+            <a (click)="dirregistro()" class="barra px-5">Registros</a>
+        </div>
+        <div class="linha">
+            <div class="horizontal-line"></div>
+        </div>
+    </div>
+    <div class="header-body">
+        <div class="cards bg-white p-4 px-4 rounded-xl shadow mt-3 ml-20 mr-20 mb-3">
+            <div>
+                <div class="search">
+                    <form action="/search" method="GET">
+                        <input type="text" placeholder="Pesquisar Usuários" name="query" class="search-input">
+                        <button type="submit" class="search-button">🔍</button>
+                    </form>
+                </div>
+                <div class="user-list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="py-2 px-4">Foto</th>
+                                <th class="py-2 px-4">Nome</th>
+                                <th class="py-2 px-4">Tipo</th>
+                                <th class="py-2 px-4">Telefone</th>
+                                <th class="py-2 px-4">CPF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users">
+                                <td class="py-2 px-2">
+                                    <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="Foto do Usuário" class="user-photo">
+                                    <img *ngIf="!user.photoUrl" src="path/to/default-photo.jpg" alt="Foto Padrão" class="user-photo">
+                                </td>
+                                <td class="py-2 px-4">{{ user.name }}</td>
+                                <td class="py-2 px-4">{{ user.type }}</td>
+                                <td class="py-2 px-4">{{ user.telephone }}</td>
+                                <td class="py-2 px-4">{{ user.cpf }}</td>
+                                <td class="py-2 px-4"><button class="edit-button">Editar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="action-buttons">
+                        <button class="remove-user-button text-l px-12 py-1 rounded text-white shadow bg-back-blue hover:bg-blue-400">Remover Usuário</button>
+                        <button class="add-user-button text-l px-12 py-1 rounded text-white shadow bg-back-blue hover:bg-blue-400">Adicionar Usuário</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

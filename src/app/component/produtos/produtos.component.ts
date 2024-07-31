@@ -79,6 +79,6 @@ export class ProdutosComponent implements OnInit{
     this.route.navigate(['/pagina-inicial']);
   }
   dirusuarios(){
-    this.route.navigate(['/pagina-inicial']);
+    this.route.navigate(['/usuarios']);
   }
 }

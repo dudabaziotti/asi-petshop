@@ -10,7 +10,6 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { ProdutosComponent } from './component/produtos/produtos.component';
 import { PerfilComponent } from './component/perfil/perfil.component';
 import { AddProdutosComponent } from './component/add-produtos/add-produtos.component';
-import { EditarProdutosComponent } from './component/editar-produtos/editar-produtos.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -23,7 +22,6 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path:'produtos', component: ProdutosComponent},
   {path:'add-produtos', component: AddProdutosComponent},
-  {path:'editar-produtos/:id', component: EditarProdutosComponent},
   {path:'perfil', component: PerfilComponent}
 ];
 

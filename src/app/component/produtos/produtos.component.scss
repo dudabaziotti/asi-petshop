@@ -90,12 +90,12 @@
                 }
                 
                 .search-input {
-                    width: 100%;
+                
                     padding: 10px;
                     font-size: 16px;
                     border: 1px solid #ccc;
                     border-right: none;
-                    border-radius: 10px 0px 0px 10px;
+                    border-radius: 20px 0px 0px 20px;
                     outline: none;
                     box-sizing: border-box;
                 }
@@ -106,7 +106,7 @@
                     font-size: 16px;
                     border: 1px solid #ccc;
                     border-left: none;
-                    border-radius: 0px 10px 10px 0px;
+                    border-radius: 0px 20px 20px 0px;
                     color: white;
                     cursor: pointer;
                     transition: background-color 0.3s;
