@@ -3,6 +3,7 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 
     .header {
         display: flex;
@@ -132,9 +133,6 @@
             }
             .body {
 
-
-                
-
                 display: flex;
 
                 .search-input {
@@ -153,37 +151,46 @@
                     width: fit-content;
                     height: 403px;
 
+                    .produto-foto{
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                    }
+
                     .itenzinho {
                         width: 180px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
+                        
                     }
 
                     .itenzinho-editar {
-                        width: 50px;
+                    
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         padding-bottom: 10px;
+                        padding-right: 10px;
+                        padding-top: 8px;
                     }
 
                     .itenzinhos {
-                        padding-bottom: 10px;
                         overflow: hidden;
                         text-overflow: ellipsis;
+                        white-space: normal;
                         width: 180px;
-                        display: flex;
-                        align-items: center;
+                        max-height: 2.4em;
+                        line-height: 1.2em;
+                        display: block;
+                        overflow-wrap: break-word;
+                        word-wrap: break-word;
                         text-align: center;
-                        justify-content: center;
-                        white-space: nowrap;
                     }
+                    
                     
 
                     .card-body-1 {
-                        
-                        
                         width: fit-content;
                     }
                     .linha-azul {
@@ -191,7 +198,7 @@
                         height: 1px;
                         background-color: #0946c9;
                         margin: 10px 0;
-        }
+                    }
                 }
             }
         }
