@@ -28,7 +28,6 @@ export class AddProdutosComponent implements OnInit {
       codigo: ['', Validators.required],
       descricao: ['', Validators.required],
       dataCadastro: ['', Validators.required],
-      foto: [null, Validators.required] // Mantenha este controle, mas não é utilizado diretamente
     });
   }
 
@@ -39,38 +38,43 @@ export class AddProdutosComponent implements OnInit {
     if (file) {
       this.selectedFile = file;
       console.log('Arquivo selecionado:', this.selectedFile);
+    } else {
+      this.selectedFile = null;
     }
   }
-  
+
   adicionarProduto(): void {
-    console.log('cheguei aqui: ', this.selectedFile);
     if (this.novoProdutoForm.invalid) {
+      console.error('Formulário inválido');
       return;
     }
+
+    if (!this.selectedFile) {
+      console.error('Nenhum arquivo foi selecionado');
+      return;
+    }
+
     const produto = this.novoProdutoForm.value;
 
-    if (this.selectedFile) {
-      const filePath = `produtos/${Date.now()}_${this.selectedFile.name}`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, this.selectedFile);
+    const filePath = `produtos/${Date.now()}_${this.selectedFile.name}`;
+    const fileRef = this.storage.ref(filePath);
+    const task = this.storage.upload(filePath, this.selectedFile);
 
-      task.snapshotChanges().pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe(url => {
-            produto.fotoUrl = url;
-            this.fire.collection('produtos').add(produto).then(() => {
-              console.log('Produto salvo com sucesso!');
-              this.novoProdutoForm.reset();
-              this.route.navigate(['/produtos']);
-            }).catch(error => {
-              console.error('Erro ao salvar o produto: ', error);
-            });
+    task.snapshotChanges().pipe(
+      finalize(() => {
+        fileRef.getDownloadURL().subscribe(url => {
+          produto.fotoUrl = url;
+          this.fire.collection('produtos').add(produto).then(() => {
+            console.log('Produto salvo com sucesso!');
+            this.novoProdutoForm.reset();
+            this.route.navigate(['/produtos']);
+          }).catch(error => {
+            console.error('Erro ao salvar o produto: ', error);
           });
-        })
-      ).subscribe();
-    } else {
-      console.error('Nenhum arquivo foi selecionado');
-    }
+        });
+      })
+    ).subscribe({
+      error: err => console.error('Erro ao fazer upload do arquivo: ', err)
+    });
   }
 }
-
