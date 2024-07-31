@@ -19,9 +19,10 @@ interface Produto {
 }
 
 const extractFotoPath = (fotoUrl: string): string | null => {
-  const match = fotoUrl.match(/\/o\/(.+?)\?alt/);
-  return match ? match[1] : null;
+  const match = fotoUrl.match(/o\/(.+?)\?alt/);
+  return match ? match[1].replace('%2F', '/') : null; 
 };
+
 
 @Component({
   selector: 'app-editar-produtos',
@@ -188,7 +189,7 @@ export class EditarProdutosComponent implements OnInit {
                     this.updateProduto(produtoEditado);
                   }, error => {
                     console.error('Erro ao excluir a foto antiga: ', error);
-                    this.updateProduto(produtoEditado); // Atualize o produto mesmo se a exclusão falhar
+                    this.updateProduto(produtoEditado);
                   });
                 } else {
                   this.updateProduto(produtoEditado);
