@@ -160,9 +160,16 @@
                         justify-content: center;
                     }
 
+                    .itenzinho-editar {
+                        width: 50px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding-bottom: 10px;
+                    }
+
                     .itenzinhos {
                         padding-bottom: 10px;
-                        padding-left: 10px;
                         padding-right: 5px;
                         overflow: hidden;
                         text-overflow: ellipsis;
