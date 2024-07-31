@@ -1,8 +1,9 @@
 <div class="form-container bg-white">
-    <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-5 ml-5">
+    <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-3 ml-3">
         <div class="title text-white drop-shadow-md">Editar Produto</div>
         <form [formGroup]="editarProdutoForm" (ngSubmit)="editarProduto()" class="form">
-                <div>
+            <div class="fotinha flex">
+                <div class="inputs">
                     <div class="item">
                         <h3>Nome</h3>
                         <input type="text" formControlName="nome" placeholder="Nome" class="input placeholder-gray-300 rounded-lg p-2">
@@ -33,11 +34,15 @@
                         <h3>Data de Cadastro</h3>
                         <input type="text" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input placeholder-gray-300 rounded-lg p-2">
                     </div>
-                    <div class="item">
-                        <h3>Foto do Produto</h3>
-                        <input type="text" formControlName="foto" placeholder="Foto do Produto" class="input placeholder-gray-300 rounded-lg p-2">
-                    </div>
+                    
                 </div>
+                <div class="item-foto flex-col">
+                    <img *ngIf="fotoUrl" [src]="fotoUrl" alt="Foto do Produto" class="rounded-lg mb-2">
+                    <button type="button" (click)="fileInput.click()" class="text-white hover:underline">Editar Foto</button>
+                    <input #fileInput type="file" (change)="onFileChange($event)" class="hidden">
+                </div>
+            </div>
+                
                 <div class="form-botao pt-3">
                     <div class="botao bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 mr-4">
                         <button class="botao" type="submit" [disabled]="!editarProdutoForm.valid">Salvar</button> 
