@@ -33,7 +33,7 @@ const routes: Routes = [
   {path: 'usuarios', component: UsuariosComponent},
   {path: 'add-user', component: AddUserComponent},
   {path: 'estoque', component: EstoqueComponent},
-  {path: 'item-estoque', component: ItemEstoqueComponent},
+  {path: 'item-estoque/:id', component: ItemEstoqueComponent},
   {path: 'editar-user/:id', component: EditarUserComponent},
 ];
 
