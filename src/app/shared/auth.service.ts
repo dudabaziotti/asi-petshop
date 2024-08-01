@@ -154,7 +154,8 @@ export class AuthService {
           type: user.usuario,
           telephone: user.telephone,
           cpf: user.cpf,
-          photoUrl: user.photoUrl
+          photoUrl: user.photoUrl,
+          email: user.email
         }));
       })
     );
