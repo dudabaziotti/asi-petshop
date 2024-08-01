@@ -1,27 +1,18 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../shared/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 interface Usuario {
-
   name: string;
   cpf: string;
-  cep: string;
   email: string;
-  endereco: string;
-  estado: string;
-  bairro: string;
-  numero: string;
-  complemento: string;
   telephone: string;
-  data: string;
   identificacao: string;
-  uid: string;
+  usuario: string;
   photoUrl: string | null;
 }
 
@@ -40,7 +31,7 @@ export class EditarUserComponent {
   editarUsuarioForm: FormGroup;
   usuarios: any[] = [];
   edicaoUsuario: any = null;
-  usuarioId: string | null = null;
+  userId: string | null = null;
   selectedFile: File | null = null;
   photoUrl: string | null = null;
   editandoFoto: boolean = false;
@@ -49,28 +40,27 @@ export class EditarUserComponent {
 
   constructor(
     private route: Router, 
-    private auth: AuthService, 
     private fire: AngularFirestore, 
-    private storage: AngularFireStorage, 
-    private afauth: AngularFireAuth, 
+    private storage: AngularFireStorage,  
     private fb: FormBuilder, 
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private auth: AngularFireAuth,
   ) {
     this.editarUsuarioForm = this.fb.group({
-      nome: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', Validators.required],
       cpf: ['', Validators.required],
-      telefone: ['', Validators.required],
-      cargo: ['', Validators.required],
+      telephone: ['', Validators.required],
+      usuario: ['', Validators.required],
       identificacao: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
-      this.usuarioId = params.get('id');
-      if (this.usuarioId) {
-        this.buscarUsuario(this.usuarioId);
+      this.userId = params.get('id');
+      if (this.userId) {
+        this.buscarUsuario(this.userId);
       }
     });
   }
@@ -85,7 +75,6 @@ export class EditarUserComponent {
       };
       reader.readAsDataURL(file);
       this.editandoFoto = true;
-      console.log('Arquivo selecionado:', this.selectedFile);
     } else {
       this.selectedFile = null;
     }
@@ -103,44 +92,59 @@ export class EditarUserComponent {
     });
   }
 
-  excluirUsuario(uid: string): void {
-    if (uid) {
-      this.fire.collection('users').doc(uid).get().subscribe(doc => {
+  excluirUsuario(): void {
+    if (this.userId) {
+      this.fire.collection('users').doc(this.userId).get().subscribe(doc => {
         if (doc.exists) {
           const user = doc.data() as Usuario;
+          const deleteUserFromAuth = () => {
+            this.auth.currentUser.then(currentUser => {
+              if (currentUser) {
+                currentUser.delete().then(() => {
+                  console.log('Autenticação do usuário excluída com sucesso!');
+                  this.route.navigate(['/usuarios']);
+                }).catch(error => {
+                  console.error('Erro ao excluir autenticação do usuário: ', error);
+                });
+              }
+            }).catch(error => {
+              console.error('Erro ao obter usuário atual: ', error);
+            });
+          };
+
           if (user.photoUrl) {
             const fotoPath = extractFotoPath(user.photoUrl);
             if (fotoPath) {
               const storageRef = this.storage.ref(fotoPath);
               storageRef.delete().toPromise().then(() => {
                 console.log('Foto excluída com sucesso!');
-                this.fire.collection('users').doc(uid).delete().then(() => {
+                this.fire.collection('users').doc(this.userId!).delete().then(() => {
                   alert('Usuário excluído com sucesso!');
-                  this.route.navigate(['/usuarios']);
+                  deleteUserFromAuth();
                 }).catch(error => {
                   console.error('Erro ao excluir usuário: ', error);
                 });
               }).catch(error => {
                 console.error('Erro ao excluir a foto: ', error);
-                this.fire.collection('users').doc(uid).delete().then(() => {
+                this.fire.collection('users').doc(this.userId!).delete().then(() => {
                   alert('Usuário excluído, mas a foto não pôde ser excluída.');
-                  this.route.navigate(['/usuarios']);
+                  deleteUserFromAuth();
                 }).catch(error => {
                   console.error('Erro ao excluir usuário: ', error);
                 });
               });
             } else {
-              this.fire.collection('users').doc(uid).delete().then(() => {
+              this.fire.collection('users').doc(this.userId!).delete().then(() => {
                 alert('Usuário excluído com sucesso!');
-                this.route.navigate(['/usuarios']);
+                deleteUserFromAuth();
               }).catch(error => {
                 console.error('Erro ao excluir usuário: ', error);
               });
             }
           } else {
-            this.fire.collection('users').doc(uid).delete().then(() => {
+            this.fire.collection('users').doc(this.userId!).delete().then(() => {
               alert('Usuário excluído com sucesso!');
-              this.route.navigate(['/usuarios']);
+              deleteUserFromAuth();
             }).catch(error => {
               console.error('Erro ao excluir usuário: ', error);
             });
@@ -173,19 +177,19 @@ export class EditarUserComponent {
 
 
   editarUsuario(): void {
-    if (this.editarUsuarioForm.valid && this.usuarioId) {
+    if (this.editarUsuarioForm.valid && this.userId) {
       const usuarioEditado = this.editarUsuarioForm.value;
   
       if (this.selectedFile) {
         const oldPhotoUrl = this.photoUrl;
-        const filePath = `users/${Date.now()}_${this.selectedFile.name}`;
+        const filePath = `users/${this.selectedFile.name}`;
         const fileRef = this.storage.ref(filePath);
         const task = this.storage.upload(filePath, this.selectedFile);
   
         task.snapshotChanges().pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe(url => {
-              usuarioEditado.fotoUrl = url;
+              usuarioEditado.photoUrl = url;
   
               if (oldPhotoUrl && oldPhotoUrl.includes('/o/')) {
                 const oldPhotoPath = extractFotoPath(oldPhotoUrl);
@@ -216,16 +220,14 @@ export class EditarUserComponent {
   }
 
   updateUsuario(usuario: Usuario): void {
-    if (this.usuarioId) {
-      this.fire.collection('users').doc(this.usuarioId).update(usuario).then(() => {
+    if (this.userId) {
+      this.fire.collection('users').doc(this.userId).update(usuario).then(() => {
         alert('Usuario editado!');
         this.editarUsuarioForm.reset();
-        this.route.navigate(['/usuario']);
+        this.route.navigate(['/usuarios']);
       }).catch(error => {
         console.error('Erro ao editar usuario: ', error);
       });
     }
   }
-
-
 }

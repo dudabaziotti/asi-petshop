@@ -165,7 +165,7 @@ export class PerfilComponent implements OnInit {
   onFileChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      const filePath = `profiles/${this.uid}/${file.name}`;
+      const filePath = `users/${file.name}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, file);
 

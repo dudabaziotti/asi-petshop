@@ -21,7 +21,6 @@ export class ProdutosComponent implements OnInit{
   selectedCategories: Set<string> = new Set<string>();
   filterDate: string | null = null;
 
-
   constructor (private route: Router, private auth: AuthService, private fire: AngularFirestore, private afauth:AngularFireAuth, private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -68,7 +67,6 @@ export class ProdutosComponent implements OnInit{
       this.produtos = produtos;
       this.filteredProdutos = produtos;
       this.filterProdutos();
-      console.log(this.filteredProdutos);
     }, error => {
       console.error('Erro ao carregar produtos: ', error);
     });

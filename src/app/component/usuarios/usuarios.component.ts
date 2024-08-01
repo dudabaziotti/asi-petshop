@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-usuarios',
@@ -10,21 +11,22 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrl: './usuarios.component.scss'
 })
 export class UsuariosComponent {
-
   users: any[] = [];
   filteredUsers: any[] = [];
   searchQuery: string = '';
 
   constructor(
     private route: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private fire: AngularFirestore
   ){}
   
   ngOnInit(): void {
-    this.authService.getUsers().subscribe({
+    this.getUsers().subscribe({
       next: (data: any[]) => {
         this.users = data;
         this.filteredUsers = data;
+        console.log('Usuários carregados:', this.users);
       },
       error: (error: any) => {
         console.error('Erro ao carregar usuários:', error);
@@ -35,14 +37,21 @@ export class UsuariosComponent {
     });
   }
   
+  getUsers(): Observable<any[]> {
+    return this.fire.collection('users').snapshotChanges().pipe(
+      map((actions: any[]) => actions.map((a: any) => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+
   navegarParaEditar(userId: string): void {
+    console.log('Navegando para editar usuário com ID:', userId);
     this.route.navigate(['/editar-user', userId]);
   }
 
-  
-  addProdutos() {
-    this.route.navigate(['/add-user']);
-  }
   filterUsers(): void {
     const query = this.searchQuery.trim().toLowerCase();
     const sanitizedQuery = query.replace(/[\.\-]/g, '');

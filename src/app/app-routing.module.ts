@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: 'editar-produtos/:id', component: EditarProdutosComponent},
   {path:'perfil', component: PerfilComponent},
   {path: 'usuarios', component: UsuariosComponent},
-  {path: 'editar-user', component: EditarUserComponent},
+  {path: 'editar-user/:id', component: EditarUserComponent},
   {path: 'add-user', component: AddUserComponent}
 ];
 

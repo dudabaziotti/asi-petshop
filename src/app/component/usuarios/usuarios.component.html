@@ -40,17 +40,13 @@
                             <img *ngIf="!user.photoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="user-photo">
                         </div>
                         <div class="user-info">{{ user.name }}</div>
-                        <div class="user-info">{{ user.type }}</div>
+                        <div class="user-info">{{ user.usuario }}</div>
                         <div class="user-info">{{ user.telephone }}</div>
                         <div class="user-info">{{ user.cpf }}</div>
                         <div class="user-actions">
-                            <button class="edit-button">Editar</button>
+                            <button class="edit-button" (click)="navegarParaEditar(user.id)">Editar</button>
                         </div>
                     </div> 
-                </div>
-                <div class="action-buttons">
-                    <button class="remove-user-button text-l px-12 py-1 rounded text-white shadow bg-back-blue hover:bg-blue-400">Remover Usuário</button>
-                    <button class="add-user-button text-l px-12 py-1 rounded text-white shadow bg-back-blue hover:bg-blue-400">Adicionar Usuário</button>
                 </div>
             </div>
         </div>

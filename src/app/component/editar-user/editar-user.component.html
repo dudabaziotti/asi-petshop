@@ -1,0 +1,55 @@
+<div class="form-container bg-white">
+    <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-4 ml-4">
+        <div class="title text-white drop-shadow-md">Editar Usuário</div>
+        <form [formGroup]="editarUsuarioForm" (ngSubmit)="editarUsuario()" class="form">
+            <div class="fotinha flex">
+                <div class="inputs">
+                    <div class="item">
+                        <h3>Nome</h3>
+                        <input type="text" formControlName="name" placeholder="Nome" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Email</h3>
+                        <input type="text" formControlName="email" placeholder="Email" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Tipo de Usuário</h3>
+                        <select formControlName="usuario" class="input placeholder-gray-300 rounded-lg p-2">
+                            <option disabled selected>Selecione um Tipo</option>
+                            <option value="leitor">Leitor</option>
+                            <option value="estoquista">Estoquista</option>
+                            <option value="administrador">Administrador</option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <h3>CPF</h3>
+                        <input type="text" formControlName="cpf" placeholder="CPF" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Número de Identificação</h3>
+                        <input type="text" formControlName="identificacao" placeholder="Identificação" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Telefone</h3>
+                        <input type="text" formControlName="telephone" placeholder="Telefone" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                </div>
+                <div class="item-foto flex-col">
+                    <img *ngIf="photoUrl" [src]="photoUrl" alt="Foto do Produto" class="rounded-lg mb-2">
+                    <button type="button" (click)="fileInput.click()" class="text-white hover:underline">Editar Foto</button>
+                    <input #fileInput type="file" (change)="onFileChange($event)" class="hidden">
+                </div>
+            </div>
+                
+                <div class="form-botao pt-1">
+                    <div class="botao bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 mr-4">
+                        <button class="botao" type="submit" [disabled]="!editarUsuarioForm.valid">Salvar</button> 
+                    </div>
+                    <div class="botao bg-red-200 text-red-800 rounded-lg hover:bg-red-300">
+                        <button class="botao" (click)="excluirUsuario()" type="button">Excluir Usuário</button>
+                    </div>
+                    
+                </div>
+        </form>
+    </div>
+  </div>
