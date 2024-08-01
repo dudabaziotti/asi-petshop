@@ -13,7 +13,8 @@ import { finalize } from 'rxjs/operators';
 export class AddProdutosComponent implements OnInit {
   novoProdutoForm: FormGroup;
   selectedFile: File | null = null;
-  fileSelected: boolean = false;
+  fotoUrl: string | null = null;
+  fotoSelected: boolean = false;
 
   constructor(
     private route: Router,
@@ -38,10 +39,16 @@ export class AddProdutosComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
-      this.fileSelected = !!file;
-      console.log('Arquivo selecionado:', this.selectedFile);
+      this.fotoSelected = true;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.fotoUrl = e.target.result; 
+      };
+      reader.readAsDataURL(file);
     } else {
       this.selectedFile = null;
+      this.fotoUrl = null;
+      this.fotoSelected = false;
     }
   }
 

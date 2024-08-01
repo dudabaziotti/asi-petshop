@@ -2,54 +2,54 @@
     <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-5 ml-5">
         <div class="title text-white drop-shadow-md">Novo Produto</div>
         <form [formGroup]="novoProdutoForm" (ngSubmit)="adicionarProduto()" class="form">
-            <div>
-                <div class="item">
-                    <h3>Nome</h3>
-                    <input type="text" formControlName="nome" placeholder="Nome" class="input placeholder-gray-300 rounded-lg p-2">
+            <div class="fotinha flex">
+                <div class="inputs">
+                    <div class="item">
+                        <h3>Nome</h3>
+                        <input type="text" formControlName="nome" placeholder="Nome" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Preço</h3>
+                        <input type="text" formControlName="preco" placeholder="Preço" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Categoria</h3>
+                        <select formControlName="categoria" class="input placeholder-gray-300 rounded-lg p-2">
+                            <option disabled selected class="text-black">Selecione uma Categoria</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Acessórios">Acessórios</option>
+                            <option value="Higiene e Limpeza">Higiene e Limpeza</option>
+                            <option value="Medicina e Saúde">Medicina e Saúde</option>
+                        </select>
+                    </div>
+                    <div class="item">
+                        <h3>Estoque</h3>
+                        <input type="number" formControlName="estoque" placeholder="Estoque" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Código</h3>
+                        <input type="text" formControlName="codigo" placeholder="Código" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Descrição</h3>
+                        <input type="text" formControlName="descricao" placeholder="Descrição" class="input placeholder-gray-300 rounded-lg p-2">
+                    </div>
+                    <div class="item">
+                        <h3>Data de Cadastro</h3>
+                        <input type="date" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input rounded-lg p-2">
+                    </div>
                 </div>
-                <div class="item">
-                    <h3>Preço</h3>
-                    <input type="text" formControlName="preco" placeholder="Preço" class="input placeholder-gray-300 rounded-lg p-2">
-                </div>
-                <div class="item">
-                    <h3>Categoria</h3>
-                    <select formControlName="categoria" class="input placeholder-gray-300 rounded-lg p-2">
-                        <option disabled selected class="text-black">Selecione uma Categoria</option>
-                        <option value="Alimentação">Alimentação</option>
-                        <option value="Lazer">Lazer</option>
-                        <option value="Acessórios">Acessórios</option>
-                        <option value="Higiene e Limpeza">Higiene e Limpeza</option>
-                        <option value="Medicina e Saúde">Medicina e Saúde</option>
-                    </select>
-                </div>
-                <div class="item">
-                    <h3>Estoque</h3>
-                    <input type="number" formControlName="estoque" placeholder="Estoque" class="input placeholder-gray-300 rounded-lg p-2">
-                </div>
-                <div class="item">
-                    <h3>Código</h3>
-                    <input type="text" formControlName="codigo" placeholder="Código" class="input placeholder-gray-300 rounded-lg p-2">
-                </div>
-                <div class="item">
-                    <h3>Descrição</h3>
-                    <input type="text" formControlName="descricao" placeholder="Descrição" class="input placeholder-gray-300 rounded-lg p-2">
-                </div>
-                <div class="item">
-                    <h3>Data de Cadastro</h3>
-                    <input type="date" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input placeholder-gray-300 rounded-lg p-2">
-                </div>
-                <div class="item">
-                    <h3>Foto do Produto</h3>
-                    <div class=" rev relative">
-                        <input type="file" id="fileInput" (change)="onFileChange($event)" class="absolute inset-0 opacity-0 w-full h-full">
-                        <label for="fileInput"[ngClass]="fileSelected ? 'bg-gray-400 text-gray-600' : 'bg-gray-50 text-gray-500'"  class="py-2 px-4 rounded-lg cursor-pointer w-full">
-                            Escolher Arquivo
+                    <div class="item-foto flex-col">
+                        <img *ngIf="fotoUrl" [src]="fotoUrl" alt="Foto do Produto" class="rounded-lg mb-2">
+                        <input *ngIf="!fotoSelected" type="file" id="fileInput" (change)="onFileChange($event)" class="inset-0 opacity-0">
+                        <label *ngIf="!fotoSelected" for="fileInput" class= "bg-white text-gray-400 py-2 px-4 rounded-lg cursor-pointer">
+                            Escolher Foto
                         </label>
                     </div>
                 </div>
-            </div>
             <div class="form-botao pt-3">
-                <div class="botao bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300">
+                <div class="botao bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 mr-4">
                     <button class="botao" type="submit" [disabled]="!novoProdutoForm.valid">Adicionar Produto</button>
                 </div>
             </div>
