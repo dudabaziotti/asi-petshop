@@ -16,6 +16,8 @@ export class ProdutosComponent implements OnInit{
   isEstoquista: boolean = false;
   isAdmin: boolean = false;
   produtos: any[] = [];
+  filteredProdutos: any[] = [];
+  searchQuery: string = '';
 
   constructor (private route: Router, private auth: AuthService, private fire: AngularFirestore, private afauth:AngularFireAuth, private fb: FormBuilder) {}
 
@@ -61,9 +63,26 @@ export class ProdutosComponent implements OnInit{
   carregarProdutos(): void {
     this.fire.collection('produtos').valueChanges({ idField : 'id'}).subscribe(produtos => {
       this.produtos = produtos;
+      this.filteredProdutos = produtos;
+      console.log(this.filteredProdutos);
     }, error => {
       console.error('Erro ao carregar produtos: ', error);
     });
+  }
+
+  filterProdutos(): void {
+    const query = this.searchQuery.trim().toLowerCase();
+    
+    if (query === '') {
+      this.filteredProdutos = this.produtos;
+    } else {
+      this.filteredProdutos = this.produtos.filter(produto => {
+  
+    
+        return produto.nome.toLowerCase().includes(query) || produto.descricao.includes(query);
+        
+      });
+    }
   }
 
   dirperfil(){

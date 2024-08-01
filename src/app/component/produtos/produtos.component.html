@@ -25,8 +25,8 @@
                 <div class="lado flex px-4">
                     <div class="search-container">
                         <form action="/search" method="GET">
-                            <input type="text" placeholder="Pesquisar Produtos " name="query" class="search-input">
-                            <button type="submit" class="search-button">🔍</button>
+                            <input type="text" placeholder="Pesquisar Produtos" name="searchQuery" (input)="filterProdutos()" [(ngModel)]="searchQuery" class="search-input">
+                            <button (click)="filterProdutos()" type="submit" class="search-button">🔍</button>
                         </form>
                     </div>
                     <div class="sort-container">
@@ -69,7 +69,7 @@
                 </div>
                 <div class="listagem w-4/5">
                     <div class="card-body bg-white rounded-xl mr-10 ">
-                        <div class="flex items-center">
+                        <div class="flex " style="padding-left: 65px; padding-right: 50px;">
                             <a class="itenzinho font-semibold">Item</a>
                             <a class="itenzinho font-semibold">Descrição</a>
                             <a class="itenzinho font-semibold">Categoria</a>
@@ -79,24 +79,24 @@
                         <hr class="linha-azul">
                         <div class="card-body-1 bg-white rounded-sm">
                             <div>
-                                <div class="flex items-center" *ngFor="let produto of produtos; trackBy: trackProdutos">
+                                <div class="flex items-center" *ngFor="let produto of filteredProdutos">
                                     <div class="items-info">
                                         <img *ngIf="produto.fotoUrl" [src]="produto.fotoUrl" alt="Foto do produto" class="produto-foto m-1">
                                         <img *ngIf="!produto.fotoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="produto-foto">
                                     </div>
-                                    <div class="itenzinhos pr-3">
+                                    <div class="itenzinhos">
                                         {{produto.nome}}
                                     </div>
-                                    <div class="itenzinhos px-3">
+                                    <div class="itenzinhos">
                                         {{produto.descricao}}
                                     </div>
-                                    <div class="itenzinhos px-3">
+                                    <div class="itenzinhos">
                                         {{produto.categoria}}
                                     </div>
-                                    <div class="itenzinhos px-3">
+                                    <div class="itenzinhos">
                                         {{produto.estoque}}
                                     </div>
-                                    <div class="itenzinhos px-3">
+                                    <div class="itenzinhos">
                                         {{produto.dataCadastro}}
                                     </div>
                                     
