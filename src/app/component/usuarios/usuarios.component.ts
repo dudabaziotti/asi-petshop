@@ -34,7 +34,15 @@ export class UsuariosComponent {
       }
     });
   }
+  
+  navegarParaEditar(userId: string): void {
+    this.route.navigate(['/editar-user', userId]);
+  }
 
+  
+  addProdutos() {
+    this.route.navigate(['/add-user']);
+  }
   filterUsers(): void {
     const query = this.searchQuery.trim().toLowerCase();
     const sanitizedQuery = query.replace(/[\.\-]/g, '');

@@ -12,6 +12,8 @@ import { PerfilComponent } from './component/perfil/perfil.component';
 import { AddProdutosComponent } from './component/add-produtos/add-produtos.component';
 import { UsuariosComponent } from './component/usuarios/usuarios.component';
 import { EditarProdutosComponent } from './component/editar-produtos/editar-produtos.component';
+import { EditarUserComponent } from './component/editar-user/editar-user.component';
+import { AddUserComponent } from './component/add-user/add-user.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -26,7 +28,9 @@ const routes: Routes = [
   {path:'add-produtos', component: AddProdutosComponent},
   {path: 'editar-produtos/:id', component: EditarProdutosComponent},
   {path:'perfil', component: PerfilComponent},
-  {path: 'usuarios', component: UsuariosComponent}
+  {path: 'usuarios', component: UsuariosComponent},
+  {path: 'editar-user', component: EditarUserComponent},
+  {path: 'add-user', component: AddUserComponent}
 ];
 
 @NgModule({
