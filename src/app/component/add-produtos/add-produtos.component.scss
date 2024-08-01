@@ -1,19 +1,23 @@
 .title {
-    padding-top: 50px;
+    padding-top: 25px;
     padding-left: 50px;
     display: flex;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 600;
 }
 
 .form {
-    padding: 50px 30px 50px 0px;
+    padding: 15px 30px 15px 0px;
+
     .form-botao {
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
     }
+
+    
+
     h3 {
         color: white;
         font-size: 18px;
@@ -24,32 +28,39 @@
         padding-top: 10px;
     }
 
-    .rev {
-        padding-right: 332px;
+    .item-foto {
+       display: flex;
+       justify-content: center;
+       align-items: center; 
+        width: 400px;
+        padding-top: 10px;
+
+        img {
+            
+            width:max-content;
+            height:max-content;
+        }
     }
+
     .item {
         display: flex;
         padding-top: 10px;
         padding-bottom: 10px;
         padding-left: 50px;
-        padding-right: 600px;
+        padding-right: 200px;
         justify-content: space-between;
     }
 
     .input {
-        width: 500px;
+        width: 420px;
         outline: none;
-    }
-
-    .input-foto {
-        width: 500px;
     }
 
     .botao {
         font-size: 15px;
         cursor: pointer;
         width: 200px;
-        padding: 5px 5px 5px 5px;
+        padding: 3px 3px 3px 3px;
         display: flex;
         align-items: center;
         justify-content: center;
