@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="header-body">
-        <div class="cards bg-white p-4 px-2 rounded-xl shadow mt-3 ml-20 mr-20 mb-3">
-            <div class="barra px-4">
+        <div class="cards bg-white p-4 px-2 rounded-xl shadow ml-24 mr-24 mb-3 mt-3">
+            <div class="barra">
                 <a class="font-bold">Filtros</a>
                 <button *ngIf="isAdmin || isEstoquista" (click)="addProdutos()" class="bg-back-blue text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                     Novo Produto
@@ -30,44 +30,44 @@
                         </form>
                     </div>
                     <div class="sort-container">
-                        <select id="sort-by" class="sort-select" onchange="sortItems() ">
+                        <select id="sort-by" class="sort-select" (change)="sortItems($event)">
                             <option  disabled selected>Ordenar por</option>
                             <option value="recentes">Mais recentes</option>
                             <option value="antigos">Mais antigos</option>
-                            <option value="alfabética">Ordem alfabética A-Z</option>
+                            <option value="alfabetica">Ordem alfabética A-Z</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="body">
-                <div class="card-body bg-white px-2 rounded-xl ml-10 mr-5">
-                    <h1 class='px-2 font-semibold'>Data de Cadastro</h1>
-                    <input type="date" placeholder="dd/mm/aaaa " name="query" class="mt-3 mb-3 search-input">
+                <div class="card-body bg-white px-2 rounded-xl ml-3 mr-3">
+                    <h1 class='px-2 mt-1 font-semibold'>Data de Cadastro</h1>
+                    <input type="date" placeholder="dd/mm/aaaa " name="query" (change)="filterByDate($event)" class="mt-3 mb-3 search-input">
                     <h1 class='px-2 font-semibold'>Categoria</h1>
                     <div class="mt-3 checks flex flex-col">
                         <div class="check flex">
-                            <input type="checkbox" name="Alimentação" class="form-check-input">
+                            <input type="checkbox" name="Alimentação" (change)="toggleCategory('Alimentação')" class="form-check-input">
                             <label class="ml-2 form-check-label" for="Alimentação">Alimentação</label>
                         </div>
                         <div class="check flex">
-                            <input type="checkbox" name="Lazer" class="form-check-input">
+                            <input type="checkbox" name="Lazer" (change)="toggleCategory('Lazer')" class="form-check-input">
                             <label class="ml-2 form-check-label" for="Lazer">Lazer</label>
                         </div>
                         <div class="check flex">
-                            <input type="checkbox" name="Acessórios" class="form-check-input">
+                            <input type="checkbox" name="Acessórios" (change)="toggleCategory('Acessórios')" class="form-check-input">
                             <label class="ml-2 form-check-label" for="Acessórios">Acessórios</label>
                         </div>
                         <div class="check flex">
-                            <input type="checkbox" name="Higiene" class="form-check-input">
+                            <input type="checkbox" name="Higiene" (change)="toggleCategory('Higiena e Limpeza')" class="form-check-input">
                             <label class="ml-2 form-check-label" for="Higiene">Higiene e Limpeza</label>
                         </div>
                         <div class="check flex">
-                            <input type="checkbox" name="Medicina" class="form-check-input">
+                            <input type="checkbox" name="Medicina" (change)="toggleCategory('Medicina')" class="form-check-input">
                             <label class="ml-2 form-check-label" for="Medicina">Medicina e Saúde</label>
                         </div>
                     </div>
                 </div>
-                <div class="listagem w-4/5">
+                <div class="listagem w-5/6">
                     <div class="card-body bg-white rounded-xl mr-10 ">
                         <div class="flex " style="padding-left: 65px; padding-right: 50px;">
                             <a class="itenzinho font-semibold">Item</a>
@@ -79,7 +79,7 @@
                         <hr class="linha-azul">
                         <div class="card-body-1 bg-white rounded-sm">
                             <div>
-                                <div class="flex items-center" *ngFor="let produto of filteredProdutos">
+                                <div class="rolagem flex items-center" *ngFor="let produto of filteredProdutos">
                                     <div class="items-info">
                                         <img *ngIf="produto.fotoUrl" [src]="produto.fotoUrl" alt="Foto do produto" class="produto-foto m-1">
                                         <img *ngIf="!produto.fotoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="produto-foto">

@@ -66,7 +66,7 @@
         align-items: center;
 
         .cards {
-            width: 100%;
+            width: 95%;
             height: 100%;
 
             .barra {
@@ -136,7 +136,7 @@
                 display: flex;
 
                 .search-input {
-                    width: 80%;
+                    width: 100%;
                     padding: 10px 10px 10px 10px;
                     font-size: 16px;
                     border: 1px solid #ccc;
@@ -146,10 +146,16 @@
                 }
 
                 .card-body {
-                    padding: 10px 10px 10px 10px;
+                    padding: 8px 8px 8px 8px;
                     border: 1px solid #86adf7;
                     width: fit-content;
-                    height: 403px;
+                    height: 400px;
+                    overflow-y: auto; 
+                    
+
+                    .rolagem {
+                        max-height: 65px;
+                    }
 
                     .produto-foto{
                         width: 60px;
@@ -162,7 +168,6 @@
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        
                     }
 
                     .itenzinho-editar {

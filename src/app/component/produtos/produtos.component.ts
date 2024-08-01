@@ -18,6 +18,9 @@ export class ProdutosComponent implements OnInit{
   produtos: any[] = [];
   filteredProdutos: any[] = [];
   searchQuery: string = '';
+  selectedCategories: Set<string> = new Set<string>();
+  filterDate: string | null = null;
+
 
   constructor (private route: Router, private auth: AuthService, private fire: AngularFirestore, private afauth:AngularFireAuth, private fb: FormBuilder) {}
 
@@ -61,28 +64,59 @@ export class ProdutosComponent implements OnInit{
   }
 
   carregarProdutos(): void {
-    this.fire.collection('produtos').valueChanges({ idField : 'id'}).subscribe(produtos => {
+    this.fire.collection('produtos', ref => ref.orderBy('dataCadastro', 'desc')).valueChanges({ idField : 'id'}).subscribe(produtos => {
       this.produtos = produtos;
       this.filteredProdutos = produtos;
+      this.filterProdutos();
       console.log(this.filteredProdutos);
     }, error => {
       console.error('Erro ao carregar produtos: ', error);
     });
   }
 
+  sortItems(event: any): void {
+    const sortBy = event.target.value;
+  
+    this.filteredProdutos.sort((a, b) => {
+      if (sortBy === 'recentes') {
+        return new Date(b.dataCadastro).getTime() - new Date(a.dataCadastro).getTime();
+      } else if (sortBy === 'antigos') {
+        return new Date(a.dataCadastro).getTime() - new Date(b.dataCadastro).getTime();
+      } else if (sortBy === 'alfabetica') {
+        const nomeA = a.nome.toLowerCase(); 
+        const nomeB = b.nome.toLowerCase(); 
+        if (nomeA < nomeB) return -1; 
+        if (nomeA > nomeB) return 1;  
+        return 0;
+      }
+      return 0;
+    });
+  }
+
   filterProdutos(): void {
     const query = this.searchQuery.trim().toLowerCase();
-    
-    if (query === '') {
-      this.filteredProdutos = this.produtos;
-    } else {
-      this.filteredProdutos = this.produtos.filter(produto => {
   
-    
-        return produto.nome.toLowerCase().includes(query) || produto.descricao.includes(query);
-        
-      });
+    this.filteredProdutos = this.produtos.filter(produto => {
+      const matchesSearchQuery = produto.nome.toLowerCase().includes(query) || produto.descricao.toLowerCase().includes(query);
+      const matchesCategory = this.selectedCategories.size === 0 || this.selectedCategories.has(produto.categoria);
+      const matchesDate = !this.filterDate || produto.dataCadastro === this.filterDate;
+      return matchesSearchQuery && matchesCategory && matchesDate;   
+    });
+  }
+
+  filterByDate(event: any): void {
+    this.filterDate = event.target.value;
+    this.filterProdutos();
+  }
+  
+
+  toggleCategory(category: string): void {
+    if (this.selectedCategories.has(category)) {
+      this.selectedCategories.delete(category);
+    } else {
+      this.selectedCategories.add(category);
     }
+    this.filterProdutos();
   }
 
   dirperfil(){
