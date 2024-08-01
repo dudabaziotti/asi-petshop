@@ -51,8 +51,8 @@ export class EstoqueComponent implements OnInit{
     this.carregarProdutos();
   }
 
-  navegarParaEditar(produtoId: string): void {
-    this.route.navigate(['/editar-produtos', produtoId]);
+  navegarParaVerItem(produtoId: string): void {
+    this.route.navigate(['/item-estoque', produtoId]);
   }
 
   addProdutos() {
@@ -97,9 +97,9 @@ export class EstoqueComponent implements OnInit{
     const query = this.searchQuery.trim().toLowerCase();
   
     this.filteredProdutos = this.produtos.filter(produto => {
-      const matchesSearchQuery = produto.nome.toLowerCase().includes(query) || produto.descricao.toLowerCase().includes(query);
+      const matchesSearchQuery = produto.nome.toLowerCase().includes(query);
       const matchesCategory = this.selectedCategories.size === 0 || this.selectedCategories.has(produto.categoria);
-      const matchesDate = !this.filterDate || produto.dataCadastro === this.filterDate;
+      const matchesDate = !this.filterDate || produto.dataCadastro || produto.dataValidade === this.filterDate;
       return matchesSearchQuery && matchesCategory && matchesDate;   
     });
   }
@@ -118,6 +118,31 @@ export class EstoqueComponent implements OnInit{
     }
     this.filterProdutos();
   }
+
+  abaixarEstoque(produto: any): void {
+    if (produto.estoque != null && produto.estoque > 0) {
+      produto.estoque--;
+      this.atualizarEstoqueProduto(produto);
+    }
+  }
+  
+  aumentarEstoque(produto: any): void {
+    if (produto.estoque != null) {
+      produto.estoque++;
+      this.atualizarEstoqueProduto(produto);
+    }
+  }
+  
+  atualizarEstoqueProduto(produto: any): void {
+    this.fire.collection('produtos').doc(produto.id).update({ estoque: produto.estoque })
+      .then(() => {
+        console.log(`Estoque do produto ${produto.nome} atualizado para ${produto.estoque}.`);
+      })
+      .catch(error => {
+        console.error('Erro ao atualizar estoque:', error);
+      });
+  }
+  
 
   dirperfil(){
     this.route.navigate(['/perfil']);

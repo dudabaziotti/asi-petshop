@@ -95,9 +95,9 @@ export class ProdutosComponent implements OnInit{
     const query = this.searchQuery.trim().toLowerCase();
   
     this.filteredProdutos = this.produtos.filter(produto => {
-      const matchesSearchQuery = produto.nome.toLowerCase().includes(query) || produto.descricao.toLowerCase().includes(query);
+      const matchesSearchQuery = produto.nome.toLowerCase().includes(query);
       const matchesCategory = this.selectedCategories.size === 0 || this.selectedCategories.has(produto.categoria);
-      const matchesDate = !this.filterDate || produto.dataCadastro === this.filterDate;
+      const matchesDate = !this.filterDate || produto.dataCadastro || produto.dataValidade === this.filterDate;
       return matchesSearchQuery && matchesCategory && matchesDate;   
     });
   }

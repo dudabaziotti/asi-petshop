@@ -28,7 +28,7 @@ export class AddProdutosComponent implements OnInit {
       categoria: ['', Validators.required],
       estoque: ['', Validators.required],
       codigo: ['', Validators.required],
-      descricao: ['', Validators.required],
+      dataValidade: ['', Validators.required],
       dataCadastro: ['', Validators.required],
     });
   }

@@ -7,8 +7,8 @@
         <div class="pags text-white px-5 font-bold">
             <a (click)="dirperfil()" class="barra px-5">Perfil</a>
             <a (click)="dirusuarios()" class="barra px-5" *ngIf="isAdmin">Usuários</a>
-            <a (click)="dirprodutos()" class="barra-atual px-5">Produtos</a>
-            <a (click)="direstoque()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Estoque</a>
+            <a (click)="dirprodutos()" class="barra px-5">Produtos</a>
+            <a (click)="direstoque()" class="barra-atual px-5" *ngIf="isEstoquista || isAdmin">Estoque</a>
             <a (click)="dirregistro()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Registros</a>
         </div>
         <div class="linha">
@@ -19,9 +19,6 @@
         <div class="cards bg-white p-4 px-2 rounded-xl shadow ml-24 mr-24 mb-3 mt-3">
             <div class="barra">
                 <a class="font-bold">Filtros</a>
-                <button *ngIf="isAdmin || isEstoquista" (click)="addProdutos()" class="bg-back-blue text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                    Novo Produto
-                </button>
                 <div class="lado flex px-4">
                     <div class="search-container">
                         <form action="/search" method="GET">
@@ -88,13 +85,15 @@
                                         {{produto.nome}}
                                     </div>
                                     <div class="itenzinhos">
-                                        {{produto.descricao}}
+                                        {{produto.dataValidade}}
                                     </div>
                                     <div class="itenzinhos">
                                         {{produto.categoria}}
                                     </div>
                                     <div class="itenzinhos">
+                                        <button (click)="abaixarEstoque(produto)" class="mr-2">-</button>
                                         {{produto.estoque}}
+                                        <button (click)="aumentarEstoque(produto)" class="ml-2">+</button>
                                     </div>
                                     <div class="itenzinhos">
                                         {{produto.dataCadastro}}
@@ -103,9 +102,9 @@
                                     
                                     
                                     
-                                    <div class="itenzinho-editar">
-                                        <button *ngIf="isAdmin || isEstoquista" (click)="navegarParaEditar(produto.id)" class="text-back-blue hover:underline">
-                                            Editar
+                                    <div class="itenzinho-visualizar">
+                                        <button *ngIf="isAdmin || isEstoquista" (click)="navegarParaVerItem(produto.id)" class="text-back-blue hover:underline">
+                                            Ver
                                         </button>
                                     </div>
                                     

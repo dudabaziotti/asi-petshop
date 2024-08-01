@@ -13,7 +13,7 @@ interface Produto {
   categoria: string;
   estoque: string;
   codigo: string;
-  descricao: string;
+  dataValidade: string;
   dataCadastro: string;
   fotoUrl?: string;
 }
@@ -22,7 +22,6 @@ const extractFotoPath = (fotoUrl: string): string | null => {
   const match = fotoUrl.match(/o\/(.+?)\?alt/);
   return match ? match[1].replace('%2F', '/') : null; 
 };
-
 
 @Component({
   selector: 'app-editar-produtos',
@@ -55,7 +54,7 @@ export class EditarProdutosComponent implements OnInit {
       categoria: ['', Validators.required],
       estoque: ['', Validators.required],
       codigo: ['', Validators.required],
-      descricao: ['', Validators.required],
+      dataValidade: ['', Validators.required],
       dataCadastro: ['', Validators.required]
     });
   }
