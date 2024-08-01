@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit{
     this.route.navigate(['/produtos']);
   }
   direstoque(){
-    this.route.navigate(['/pagina-inicial']);
+    this.route.navigate(['/estoque']);
   }
   dirregistro(){
     this.route.navigate(['/pagina-inicial']);
