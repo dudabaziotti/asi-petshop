@@ -31,12 +31,10 @@ const routes: Routes = [
   {path: 'editar-produtos/:id', component: EditarProdutosComponent},
   {path:'perfil', component: PerfilComponent},
   {path: 'usuarios', component: UsuariosComponent},
-  {path: 'editar-user', component: EditarUserComponent},
   {path: 'add-user', component: AddUserComponent},
   {path: 'estoque', component: EstoqueComponent},
   {path: 'item-estoque', component: ItemEstoqueComponent},
   {path: 'editar-user/:id', component: EditarUserComponent},
-  {path: 'add-user', component: AddUserComponent}
 ];
 
 @NgModule({
