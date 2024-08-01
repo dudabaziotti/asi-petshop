@@ -14,6 +14,8 @@ import { UsuariosComponent } from './component/usuarios/usuarios.component';
 import { EditarProdutosComponent } from './component/editar-produtos/editar-produtos.component';
 import { EditarUserComponent } from './component/editar-user/editar-user.component';
 import { AddUserComponent } from './component/add-user/add-user.component';
+import { EstoqueComponent } from './component/estoque/estoque.component';
+import { ItemEstoqueComponent } from './component/item-estoque/item-estoque.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -30,7 +32,9 @@ const routes: Routes = [
   {path:'perfil', component: PerfilComponent},
   {path: 'usuarios', component: UsuariosComponent},
   {path: 'editar-user', component: EditarUserComponent},
-  {path: 'add-user', component: AddUserComponent}
+  {path: 'add-user', component: AddUserComponent},
+  {path: 'estoque', component: EstoqueComponent},
+  {path: 'item-estoque', component: ItemEstoqueComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,213 @@
+.page {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 15px;
+
+        .linha {
+
+            .horizontal-line {
+                
+                width: 100%;             
+                height: 2px;             
+                background-color: white; 
+                position: absolute;      
+                top: 21%;               
+                left: 0;   
+            }
+        }
+
+        .img {
+            padding-left: 30px;     
+        }
+
+        img {
+            width: 160px;
+            height: 150px;
+        }
+
+        .vertical-line {
+            width: 2px;            
+            height: 21vh;         
+            background-color: white;
+            position: absolute;   
+            left: 15%;             
+        }
+
+        .pags {
+            font-size: 30px;
+            padding-top: 50px;
+
+            a:hover {
+                color: #c2c0c0;
+            }
+        }
+
+        .barra {
+            cursor: pointer;
+        }
+
+        .barra-atual {
+            cursor: pointer;
+            color:#c2c0c0;
+            
+        }
+    }
+
+    .header-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .cards {
+            width: 95%;
+            height: 100%;
+
+            .barra {
+
+                display: flex;
+                justify-content: space-between;
+                align-items: center;   
+                margin-left: 20px;
+                margin-right: 20px;             
+
+                .search-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 300px;
+                    margin: 0 auto;
+                }
+                
+                form {
+                    display: flex;
+                    width: 100%;
+                }
+                
+                .search-input {
+                
+                    padding: 10px;
+                    font-size: 16px;
+                    border: 1px solid #ccc;
+                    border-right: none;
+                    border-radius: 20px 0px 0px 20px;
+                    outline: none;
+                    box-sizing: border-box;
+                }
+                
+                
+                .search-button {
+                    padding: 10px 15px;
+                    font-size: 16px;
+                    border: 1px solid #ccc;
+                    border-left: none;
+                    border-radius: 0px 20px 20px 0px;
+                    color: white;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+                
+                .search-button:hover {
+                    background-color: #ccc;
+                }
+
+                .sort-container {
+                    margin-bottom: 20px;
+                    padding-top: 20px;
+                    padding-left: 10px;
+                }
+                
+                .sort-select {
+                    padding: 10px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    
+                }
+            }
+            .body {
+
+                display: flex;
+
+                .search-input {
+                    width: 100%;
+                    padding: 10px 10px 10px 10px;
+                    font-size: 16px;
+                    border: 1px solid #ccc;
+                    border-radius: 10px 10px 10px 10px;
+                    outline: none;
+                    box-sizing: border-box;
+                }
+
+                .card-body {
+                    padding: 8px 8px 8px 8px;
+                    border: 1px solid #86adf7;
+                    width: fit-content;
+                    height: 400px;
+                    overflow-y: auto; 
+                    
+
+                    .rolagem {
+                        max-height: 72px;
+                    }
+
+                    .produto-foto{
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 50%;
+                    }
+
+                    .itenzinho {
+                        width: 180px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .itenzinho-editar {
+                    
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding-bottom: 10px;
+                        padding-right: 10px;
+                        padding-top: 8px;
+                    }
+
+                    .itenzinhos {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: normal;
+                        width: 180px;
+                        max-height: 2.4em;
+                        line-height: 1.2em;
+                        display: block;
+                        overflow-wrap: break-word;
+                        word-wrap: break-word;
+                        text-align: center;
+                    }
+                    
+                    
+
+                    .card-body-1 {
+                        width: fit-content;
+                    }
+                    .linha-azul {
+                        border: none;
+                        height: 1px;
+                        background-color: #0946c9;
+                        margin: 10px 0;
+                    }
+                }
+            }
+        }
+
+    }
+
+}
