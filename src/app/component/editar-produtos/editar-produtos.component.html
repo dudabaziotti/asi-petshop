@@ -1,5 +1,5 @@
 <div class="form-container bg-white">
-    <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-3 ml-3">
+    <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-4 ml-4">
         <div class="title text-white drop-shadow-md">Editar Produto</div>
         <form [formGroup]="editarProdutoForm" (ngSubmit)="editarProduto()" class="form">
             <div class="fotinha flex">
@@ -50,7 +50,7 @@
                 </div>
             </div>
                 
-                <div class="form-botao pt-3">
+                <div class="form-botao pt-1">
                     <div class="botao bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 mr-4">
                         <button class="botao" type="submit" [disabled]="!editarProdutoForm.valid">Salvar</button> 
                     </div>
