@@ -85,7 +85,7 @@
                                         {{produto.nome}}
                                     </div>
                                     <div class="itenzinhos">
-                                        {{produto.dataValidade}}
+                                        {{ formatarData(produto.dataValidade) }}
                                     </div>
                                     <div class="itenzinhos">
                                         {{produto.categoria}}
@@ -96,7 +96,7 @@
                                         <button (click)="aumentarEstoque(produto)" class="ml-2">+</button>
                                     </div>
                                     <div class="itenzinhos">
-                                        {{produto.dataCadastro}}
+                                        {{ formatarData(produto.dataCadastro) }}
                                     </div>
                                     
                                     
