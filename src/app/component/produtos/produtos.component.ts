@@ -130,6 +130,14 @@ export class ProdutosComponent implements OnInit {
     return this.datePipe.transform(data, 'dd-MM-yyyy') || 'Data não informada';
   }
 
+  formatarPreco(preco: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+    }).format(preco);
+  }
+
   dirperfil() {
     this.route.navigate(['/perfil']);
   }

@@ -73,7 +73,7 @@
                             <a class="itenzinho font-semibold">Item</a>
                             <a class="itenzinho font-semibold">Validade</a>
                             <a class="itenzinho font-semibold">Categoria</a>
-                            <a class="itenzinho font-semibold">Código</a>
+                            <a class="itenzinho font-semibold">Preço</a>
                             <a class="itenzinho font-semibold">Data de Cadastro</a>
                         </div>
                         <hr class="linha-azul">
@@ -94,7 +94,7 @@
                                         {{produto.categoria}}
                                     </div>
                                     <div class="itenzinhos">
-                                        {{produto.codigo}}
+                                        {{ formatarPreco(produto.preco) }}
                                     </div>
                                     <div class="itenzinhos">
                                         {{ formatarData(produto.dataCadastro) }}
