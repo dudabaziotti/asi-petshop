@@ -9,7 +9,7 @@
             <a (click)="dirusuarios()" class="barra px-5" *ngIf="isAdmin">Usuários</a>
             <a (click)="dirprodutos()" class="barra px-5">Produtos</a>
             <a (click)="direstoque()" class="barra-atual px-5" *ngIf="isEstoquista || isAdmin">Estoque</a>
-            <a (click)="dirregistro()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Registros</a>
+            <a (click)="dirregistro()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Registros de Baixas</a>
         </div>
         <div class="linha">
             <div class="horizontal-line"></div>
@@ -85,7 +85,7 @@
                                         {{produto.nome}}
                                     </div>
                                     <div class="itenzinhos">
-                                        {{produto.dataValidade}}
+                                        {{ produto.dataValidade }}
                                     </div>
                                     <div class="itenzinhos">
                                         {{produto.categoria}}
@@ -96,7 +96,7 @@
                                         <button (click)="aumentarEstoque(produto)" class="ml-2">+</button>
                                     </div>
                                     <div class="itenzinhos">
-                                        {{produto.dataCadastro}}
+                                        {{ produto.dataCadastro }}
                                     </div>
                                     
                                     

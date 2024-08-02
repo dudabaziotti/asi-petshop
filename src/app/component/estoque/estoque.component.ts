@@ -21,7 +21,6 @@ export class EstoqueComponent implements OnInit{
   selectedCategories: Set<string> = new Set<string>();
   filterDate: string | null = null;
 
-
   constructor (private route: Router, private auth: AuthService, private fire: AngularFirestore, private afauth:AngularFireAuth, private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -108,7 +107,6 @@ export class EstoqueComponent implements OnInit{
     this.filterDate = event.target.value;
     this.filterProdutos();
   }
-  
 
   toggleCategory(category: string): void {
     if (this.selectedCategories.has(category)) {
@@ -142,7 +140,6 @@ export class EstoqueComponent implements OnInit{
         console.error('Erro ao atualizar estoque:', error);
       });
   }
-  
 
   dirperfil(){
     this.route.navigate(['/perfil']);
