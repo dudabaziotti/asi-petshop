@@ -4,13 +4,15 @@ import { AuthService } from '../../shared/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-produtos',
   templateUrl: './produtos.component.html',
-  styleUrl: './produtos.component.scss'
+  styleUrls: ['./produtos.component.scss'],
+  providers: [DatePipe]
 })
-export class ProdutosComponent implements OnInit{
+export class ProdutosComponent implements OnInit {
   userId: string | null = null;
   isLeitor: boolean = false;
   isEstoquista: boolean = false;
@@ -21,7 +23,14 @@ export class ProdutosComponent implements OnInit{
   selectedCategories: Set<string> = new Set<string>();
   filterDate: string | null = null;
 
-  constructor (private route: Router, private auth: AuthService, private fire: AngularFirestore, private afauth:AngularFireAuth, private fb: FormBuilder) {}
+  constructor(
+    private route: Router,
+    private auth: AuthService,
+    private fire: AngularFirestore,
+    private afauth: AngularFireAuth,
+    private fb: FormBuilder,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
     this.afauth.user.subscribe(user => {
@@ -30,14 +39,14 @@ export class ProdutosComponent implements OnInit{
         console.log('Logged in user ID:', this.userId);
         if (this.userId) {
           this.auth.getUserType(this.userId).subscribe(userType => {
-            console.log('User type from document:', userType); 
+            console.log('User type from document:', userType);
             if (userType === 'estoquista') {
               this.isEstoquista = true;
             } else if (userType === 'leitor') {
               this.isLeitor = true;
             } else if (userType === 'administrador') {
               this.isAdmin = true;
-            } 
+            }
           });
         }
       } else {
@@ -63,28 +72,29 @@ export class ProdutosComponent implements OnInit{
   }
 
   carregarProdutos(): void {
-    this.fire.collection('produtos', ref => ref.orderBy('dataCadastro', 'desc')).valueChanges({ idField : 'id'}).subscribe(produtos => {
-      this.produtos = produtos;
-      this.filteredProdutos = produtos;
-      this.filterProdutos();
-    }, error => {
-      console.error('Erro ao carregar produtos: ', error);
-    });
+    this.fire.collection('produtos', ref => ref.orderBy('dataCadastro', 'desc'))
+      .valueChanges({ idField: 'id' }).subscribe(produtos => {
+        this.produtos = produtos;
+        this.filteredProdutos = produtos;
+        this.filterProdutos();
+      }, error => {
+        console.error('Erro ao carregar produtos: ', error);
+      });
   }
 
   sortItems(event: any): void {
     const sortBy = event.target.value;
-  
+
     this.filteredProdutos.sort((a, b) => {
       if (sortBy === 'recentes') {
         return new Date(b.dataCadastro).getTime() - new Date(a.dataCadastro).getTime();
       } else if (sortBy === 'antigos') {
         return new Date(a.dataCadastro).getTime() - new Date(b.dataCadastro).getTime();
       } else if (sortBy === 'alfabetica') {
-        const nomeA = a.nome.toLowerCase(); 
-        const nomeB = b.nome.toLowerCase(); 
-        if (nomeA < nomeB) return -1; 
-        if (nomeA > nomeB) return 1;  
+        const nomeA = a.nome.toLowerCase();
+        const nomeB = b.nome.toLowerCase();
+        if (nomeA < nomeB) return -1;
+        if (nomeA > nomeB) return 1;
         return 0;
       }
       return 0;
@@ -93,12 +103,12 @@ export class ProdutosComponent implements OnInit{
 
   filterProdutos(): void {
     const query = this.searchQuery.trim().toLowerCase();
-  
+
     this.filteredProdutos = this.produtos.filter(produto => {
       const matchesSearchQuery = produto.nome.toLowerCase().includes(query);
       const matchesCategory = this.selectedCategories.size === 0 || this.selectedCategories.has(produto.categoria);
       const matchesDate = !this.filterDate || produto.dataCadastro === this.filterDate;
-      return matchesSearchQuery && matchesCategory && matchesDate;   
+      return matchesSearchQuery && matchesCategory && matchesDate;
     });
   }
 
@@ -106,7 +116,6 @@ export class ProdutosComponent implements OnInit{
     this.filterDate = event.target.value;
     this.filterProdutos();
   }
-  
 
   toggleCategory(category: string): void {
     if (this.selectedCategories.has(category)) {
@@ -117,19 +126,27 @@ export class ProdutosComponent implements OnInit{
     this.filterProdutos();
   }
 
-  dirperfil(){
+  formatarData(data: string): string {
+    return this.datePipe.transform(data, 'dd-MM-yyyy') || 'Data não informada';
+  }
+
+  dirperfil() {
     this.route.navigate(['/perfil']);
   }
-  dirprodutos(){
+
+  dirprodutos() {
     this.route.navigate(['/produtos']);
   }
-  direstoque(){
+
+  direstoque() {
     this.route.navigate(['/estoque']);
   }
-  dirregistro(){
+
+  dirregistro() {
     this.route.navigate(['/pagina-inicial']);
   }
-  dirusuarios(){
+
+  dirusuarios() {
     this.route.navigate(['/usuarios']);
   }
 }
