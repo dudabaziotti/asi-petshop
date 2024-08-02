@@ -16,6 +16,7 @@ import { EditarUserComponent } from './component/editar-user/editar-user.compone
 import { EstoqueComponent } from './component/estoque/estoque.component';
 import { ItemEstoqueComponent } from './component/item-estoque/item-estoque.component';
 import { RegistrosComponent } from './component/registros/registros.component';
+import { AuthService } from './shared/auth.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/pagina-inicial', pathMatch: 'full'},
@@ -25,16 +26,16 @@ const routes: Routes = [
   {path: 'cadastro-leitor', component: CadastroLeitorComponent},
   {path: 'cadastro-estoquista', component: CadastroEstoquistaComponent},
   {path: 'redefinir-senha', component: RedefinirSenhaComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path:'produtos', component: ProdutosComponent},
-  {path:'add-produtos', component: AddProdutosComponent},
-  {path: 'editar-produtos/:id', component: EditarProdutosComponent},
-  {path:'perfil', component: PerfilComponent},
-  {path: 'usuarios', component: UsuariosComponent},
-  {path: 'estoque', component: EstoqueComponent},
-  {path: 'item-estoque/:id', component: ItemEstoqueComponent},
-  {path: 'editar-user/:id', component: EditarUserComponent},
-  {path: 'registros', component: RegistrosComponent}
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthService]},
+  {path:'produtos', component: ProdutosComponent, canActivate: [AuthService]},
+  {path:'add-produtos', component: AddProdutosComponent, canActivate: [AuthService]},
+  {path: 'editar-produtos/:id', component: EditarProdutosComponent, canActivate: [AuthService]},
+  {path:'perfil', component: PerfilComponent, canActivate: [AuthService]},
+  {path: 'usuarios', component: UsuariosComponent, canActivate: [AuthService]},
+  {path: 'estoque', component: EstoqueComponent, canActivate: [AuthService]},
+  {path: 'item-estoque/:id', component: ItemEstoqueComponent, canActivate: [AuthService]},
+  {path: 'editar-user/:id', component: EditarUserComponent, canActivate: [AuthService]},
+  {path: 'registros', component: RegistrosComponent, canActivate: [AuthService]}
 ];
 
 @NgModule({

@@ -22,8 +22,21 @@ export enum tipoCadastro {
 })
 export class AuthService {
 
-
   constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore, private storage: AngularFireStorage) {}
+  
+  canActivate(): Observable<boolean> {
+    return this.fireauth.authState.pipe(
+      map(user => {
+        if (user) {
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
+      })
+    );
+  }
+  
   //obtem tipo de usuario
   getUserType(uid: string): Observable<string | null> {
     return this.firestore.collection('users').doc(uid).valueChanges().pipe(
@@ -146,6 +159,7 @@ export class AuthService {
       cpf
     });
   }
+  
   getUsers(): Observable<any[]> {
     return this.firestore.collection('users').valueChanges().pipe(
       map((users: any[]) => {
