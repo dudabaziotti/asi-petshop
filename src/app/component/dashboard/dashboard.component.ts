@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit{
     this.route.navigate(['/estoque']);
   }
   dirregistro(){
-    this.route.navigate(['/pagina-inicial']);
+    this.route.navigate(['/registros']);
   }
   dirusuarios(){
     this.route.navigate(['/usuarios']);

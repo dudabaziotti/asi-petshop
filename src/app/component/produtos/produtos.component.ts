@@ -143,7 +143,7 @@ export class ProdutosComponent implements OnInit {
   }
 
   dirregistro() {
-    this.route.navigate(['/pagina-inicial']);
+    this.route.navigate(['/registros']);
   }
 
   dirusuarios() {

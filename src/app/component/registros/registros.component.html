@@ -1,0 +1,110 @@
+<div class="page bg-back-blue">
+    <div class="header">
+        <div class="img">
+            <img src="../../../assets/Cabeçalho (19) 1.png">
+        </div>
+        <div class="vertical-line"></div>
+        <div class="pags text-white px-5 font-bold">
+            <a (click)="dirperfil()" class="barra px-5">Perfil</a>
+            <a (click)="dirusuarios()" class="barra px-5" *ngIf="isAdmin">Usuários</a>
+            <a (click)="dirprodutos()" class="barra px-5">Produtos</a>
+            <a (click)="direstoque()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Estoque</a>
+            <a (click)="dirregistro()" class="barra-atual px-5" *ngIf="isEstoquista || isAdmin">Registros</a>
+        </div>
+        <div class="linha">
+            <div class="horizontal-line"></div>
+        </div>
+    </div>
+    <div class="header-body">
+        <div class="cards bg-white p-4 px-2 rounded-xl shadow ml-24 mr-24 mb-3 mt-3">
+            <div class="barra">
+                <a class="font-bold">Filtros</a>
+                <button *ngIf="isAdmin || isEstoquista"  class="bg-back-blue text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Registrar Baixa
+                </button>
+                <div class="lado flex px-4">
+                    <div class="search-container">
+                        <form action="/search" method="GET">
+                            <input type="text" placeholder="Pesquisar Produtos" name="searchQuery" (input)="filterProdutos()" [(ngModel)]="searchQuery" class="search-input">
+                            <button (click)="filterProdutos()" type="submit" class="search-button">🔍</button>
+                        </form>
+                    </div>
+                    <div class="sort-container">
+                        <select id="sort-by" class="sort-select" (change)="sortItems($event)">
+                            <option  disabled selected>Ordenar por</option>
+                            <option value="recentes">Mais recentes</option>
+                            <option value="antigos">Mais antigos</option>
+                            <option value="alfabetica">Ordem alfabética A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="card-body bg-white px-2 rounded-xl ml-3 mr-3">
+                    <h1 class='px-2 mt-1 font-semibold'>Data de Cadastro</h1>
+                    <input type="date" placeholder="dd/mm/aaaa " name="query" (change)="filterByDate($event)" class="mt-3 mb-3 search-input">
+                    <h1 class='px-2 font-semibold'>Categoria</h1>
+                    <div class="mt-3 checks flex flex-col">
+                        <div class="check flex">
+                            <input type="checkbox" name="Alimentação" (change)="toggleCategory('Alimentação')" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Alimentação">Alimentação</label>
+                        </div>
+                        <div class="check flex">
+                            <input type="checkbox" name="Lazer" (change)="toggleCategory('Lazer')" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Lazer">Lazer</label>
+                        </div>
+                        <div class="check flex">
+                            <input type="checkbox" name="Acessórios" (change)="toggleCategory('Acessórios')" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Acessórios">Acessórios</label>
+                        </div>
+                        <div class="check flex">
+                            <input type="checkbox" name="Higiene" (change)="toggleCategory('Higiena e Limpeza')" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Higiene">Higiene e Limpeza</label>
+                        </div>
+                        <div class="check flex">
+                            <input type="checkbox" name="Medicina" (change)="toggleCategory('Medicina')" class="form-check-input">
+                            <label class="ml-2 form-check-label" for="Medicina">Medicina e Saúde</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="listagem w-5/6">
+                    <div class="card-body bg-white rounded-xl mr-10 ">
+                        <div class="flex " style="padding-left: 65px; padding-right: 50px;">
+                            <a class="itenzinho font-semibold">Item</a>
+                            <a class="itenzinho font-semibold">Validade</a>
+                            <a class="itenzinho font-semibold">Categoria</a>
+                            <a class="itenzinho font-semibold">Usuário</a>
+                            <a class="itenzinho font-semibold">Data de Cadastro</a>
+                        </div>
+                        <hr class="linha-azul">
+                        <div class="card-body-1 bg-white rounded-sm">
+                            <div>
+                                <div class="rolagem flex items-center" *ngFor="let produto of filteredProdutos">
+                                    <div class="items-info">
+                                        <img *ngIf="produto.fotoUrl" [src]="produto.fotoUrl" alt="Foto do produto" class="produto-foto m-1">
+                                        <img *ngIf="!produto.fotoUrl" src="src/assets/default.webp" alt="Foto Padrão" class="produto-foto">
+                                    </div>
+                                    <div class="itenzinhos">
+                                        {{produto.nome}}
+                                    </div>
+                                    <div class="itenzinhos">
+                                        {{ produto.dataValidade }}
+                                    </div>
+                                    <div class="itenzinhos">
+                                        {{produto.categoria}}
+                                    </div>
+                                    <div class="itenzinhos">
+                                        {{userName}}
+                                    </div>
+                                    <div class="itenzinhos">
+                                        {{ produto.dataCadastro }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

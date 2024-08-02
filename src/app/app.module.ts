@@ -21,9 +21,9 @@ import { AddProdutosComponent } from './component/add-produtos/add-produtos.comp
 import { EditarProdutosComponent } from './component/editar-produtos/editar-produtos.component';
 import { UsuariosComponent } from './component/usuarios/usuarios.component';
 import { EditarUserComponent } from './component/editar-user/editar-user.component';
-import { AddUserComponent } from './component/add-user/add-user.component';
 import { EstoqueComponent } from './component/estoque/estoque.component';
 import { ItemEstoqueComponent } from './component/item-estoque/item-estoque.component';
+import { RegistrosComponent } from './component/registros/registros.component';
 
 @NgModule({
   declarations: [
@@ -41,9 +41,9 @@ import { ItemEstoqueComponent } from './component/item-estoque/item-estoque.comp
     EditarProdutosComponent,
     UsuariosComponent,
     EditarUserComponent,
-    AddUserComponent,
     EstoqueComponent,
-    ItemEstoqueComponent
+    ItemEstoqueComponent,
+    RegistrosComponent
   ],
   imports: [
     BrowserModule,
