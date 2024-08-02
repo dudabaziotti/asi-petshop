@@ -71,9 +71,9 @@
                     <div class="card-body bg-white rounded-xl mr-10 ">
                         <div class="flex " style="padding-left: 65px; padding-right: 50px;">
                             <a class="itenzinho font-semibold">Item</a>
-                            <a class="itenzinho font-semibold">Validade</a>
-                            <a class="itenzinho font-semibold">Categoria</a>
                             <a class="itenzinho font-semibold">Usuário</a>
+                            <a class="itenzinho font-semibold">Categoria</a>
+                            <a class="itenzinho font-semibold">Estoque</a>
                             <a class="itenzinho font-semibold">Data de Cadastro</a>
                         </div>
                         <hr class="linha-azul">
@@ -88,13 +88,13 @@
                                         {{produto.nome}}
                                     </div>
                                     <div class="itenzinhos">
-                                        {{ produto.dataValidade }}
+                                        {{ userName }}
                                     </div>
                                     <div class="itenzinhos">
                                         {{produto.categoria}}
                                     </div>
                                     <div class="itenzinhos">
-                                        {{userName}}
+                                        {{produto.estoque }}
                                     </div>
                                     <div class="itenzinhos">
                                         {{ produto.dataCadastro }}
