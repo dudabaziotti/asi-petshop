@@ -9,12 +9,6 @@
 .form {
     padding: 15px 30px 15px 0px;
 
-    .form-botao {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
     h3 {
         color: white;
         font-size: 18px;
@@ -35,9 +29,9 @@
     }
 
     .item-foto {
-       display: flex;
-       justify-content: center;
-       align-items: center; 
+        display: flex;
+        justify-content: center;
+        align-items: center; 
         width: 400px;
         padding-top: 10px;
 

@@ -1,0 +1,42 @@
+<div class="form-container bg-white">
+    <div class="bg-back-blue rounded-xl shadow-lg mt-3 mb-3 mr-4 ml-4">
+        <div class="title text-white drop-shadow-md">Visualizar Item Estoque</div>
+        <form [formGroup]="verProdutoForm" class="form">
+            <div class="fotinha flex">
+                <div class="inputs">
+                    <div class="item">
+                        <h3>Nome</h3>
+                        <input type="text" formControlName="nome" placeholder="Nome" class="input placeholder-gray-300 rounded-lg p-2" readonly style="background-color: white;">
+                    </div>
+                    <div class="item">
+                        <h3>Preço</h3>
+                        <input type="text" formControlName="preco" placeholder="Preço" class="input placeholder-gray-300 rounded-lg p-2" readonly style="background-color: white;">
+                    </div>
+                    <div class="item">
+                        <h3>Categoria</h3>
+                        <input type="text" formControlName="categoria" placeholder="Categoria" class="input placeholder-gray-300 rounded-lg p-2" readonly style="background-color: white;">
+                    </div>
+                    <div class="item">
+                        <h3>Estoque</h3>
+                        <input type="number" formControlName="estoque" placeholder="Estoque" class="input placeholder-gray-300 rounded-lg p-2" readonly style="background-color: white;">
+                    </div>
+                    <div class="item">
+                        <h3>Código</h3>
+                        <input type="text" formControlName="codigo" placeholder="Código" class="input placeholder-gray-300 rounded-lg p-2" readonly style="background-color: white;">
+                    </div>
+                    <div class="item">
+                        <h3>Data de Validade</h3>
+                        <input type="date" formControlName="dataValidade" placeholder="Data de Validade" class="input placeholder-gray-300 rounded-lg p-2" readonly style="background-color: white;">
+                    </div>
+                    <div class="item">
+                        <h3>Data de Cadastro</h3>
+                        <input type="date" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input placeholder-gray-300 rounded-lg p-2" readonly style="background-color: white;">
+                    </div>
+                </div>
+                <div class="item-foto flex-col">
+                    <img *ngIf="fotoUrl" [src]="fotoUrl" alt="Foto do Produto" class="rounded-lg mb-2">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
