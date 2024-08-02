@@ -4,11 +4,13 @@ import { AuthService } from '../../shared/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-estoque',
   templateUrl: './estoque.component.html',
-  styleUrl: './estoque.component.scss'
+  styleUrl: './estoque.component.scss',
+  providers: [DatePipe]
 })
 export class EstoqueComponent implements OnInit{
   userId: string | null = null;
@@ -21,7 +23,8 @@ export class EstoqueComponent implements OnInit{
   selectedCategories: Set<string> = new Set<string>();
   filterDate: string | null = null;
 
-  constructor (private route: Router, private auth: AuthService, private fire: AngularFirestore, private afauth:AngularFireAuth, private fb: FormBuilder) {}
+
+  constructor (private route: Router, private auth: AuthService, private fire: AngularFirestore, private afauth:AngularFireAuth, private fb: FormBuilder, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.afauth.user.subscribe(user => {
@@ -140,6 +143,11 @@ export class EstoqueComponent implements OnInit{
         console.error('Erro ao atualizar estoque:', error);
       });
   }
+
+  formatarData(data: string): string {
+    return this.datePipe.transform(data, 'dd-MM-yyyy') || 'Data não informada';
+  }
+  
 
   dirperfil(){
     this.route.navigate(['/perfil']);

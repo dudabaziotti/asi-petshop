@@ -4,11 +4,13 @@ import { AuthService } from '../../shared/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-registros',
   templateUrl: './registros.component.html',
-  styleUrl: './registros.component.scss'
+  styleUrl: './registros.component.scss',
+  providers: [DatePipe]
 })
 export class RegistrosComponent implements OnInit{
   userName: string | null = null;
@@ -28,6 +30,7 @@ export class RegistrosComponent implements OnInit{
     private fire: AngularFirestore,
     private afauth: AngularFireAuth,
     private fb: FormBuilder,
+    private datePipe: DatePipe
   ) { }
   ngOnInit(): void {
     this.afauth.user.subscribe(user => {
@@ -121,6 +124,10 @@ export class RegistrosComponent implements OnInit{
       this.selectedCategories.add(category);
     }
     this.filterProdutos();
+  }
+
+  formatarData(data: string): string {
+    return this.datePipe.transform(data, 'dd-MM-yyyy') || 'Data não informada';
   }
 
   dirperfil() {
