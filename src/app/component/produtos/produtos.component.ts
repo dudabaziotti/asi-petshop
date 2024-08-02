@@ -97,7 +97,7 @@ export class ProdutosComponent implements OnInit{
     this.filteredProdutos = this.produtos.filter(produto => {
       const matchesSearchQuery = produto.nome.toLowerCase().includes(query);
       const matchesCategory = this.selectedCategories.size === 0 || this.selectedCategories.has(produto.categoria);
-      const matchesDate = !this.filterDate || produto.dataCadastro || produto.dataValidade === this.filterDate;
+      const matchesDate = !this.filterDate || produto.dataCadastro === this.filterDate;
       return matchesSearchQuery && matchesCategory && matchesDate;   
     });
   }

@@ -54,7 +54,7 @@ export class EditarProdutosComponent implements OnInit {
       categoria: ['', Validators.required],
       estoque: ['', Validators.required],
       codigo: ['', Validators.required],
-      dataValidade: ['', Validators.required],
+      dataValidade: [''],
       dataCadastro: ['', Validators.required]
     });
   }
