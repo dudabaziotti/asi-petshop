@@ -110,6 +110,7 @@ export class EstoqueComponent implements OnInit{
     this.filterDate = event.target.value;
     this.filterProdutos();
   }
+  
 
   toggleCategory(category: string): void {
     if (this.selectedCategories.has(category)) {
