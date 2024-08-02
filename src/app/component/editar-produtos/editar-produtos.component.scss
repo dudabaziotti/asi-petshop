@@ -35,9 +35,9 @@
     }
 
     .item-foto {
-       display: flex;
-       justify-content: center;
-       align-items: center; 
+        display: flex;
+        justify-content: center;
+        align-items: center; 
         width: 400px;
         padding-top: 10px;
 
@@ -75,4 +75,9 @@
         font-weight: 600;
 
     }
+}
+
+.botao-voltar{
+    max-width: 32px;
+    max-height: 32px;
 }

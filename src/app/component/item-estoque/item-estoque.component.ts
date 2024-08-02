@@ -96,4 +96,8 @@ export class ItemEstoqueComponent implements OnInit {
       }
     })
   }
+
+  voltar() {
+    this.route.navigate(['/estoque']);
+  }
 }

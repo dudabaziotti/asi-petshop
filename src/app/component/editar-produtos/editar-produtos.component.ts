@@ -214,4 +214,7 @@ export class EditarProdutosComponent implements OnInit {
       });
     }
   }
+  voltar() {
+    this.route.navigate(['/produtos']);
+  }
 }

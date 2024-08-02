@@ -32,6 +32,9 @@
                         <h3>Data de Cadastro</h3>
                         <input type="date" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input placeholder-gray-300 rounded-lg p-2" readonly style="background-color: white;">
                     </div>
+                    <button (click)="voltar()" class="botao-voltar ml-12 mt-10">
+                        <img src="assets/icons/botao-voltar.png">
+                    </button>
                 </div>
                 <div class="item-foto flex-col">
                     <img *ngIf="fotoUrl" [src]="fotoUrl" alt="Foto do Produto" class="rounded-lg mb-2">

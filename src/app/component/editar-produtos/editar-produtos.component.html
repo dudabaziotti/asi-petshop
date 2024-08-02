@@ -36,7 +36,6 @@
                         <h3>Data de Cadastro</h3>
                         <input type="date" formControlName="dataCadastro" placeholder="Data de Cadastro" class="input placeholder-gray-300 rounded-lg p-2">
                     </div>
-                    
                 </div>
                 <div class="item-foto flex-col">
                     <img *ngIf="fotoUrl" [src]="fotoUrl" alt="Foto do Produto" class="rounded-lg mb-2">
@@ -52,8 +51,10 @@
                     <div class="botao bg-red-200 text-red-800 rounded-lg hover:bg-red-300">
                         <button class="botao" (click)="excluirProduto()" type="button">Excluir Produto</button>
                     </div>
-                    
                 </div>
         </form>
+        <button (click)="voltar()" class="botao-voltar ml-12 mb-5">
+            <img src="assets/icons/botao-voltar.png">
+        </button>
     </div>
-  </div>
+</div>
