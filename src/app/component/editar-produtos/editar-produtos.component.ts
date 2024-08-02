@@ -78,7 +78,6 @@ export class EditarProdutosComponent implements OnInit {
       };
       reader.readAsDataURL(file);
       this.editandoFoto = true;
-      console.log('Arquivo selecionado:', this.selectedFile);
     } else {
       this.selectedFile = null;
     }
@@ -146,12 +145,9 @@ export class EditarProdutosComponent implements OnInit {
   }
 
   editorProduto(id: string): void {
-    console.log('ID recebido:', id);
     this.fire.collection('produtos').doc(id).get().toPromise().then((doc) => {
-      console.log('Documento recebido:', doc);
       if (doc && doc.exists) {
         const data = doc.data() as Produto;
-        console.log('Dados do documento:', data);
         if (data) {
           this.fotoUrl = data.fotoUrl || null;
           this.editarProdutoForm.patchValue(data);

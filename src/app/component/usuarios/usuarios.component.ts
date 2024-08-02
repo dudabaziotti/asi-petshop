@@ -26,7 +26,6 @@ export class UsuariosComponent {
       next: (data: any[]) => {
         this.users = data;
         this.filteredUsers = data;
-        console.log('Usuários carregados:', this.users);
       },
       error: (error: any) => {
         console.error('Erro ao carregar usuários:', error);
@@ -48,7 +47,6 @@ export class UsuariosComponent {
   }
 
   navegarParaEditar(userId: string): void {
-    console.log('Navegando para editar usuário com ID:', userId);
     this.route.navigate(['/editar-user', userId]);
   }
 
@@ -81,5 +79,4 @@ export class UsuariosComponent {
   dirusuarios() {
     this.route.navigate(['/usuarios']);
   }
-
 }

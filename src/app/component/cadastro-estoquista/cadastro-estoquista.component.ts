@@ -59,6 +59,7 @@ export class CadastroEstoquistaComponent implements OnInit {
 
   cadastroEstoquista(): void {
     if (this.isFormValid && this.selectedFile) {
+      
       const filePath = `users/${this.selectedFile.name}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, this.selectedFile);

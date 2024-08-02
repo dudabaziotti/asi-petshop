@@ -12,9 +12,7 @@ export class RedefinirSenhaComponent implements OnInit {
 
   constructor (private auth: AuthService) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void { }
 
   redefinirSenha() {
     this.auth.redefinirSenha(this.email);

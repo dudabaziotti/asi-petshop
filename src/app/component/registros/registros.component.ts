@@ -32,6 +32,7 @@ export class RegistrosComponent implements OnInit{
     private fb: FormBuilder,
     private datePipe: DatePipe
   ) { }
+
   ngOnInit(): void {
     this.afauth.user.subscribe(user => {
       if (user) {
@@ -48,7 +49,6 @@ export class RegistrosComponent implements OnInit{
         });
         if (this.userId) {
           this.auth.getUserType(this.userId).subscribe(userType => {
-            console.log('User type from document:', userType);
             if (userType === 'estoquista') {
               this.isEstoquista = true;
             } else if (userType === 'leitor') {
@@ -128,6 +128,30 @@ export class RegistrosComponent implements OnInit{
 
   formatarData(data: string): string {
     return this.datePipe.transform(data, 'dd-MM-yyyy') || 'Data não informada';
+  }
+
+  abaixarEstoque(produto: any): void {
+    if (produto.estoque != null && produto.estoque > 0) {
+      produto.estoque--;
+      this.atualizarEstoqueProduto(produto);
+    }
+  }
+  
+  aumentarEstoque(produto: any): void {
+    if (produto.estoque != null) {
+      produto.estoque++;
+      this.atualizarEstoqueProduto(produto);
+    }
+  }
+  
+  atualizarEstoqueProduto(produto: any): void {
+    this.fire.collection('produtos').doc(produto.id).update({ estoque: produto.estoque })
+      .then(() => {
+        console.log(`Estoque do produto ${produto.nome} atualizado para ${produto.estoque}.`);
+      })
+      .catch(error => {
+        console.error('Erro ao atualizar estoque:', error);
+      });
   }
 
   dirperfil() {

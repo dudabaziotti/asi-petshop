@@ -111,7 +111,6 @@ export class EditarUserComponent {
               console.error('Erro ao obter usuário atual: ', error);
             });
           };
-
           if (user.photoUrl) {
             const fotoPath = extractFotoPath(user.photoUrl);
             if (fotoPath) {
@@ -157,12 +156,9 @@ export class EditarUserComponent {
   }
 
   editorUsuario(uid: string): void {
-    console.log('ID recebido:', uid);
     this.fire.collection('users').doc(uid).get().toPromise().then((doc) => {
-      console.log('Documento recebido:', doc);
       if (doc && doc.exists) {
         const data = doc.data() as Usuario;
-        console.log('Dados do documento:', data);
         if (data) {
           this.photoUrl = data.photoUrl || null;
           this.editarUsuarioForm.patchValue(data);
@@ -174,7 +170,6 @@ export class EditarUserComponent {
       console.error('Erro ao buscar usuario: ', error);
     });
   }
-
 
   editarUsuario(): void {
     if (this.editarUsuarioForm.valid && this.userId) {

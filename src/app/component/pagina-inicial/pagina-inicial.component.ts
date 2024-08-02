@@ -10,12 +10,9 @@ export class PaginaInicialComponent implements OnInit{
 
   constructor (private router: Router){}
 
+  ngOnInit(): void { }
+
   logar () {
     this.router.navigate(['/login']);
   }
-
-  ngOnInit(): void {
-    
-  }
-
 }

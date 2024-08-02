@@ -64,7 +64,6 @@ export class AddProdutosComponent implements OnInit {
     }
 
     const produto = this.novoProdutoForm.value;
-
     const filePath = `produtos/${Date.now()}_${this.selectedFile.name}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, this.selectedFile);

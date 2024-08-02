@@ -91,7 +91,9 @@
                                         {{produto.categoria}}
                                     </div>
                                     <div class="itenzinhos">
-                                        {{produto.estoque }}
+                                        <button (click)="abaixarEstoque(produto)" class="mr-2">-</button>
+                                        {{produto.estoque}}
+                                        <button (click)="aumentarEstoque(produto)" class="ml-2">+</button>
                                     </div>
                                     <div class="itenzinhos">
                                         {{ formatarData(produto.dataCadastro) }}

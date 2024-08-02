@@ -96,7 +96,4 @@ export class ItemEstoqueComponent implements OnInit {
       }
     })
   }
-
-
-
 }

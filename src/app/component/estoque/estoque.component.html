@@ -91,23 +91,16 @@
                                         {{produto.categoria}}
                                     </div>
                                     <div class="itenzinhos">
-                                        <button (click)="abaixarEstoque(produto)" class="mr-2">-</button>
                                         {{produto.estoque}}
-                                        <button (click)="aumentarEstoque(produto)" class="ml-2">+</button>
                                     </div>
                                     <div class="itenzinhos">
                                         {{ formatarData(produto.dataCadastro) }}
                                     </div>
-                                    
-                                    
-                                    
-                                    
                                     <div class="itenzinho-visualizar">
                                         <button *ngIf="isAdmin || isEstoquista" (click)="navegarParaVerItem(produto.id)" class="text-back-blue hover:underline">
                                             Ver
                                         </button>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>

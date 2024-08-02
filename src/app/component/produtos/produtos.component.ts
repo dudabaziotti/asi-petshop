@@ -36,10 +36,8 @@ export class ProdutosComponent implements OnInit {
     this.afauth.user.subscribe(user => {
       if (user) {
         this.userId = user.uid;
-        console.log('Logged in user ID:', this.userId);
         if (this.userId) {
           this.auth.getUserType(this.userId).subscribe(userType => {
-            console.log('User type from document:', userType);
             if (userType === 'estoquista') {
               this.isEstoquista = true;
             } else if (userType === 'leitor') {

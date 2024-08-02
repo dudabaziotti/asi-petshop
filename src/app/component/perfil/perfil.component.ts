@@ -61,7 +61,6 @@ export class PerfilComponent implements OnInit {
     this.afAuth.user.subscribe(user => {
       if (user) {
         this.uid = user.uid;
-        console.log('Logged in user ID:', this.uid);
         this.loadUserData();
       } else {
         console.log('No user is logged in');
@@ -74,8 +73,7 @@ export class PerfilComponent implements OnInit {
 
   loadUserData(): void {
     if (this.uid) {
-      this.auth.getUserType(this.uid).subscribe(userType => {
-        console.log('User type from document:', userType); 
+      this.auth.getUserType(this.uid).subscribe(userType => { 
         if (userType === 'estoquista') {
           this.isEstoquista = true;
         } else if (userType === 'leitor') {
@@ -87,7 +85,6 @@ export class PerfilComponent implements OnInit {
     }
   }
   
-
   dirperfil() {
     this.route.navigate(['/perfil']);
   }
@@ -103,7 +100,6 @@ export class PerfilComponent implements OnInit {
   dirusuarios() {
     this.route.navigate(['/usuarios']);
   }
-
 
   loadUser(): void {
     this.afAuth.currentUser.then(user => {

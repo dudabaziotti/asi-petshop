@@ -30,10 +30,8 @@ export class EstoqueComponent implements OnInit{
     this.afauth.user.subscribe(user => {
       if (user) {
         this.userId = user.uid;
-        console.log('Logged in user ID:', this.userId);
         if (this.userId) {
           this.auth.getUserType(this.userId).subscribe(userType => {
-            console.log('User type from document:', userType); 
             if (userType === 'estoquista') {
               this.isEstoquista = true;
             } else if (userType === 'leitor') {
@@ -70,7 +68,6 @@ export class EstoqueComponent implements OnInit{
       this.produtos = produtos;
       this.filteredProdutos = produtos;
       this.filterProdutos();
-      console.log(this.filteredProdutos);
     }, error => {
       console.error('Erro ao carregar produtos: ', error);
     });
@@ -97,7 +94,6 @@ export class EstoqueComponent implements OnInit{
 
   filterProdutos(): void {
     const query = this.searchQuery.trim().toLowerCase();
-  
     this.filteredProdutos = this.produtos.filter(produto => {
       const matchesSearchQuery = produto.nome.toLowerCase().includes(query);
       const matchesCategory = this.selectedCategories.size === 0 || this.selectedCategories.has(produto.categoria);
@@ -111,7 +107,6 @@ export class EstoqueComponent implements OnInit{
     this.filterProdutos();
   }
   
-
   toggleCategory(category: string): void {
     if (this.selectedCategories.has(category)) {
       this.selectedCategories.delete(category);
@@ -121,35 +116,10 @@ export class EstoqueComponent implements OnInit{
     this.filterProdutos();
   }
 
-  abaixarEstoque(produto: any): void {
-    if (produto.estoque != null && produto.estoque > 0) {
-      produto.estoque--;
-      this.atualizarEstoqueProduto(produto);
-    }
-  }
-  
-  aumentarEstoque(produto: any): void {
-    if (produto.estoque != null) {
-      produto.estoque++;
-      this.atualizarEstoqueProduto(produto);
-    }
-  }
-  
-  atualizarEstoqueProduto(produto: any): void {
-    this.fire.collection('produtos').doc(produto.id).update({ estoque: produto.estoque })
-      .then(() => {
-        console.log(`Estoque do produto ${produto.nome} atualizado para ${produto.estoque}.`);
-      })
-      .catch(error => {
-        console.error('Erro ao atualizar estoque:', error);
-      });
-  }
-
   formatarData(data: string): string {
     return this.datePipe.transform(data, 'dd-MM-yyyy') || 'Data não informada';
   }
   
-
   dirperfil(){
     this.route.navigate(['/perfil']);
   }
