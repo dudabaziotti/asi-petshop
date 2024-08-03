@@ -10,6 +10,9 @@
             <a (click)="dirprodutos()" class="barra px-5">Produtos</a>
             <a (click)="direstoque()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Estoque</a>
             <a (click)="dirregistro()" class="barra px-5" *ngIf="isEstoquista || isAdmin">Registros de Baixas</a>
+            <a (click)="logout()" class="barra pl-6">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
         </div>
         <div class="linha">
             <div class="horizontal-line"></div>

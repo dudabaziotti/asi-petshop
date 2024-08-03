@@ -80,17 +80,6 @@ export class AuthService {
       });
   }
 
-  // sair
-  logout() {
-    this.fireauth.signOut().then(() => {
-      localStorage.removeItem('token');
-      sessionStorage.removeItem('token');
-      this.router.navigate(['/login']);
-    }).catch(err => {
-      alert(err.message);
-    });
-  }
-
   // redefinir a senha
   redefinirSenha(email: string) {
     this.fireauth.sendPasswordResetEmail(email).then(() => {

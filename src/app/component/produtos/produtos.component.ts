@@ -22,6 +22,7 @@ export class ProdutosComponent implements OnInit {
   searchQuery: string = '';
   selectedCategories: Set<string> = new Set<string>();
   filterDate: string | null = null;
+  fireauth: any;
 
   constructor(
     private route: Router,
@@ -134,6 +135,11 @@ export class ProdutosComponent implements OnInit {
       currency: 'BRL',
       minimumFractionDigits: 2,
     }).format(preco);
+  }
+
+  logout() {
+    console.log('Usuário deslogado.');
+    this.route.navigate(['/login']);
   }
 
   dirperfil() {

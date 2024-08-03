@@ -64,6 +64,12 @@ export class UsuariosComponent {
     }
   }
 
+  logout() {
+    console.log('Usuário deslogado.');
+    this.route.navigate(['/login']);
+  }
+
+
   dirperfil() {
     this.route.navigate(['/perfil']);
   }

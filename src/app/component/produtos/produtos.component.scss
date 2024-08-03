@@ -44,6 +44,7 @@
             font-size: 25px;
             padding-top: 40px;
 
+            
             a:hover {
                 color: #c2c0c0;
             }
@@ -51,6 +52,10 @@
 
         .barra {
             cursor: pointer;
+        }
+
+        .barra i {
+            font-size: 18px; 
         }
 
         .barra-atual {

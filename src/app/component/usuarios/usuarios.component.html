@@ -10,6 +10,9 @@
             <a (click)="dirprodutos()" class="barra px-5">Produtos</a>
             <a (click)="direstoque()" class="barra px-5">Estoque</a>
             <a (click)="dirregistro()" class="barra px-5">Registros de Baixas</a>
+            <a (click)="logout()" class="barra pl-6">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
         </div>
         <div class="linha">
             <div class="horizontal-line"></div>
@@ -25,7 +28,6 @@
                     
                 </div>
                 <div class="user-list">
-                    <!-- Header -->
                     <div class="user-header">
                         <div class="header-item">Foto</div>
                         <div class="header-item">Nome</div>
@@ -33,7 +35,6 @@
                         <div class="header-item">Telefone</div>
                         <div class="header-item">CPF</div>
                     </div>
-                    <!-- User Infos -->
                     <div class="user-item" *ngFor="let user of filteredUsers">
                         <div class="user-info">
                             <img *ngIf="user.photoUrl" [src]="user.photoUrl" alt="Foto do Usuário" class="user-photo ml-12">

@@ -142,6 +142,11 @@ export class RegistrosComponent implements OnInit{
         console.error('Erro ao atualizar estoque:', error);
       });
   }
+  logout() {
+    console.log('Usuário deslogado.');
+    this.route.navigate(['/login']);
+  }
+
 
   dirperfil() {
     this.route.navigate(['/perfil']);

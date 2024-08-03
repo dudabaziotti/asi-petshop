@@ -199,4 +199,12 @@ export class PerfilComponent implements OnInit {
     event.preventDefault(); 
     this.fileInput.nativeElement.click();
   }
+
+  logout() {
+    console.log('Usuário deslogado.');
+    this.route.navigate(['/login']);
+  }
+
 }
+
+
