@@ -13,7 +13,6 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 export class RegistrosComponent implements OnInit{
-  userName: string | null = null;
   userId: string | null = null;
   isLeitor: boolean = false;
   isEstoquista: boolean = false;
