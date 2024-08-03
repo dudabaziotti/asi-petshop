@@ -37,16 +37,6 @@ export class RegistrosComponent implements OnInit{
     this.afauth.user.subscribe(user => {
       if (user) {
         this.userId = user.uid;
-        this.fire.collection('users').doc(this.userId).valueChanges().subscribe({
-          next: (user: any) => {
-            if (user) {
-              this.userName = user.name;
-            }
-          },
-          error: (error) => {
-            console.error('Error ao carregar usuário:', error);
-          }
-        });
         if (this.userId) {
           this.auth.getUserType(this.userId).subscribe(userType => {
             if (userType === 'estoquista') {

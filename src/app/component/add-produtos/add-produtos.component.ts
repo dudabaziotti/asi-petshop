@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { finalize } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-add-produtos',
@@ -15,12 +16,15 @@ export class AddProdutosComponent implements OnInit {
   selectedFile: File | null = null;
   fotoUrl: string | null = null;
   fotoSelected: boolean = false;
+  userId: string = '';
+  userName: string = '';
 
   constructor(
     private route: Router,
     private fire: AngularFirestore,
     private storage: AngularFireStorage,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private afAuth: AngularFireAuth
   ) {
     this.novoProdutoForm = this.fb.group({
       nome: ['', Validators.required],
@@ -33,7 +37,23 @@ export class AddProdutosComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //obter usuario que submete o formulario
+    this.afAuth.authState.subscribe(user => {
+      if (user) {
+        this.userId = user.uid;
+        this.getUserName(this.userId); 
+      }
+    });
+  }
+
+  getUserName(uid: string): void {
+    this.fire.collection('users').doc(uid).valueChanges().subscribe((user: any) => {
+      if (user) {
+        this.userName = user.name; 
+      }
+    });
+  }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
@@ -64,6 +84,7 @@ export class AddProdutosComponent implements OnInit {
     }
 
     const produto = this.novoProdutoForm.value;
+    produto.usuario = this.userName; 
     const filePath = `produtos/${Date.now()}_${this.selectedFile.name}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, this.selectedFile);

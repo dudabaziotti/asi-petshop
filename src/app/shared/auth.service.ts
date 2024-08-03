@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -24,14 +24,29 @@ export class AuthService {
 
   constructor(private fireauth: AngularFireAuth, private router: Router, private firestore: AngularFirestore, private storage: AngularFireStorage) {}
   
-  canActivate(): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.fireauth.authState.pipe(
-      map(user => {
+      switchMap(user => {
         if (user) {
-          return true;
+          return this.getUserType(user.uid).pipe(
+            map(userType => {
+              const url = state.url;
+              if (userType === 'administrador') {
+                return true; // admin tem acesso total
+              } else if (userType === 'estoquista' && url.includes('/usuarios') || url.includes('/editar-user')) {
+                this.router.navigate(['/dashboard']);
+                return false; // estoquista não pode acessar 'usuarios'
+              } else if (userType === 'leitor' && (url.includes('/usuarios') || url.includes('/editar-user') || url.includes('/estoque') || url.includes('/item-estoque') || url.includes('/registros') || url.includes('/editar-produtos') || url.includes('/add-produtos'))) {
+                this.router.navigate(['/dashboard']);
+                return false; // leitor não pode acessar 'usuarios', 'estoque' ou 'registros'
+              } else {
+                return true; // acesso permitido
+              }
+            })
+          );
         } else {
           this.router.navigate(['/login']);
-          return false;
+          return of(false); // não autenticado
         }
       })
     );
