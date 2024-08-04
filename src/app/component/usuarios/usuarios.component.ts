@@ -57,18 +57,21 @@ export class UsuariosComponent {
       this.filteredUsers = this.users;
     } else {
       this.filteredUsers = this.users.filter(user => {
-        const sanitizedCPF = user.cpf.replace(/[\.\-]/g, '');
-        const sanitizedTelephone = user.telephone.replace(/[\-\(\)\s]/g, '');
-        return user.name.toLowerCase().includes(query) || user.type.includes(query) || sanitizedCPF.includes(sanitizedQuery) || sanitizedTelephone.includes(sanitizedQuery);
+        const sanitizedCPF = user.cpf ? user.cpf.replace(/[\.\-]/g, '') : '';
+        const sanitizedTelephone = user.telephone ? user.telephone.replace(/[\-\(\)\s]/g, '') : '';
+        const nameMatch = user.name ? user.name.toLowerCase().includes(query) : false;
+        const typeMatch = user.type ? user.type.toLowerCase().includes(query) : false;
+        const cpfMatch = sanitizedCPF.includes(sanitizedQuery);
+        const telephoneMatch = sanitizedTelephone.includes(sanitizedQuery);
+        return nameMatch || typeMatch || cpfMatch || telephoneMatch;
       });
     }
-  }
+  }  
 
   logout() {
+    this.authService.logout();
     console.log('Usuário deslogado.');
-    this.route.navigate(['/login']);
   }
-
 
   dirperfil() {
     this.route.navigate(['/perfil']);

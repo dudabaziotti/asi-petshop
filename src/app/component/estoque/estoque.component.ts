@@ -121,11 +121,10 @@ export class EstoqueComponent implements OnInit{
   }
 
   logout() {
+    this.auth.logout();
     console.log('Usuário deslogado.');
-    this.route.navigate(['/login']);
   }
 
-  
   dirperfil(){
     this.route.navigate(['/perfil']);
   }

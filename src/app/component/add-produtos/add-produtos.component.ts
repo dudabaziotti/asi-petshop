@@ -106,4 +106,7 @@ export class AddProdutosComponent implements OnInit {
       error: err => console.error('Erro ao fazer upload do arquivo: ', err)
     });
   }
+  voltar() {
+    this.route.navigate(['/produtos']);
+  }
 }

@@ -138,8 +138,8 @@ export class ProdutosComponent implements OnInit {
   }
 
   logout() {
+    this.auth.logout();
     console.log('Usuário deslogado.');
-    this.route.navigate(['/login']);
   }
 
   dirperfil() {

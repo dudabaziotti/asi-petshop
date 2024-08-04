@@ -225,4 +225,7 @@ export class EditarUserComponent {
       });
     }
   }
+  voltar() {
+    this.route.navigate(['/usuarios']);
+  }
 }
