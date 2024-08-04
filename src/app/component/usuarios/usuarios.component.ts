@@ -60,7 +60,7 @@ export class UsuariosComponent {
         const sanitizedCPF = user.cpf ? user.cpf.replace(/[\.\-]/g, '') : '';
         const sanitizedTelephone = user.telephone ? user.telephone.replace(/[\-\(\)\s]/g, '') : '';
         const nameMatch = user.name ? user.name.toLowerCase().includes(query) : false;
-        const typeMatch = user.type ? user.type.toLowerCase().includes(query) : false;
+        const typeMatch = user.usuario ? user.usuario.toLowerCase().includes(query) : false;
         const cpfMatch = sanitizedCPF.includes(sanitizedQuery);
         const telephoneMatch = sanitizedTelephone.includes(sanitizedQuery);
         return nameMatch || typeMatch || cpfMatch || telephoneMatch;
