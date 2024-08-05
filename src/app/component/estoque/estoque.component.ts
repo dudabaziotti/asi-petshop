@@ -117,7 +117,7 @@ export class EstoqueComponent implements OnInit{
   }
 
   formatarData(data: string): string {
-    return this.datePipe.transform(data, 'dd-MM-yyyy') || 'Data não informada';
+    return this.datePipe.transform(data, 'dd-MM-yyyy') || 'N/A';
   }
 
   logout() {
