@@ -45,7 +45,7 @@ export class PerfilComponent implements OnInit {
       name: ['', Validators.required],
       data: ['', Validators.required],
       cpf: ['', Validators.required],
-      identificacao: ['', Validators.required],
+      identificacao: [''],
       cep: ['', Validators.required],
       endereco: ['', Validators.required],
       estado: ['', Validators.required],
@@ -63,7 +63,6 @@ export class PerfilComponent implements OnInit {
         this.uid = user.uid;
         this.loadUserData();
       } else {
-        console.log('No user is logged in');
         this.isLeitor = false;
         this.isEstoquista = false;
         this.isAdmin = false;
@@ -135,12 +134,23 @@ export class PerfilComponent implements OnInit {
     });
   }
 
+  private cleanData(data: { [key: string]: any }): { [key: string]: any } {
+    return Object.entries(data).reduce((acc, [key, value]) => {
+      if (value !== undefined) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {} as { [key: string]: any });
+  }
+
   onSave(): void {
     if (this.perfilForm.valid) {
       const userData = this.perfilForm.value;
       userData.photoUrl = this.photoUrl;
+      const cleanedData = this.cleanData(userData);
+
       if (this.uid) {
-        this.db.collection('users').doc(this.uid).update(userData)
+        this.db.collection('users').doc(this.uid).update(cleanedData)
           .then(() => {
             alert('Dados do usuário salvos com sucesso!');
             this.route.navigate(['/perfil']);
@@ -154,7 +164,7 @@ export class PerfilComponent implements OnInit {
         alert('ID do usuário não fornecido.');
       }
     } else {
-      alert('Formulário inválido');;
+      alert('Formulário inválido');
     }
   }
 
@@ -204,7 +214,4 @@ export class PerfilComponent implements OnInit {
     this.auth.logout();
     console.log('Usuário deslogado.');
   }
-
 }
-
-
