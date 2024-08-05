@@ -126,7 +126,7 @@ export class ProdutosComponent implements OnInit {
   }
 
   formatarData(data: string): string {
-    return this.datePipe.transform(data, 'dd-MM-yyyy') || 'Data não informada';
+    return this.datePipe.transform(data, 'dd-MM-yyyy') || 'N/A';
   }
 
   formatarPreco(preco: number): string {
