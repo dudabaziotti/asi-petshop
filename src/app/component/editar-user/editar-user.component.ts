@@ -52,7 +52,7 @@ export class EditarUserComponent {
       cpf: ['', Validators.required],
       telephone: ['', Validators.required],
       usuario: ['', Validators.required],
-      identificacao: ['', Validators.required]
+      identificacao: ['']
     });
   }
 
