@@ -92,69 +92,6 @@ export class EditarUserComponent {
     });
   }
 
-  excluirUsuario(): void {
-    if (this.userId) {
-      this.fire.collection('users').doc(this.userId).get().subscribe(doc => {
-        if (doc.exists) {
-          const user = doc.data() as Usuario;
-          const deleteUserFromAuth = () => {
-            this.auth.currentUser.then(currentUser => {
-              if (currentUser) {
-                currentUser.delete().then(() => {
-                  console.log('Autenticação do usuário excluída com sucesso!');
-                  this.route.navigate(['/usuarios']);
-                }).catch(error => {
-                  console.error('Erro ao excluir autenticação do usuário: ', error);
-                });
-              }
-            }).catch(error => {
-              console.error('Erro ao obter usuário atual: ', error);
-            });
-          };
-          if (user.photoUrl) {
-            const fotoPath = extractFotoPath(user.photoUrl);
-            if (fotoPath) {
-              const storageRef = this.storage.ref(fotoPath);
-              storageRef.delete().toPromise().then(() => {
-                console.log('Foto excluída com sucesso!');
-                this.fire.collection('users').doc(this.userId!).delete().then(() => {
-                  alert('Usuário excluído com sucesso!');
-                  deleteUserFromAuth();
-                }).catch(error => {
-                  console.error('Erro ao excluir usuário: ', error);
-                });
-              }).catch(error => {
-                console.error('Erro ao excluir a foto: ', error);
-                this.fire.collection('users').doc(this.userId!).delete().then(() => {
-                  alert('Usuário excluído, mas a foto não pôde ser excluída.');
-                  deleteUserFromAuth();
-                }).catch(error => {
-                  console.error('Erro ao excluir usuário: ', error);
-                });
-              });
-            } else {
-              this.fire.collection('users').doc(this.userId!).delete().then(() => {
-                alert('Usuário excluído com sucesso!');
-                deleteUserFromAuth();
-              }).catch(error => {
-                console.error('Erro ao excluir usuário: ', error);
-              });
-            }
-          } else {
-            this.fire.collection('users').doc(this.userId!).delete().then(() => {
-              alert('Usuário excluído com sucesso!');
-              deleteUserFromAuth();
-            }).catch(error => {
-              console.error('Erro ao excluir usuário: ', error);
-            });
-          }
-        } else {
-          console.log('Usuário não encontrado!');
-        }
-      });
-    }
-  }
-
   editorUsuario(uid: string): void {
     this.fire.collection('users').doc(uid).get().toPromise().then((doc) => {
       if (doc && doc.exists) {

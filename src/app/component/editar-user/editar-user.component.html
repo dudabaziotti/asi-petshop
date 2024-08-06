@@ -42,13 +42,9 @@
             </div>
                 
                 <div class="form-botao pt-4">
-                    <div class="botao bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300 mr-4">
+                    <div class="botao bg-blue-200 text-blue-700 rounded-lg hover:bg-blue-300">
                         <button class="botao" type="submit" [disabled]="!editarUsuarioForm.valid">Salvar</button> 
-                    </div>
-                    <div class="botao bg-red-200 text-red-800 rounded-lg hover:bg-red-300">
-                        <button class="botao" (click)="excluirUsuario()" type="button">Excluir Usuário</button>
-                    </div>
-                    
+                    </div>  
                 </div>
         </form>
         <button (click)="voltar()" class="botao-voltar ml-12 mb-5">
